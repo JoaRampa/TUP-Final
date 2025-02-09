@@ -35,13 +35,12 @@
 </template>
 
 <script>
-import { dataFetchMixin } from '@/mixins/dataFetchMixin.js';
 import sStock from '@/services/sStock.js';
 import EditIngresoModal from './EditIngresoModal.vue';
 import cmLoader from '@/components/cmLoader.vue';
+import { mapState} from "vuex";
 
 export default {
-  mixins: [dataFetchMixin],
   components: { EditIngresoModal, cmLoader },
   data() {
     return {
@@ -52,6 +51,7 @@ export default {
       msg: null
     };
   },
+  computed: {...mapState(["products"])},
   async created() {
     await this.fetchTransacciones();
   },
@@ -70,6 +70,10 @@ export default {
         console.error("Error al cargar transacciones:", error);
         this.transacciones = [];
       }
+    },
+    getProductDescription(id) {
+      const product = this.products.find(prod => prod.id === id);
+      return product ? product.nombreProducto : '';
     },
     openEditModal(transaccion) {
       this.selectedTransaccion = { ...transaccion }; 

@@ -20,11 +20,10 @@
 </template>
 
 <script>
-import { dataFetchMixin } from '@/mixins/dataFetchMixin';
 import { groupedProducts } from "@/mixins/groupedProducts";
 
 export default {
-  mixins: [dataFetchMixin, groupedProducts],
+  mixins: [groupedProducts],
   data() {
     return {
       transacciones: [],

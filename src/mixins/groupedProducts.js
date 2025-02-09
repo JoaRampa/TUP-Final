@@ -1,3 +1,4 @@
+import { mapState, mapActions} from "vuex";
 import sStock from "@/services/sStock";
 
 export const groupedProducts = {
@@ -10,22 +11,28 @@ export const groupedProducts = {
       totalNetEarnings: 0,
     };
   },
+  computed: {...mapState(["products"])},
   async created() {
     await this.fetchTransacciones();
     this.groupProducts();
   },
   methods: {
-    async fetchTransacciones() {
-          try {
-            const res = await sStock.getAll();
-            this.transacciones = res.data.transacciones;
-            this.groupProducts();
-          } catch (error) {
-            console.error("Error al cargar transacciones:", error);
-            this.transacciones = [];
-          }
-        },
-groupProducts(transacciones = null) {
+  ...mapActions(["fetchProducts"]),
+  async fetchTransacciones() {
+    try {
+      const res = await sStock.getAll();
+      this.transacciones = res.data.transacciones;
+      this.groupProducts();
+    } catch (error) {
+      console.error("Error al cargar transacciones:", error);
+      this.transacciones = [];
+    }
+  },
+  getProductDescription(id) {
+    const product = this.products.find(prod => prod.id === id);
+    return product ? product.nombreProducto : '';
+  },
+  groupProducts(transacciones = null) {
   const productMap = {};
   let totalPriceSum = 0; //var para almacenar la suma de los costos
   let saleSum = 0;

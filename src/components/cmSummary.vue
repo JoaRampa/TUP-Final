@@ -29,13 +29,12 @@
 </template>
 
 <script>
-import { dataFetchMixin } from '@/mixins/dataFetchMixin.js';
 import { groupedProducts } from '@/mixins/groupedProducts';
 import sBill from "@/services/sBill";
 import sStock from '@/services/sStock';
 
 export default {
-  mixins: [dataFetchMixin, groupedProducts],
+  mixins: [groupedProducts],
   data() {
     return {
       stockValue: 0,

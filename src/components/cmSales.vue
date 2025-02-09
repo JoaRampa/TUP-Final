@@ -40,13 +40,13 @@
 
 <script>
 import sStock from '@/services/sStock';
-import { dataFetchMixin } from '@/mixins/dataFetchMixin';
 import { groupedProducts } from '@/mixins/groupedProducts';
 import cmLoader from '@/components/cmLoader.vue';
+import { mapState } from "vuex";
 
 export default {
   components: {cmLoader},
-  mixins: [dataFetchMixin, groupedProducts],
+  mixins: [groupedProducts],
   data() {
     return {
       currentProduct: { searchQuery: "", amount: "", price: "" }, // Producto actual en el formulario
@@ -57,6 +57,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(["products"]),
     availableProducts() {
       return this.products.filter(product => {
         const groupedProduct = this.groupedProducts.find(gp => gp.idProduct === product.id);

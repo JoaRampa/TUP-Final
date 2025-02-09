@@ -33,12 +33,11 @@
 
 <script>
 import sStock from '@/services/sStock';
-import { dataFetchMixin } from '@/mixins/dataFetchMixin';
 import cmLoader from '@/components/cmLoader.vue';
+import { mapState} from "vuex";
 
 export default {
   components: {cmLoader},
-  mixins: [dataFetchMixin],
   data() {
     return {
       currentProduct: { searchQuery: "", amount: "", price: "" },
@@ -47,6 +46,7 @@ export default {
       msg: null 
     };
   },
+  computed: {...mapState(["products"])},
   methods: {
     addProduct() {
       if(this.currentProduct.searchQuery !== "" && this.currentProduct.amount !== "" && this.currentProduct.price !== ""){

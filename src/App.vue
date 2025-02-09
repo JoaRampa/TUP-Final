@@ -29,16 +29,22 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
   export default {
     data() {
       return {
         isActive: false,
       };
     },
+    created() {
+      this.fetchProducts();
+    },
     mounted() {
     this.initScrollTopButton(".scroll-top-btn"); 
-  },
+    },
     methods: {
+    ...mapActions(["fetchProducts"]),
     toggleMenu() {
       this.isActive = !this.isActive;
     },

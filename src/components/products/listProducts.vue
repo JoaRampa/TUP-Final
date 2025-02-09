@@ -28,72 +28,75 @@
 </template>
 
 <script>
-  import { dataFetchMixin } from "@/mixins/dataFetchMixin";
-  import sProduct from "@/services/sProduct"; 
-  import EditProductModal from "@/components/products/EditProductModal.vue";
-  import cmLoader from '@/components/cmLoader.vue';
+import sProduct from "@/services/sProduct"; 
+import EditProductModal from "@/components/products/EditProductModal.vue";
+import cmLoader from '@/components/cmLoader.vue';
+import { mapGetters, mapActions } from "vuex";
 
-  export default {
-    mixins: [dataFetchMixin],
-    components: {EditProductModal,cmLoader},
-    data() {
+export default {
+  components: { EditProductModal, cmLoader },
+  data() {
     return {
-        isModalVisible: false,
-        selectedProduct: null,
-        searchQuery: "", 
-        filteredProducts: [], 
-        products: [],
-        isLoading: false,
-        msg: null
-      };
-    },
-    async mounted() { 
-      await this.fetchProducts();
-      this.filteredProducts = this.products;},
-    watch: { products: {
+      isModalVisible: false,
+      selectedProduct: null,
+      searchQuery: "", 
+      filteredProducts: [], 
+      isLoading: false,
+      msg: null
+    };
+  },
+  computed: {
+    ...mapGetters(["allProducts"])
+  },
+  async mounted() { 
+    await this.fetchProducts(); // Ahora debería existir
+    this.filteredProducts = this.allProducts;
+  },
+  watch: {
+    allProducts: {
       immediate: true,
       handler(newProducts) {
-        this.filteredProducts = newProducts;},
+        this.filteredProducts = newProducts;
       },
     },
-    methods: {
-      openEditModal(prod) {
-        this.selectedProduct = { ...prod }; // Clona el prod para editar
-        this.isModalVisible = true;
-      },
-      closeEditModal() {
-        this.isModalVisible = false;
-        this.selectedProduct = null;
-      },
-      async updateProduct(updatedProduct) {
-        if (!updatedProduct.id) return;
-        try {
-          this.isLoading = true;
-          await sProduct.edit(updatedProduct); 
-          // Actualizar el producto en la lista local
-          const index = this.products.findIndex(prod => prod.id === updatedProduct.id);
-          if (index !== -1) {
-           this.products.splice(index, 1, updatedProduct); // Reemplazar el producto editado
-          }
-          this.closeEditModal();
-        } catch (error) {
-          this.msg = "Error al editar el producto";
-          console.error("Error al actualizar el producto:", error);
-        } finally {      
-          setTimeout(() => {
-            this.isLoading = false;
-          } , 3000);}
-      },
-      filterProducts() {
+  },
+  methods: {
+    ...mapActions(["fetchProducts"]), // 🔹 Asegura que fetchProducts existe
+
+    openEditModal(prod) {
+      this.selectedProduct = { ...prod };
+      this.isModalVisible = true;
+    },
+    closeEditModal() {
+      this.isModalVisible = false;
+      this.selectedProduct = null;
+    },
+    async updateProduct(updatedProduct) {
+      if (!updatedProduct.id) return;
+      try {
+        this.isLoading = true;
+        await sProduct.edit(updatedProduct); 
+        await this.fetchProducts(); // 🔹 Recargar productos después de la edición
+        this.closeEditModal();
+      } catch (error) {
+        this.msg = "Error al editar el producto";
+        console.error("Error al actualizar el producto:", error);
+      } finally {      
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 3000);
+      }
+    },
+    filterProducts() {
       const query = this.searchQuery.toUpperCase();
-      this.filteredProducts = this.products.filter((prod) => {
+      this.filteredProducts = this.allProducts.filter((prod) => {
         const nombre = prod.nombreProducto ? prod.nombreProducto.toUpperCase() : "";
         const cod = prod.prodCod ? prod.prodCod.toUpperCase() : "";
         return nombre.includes(query) || cod.includes(query);
       });
     },
   }
-}
+};
 </script>
 
 <style scoped>

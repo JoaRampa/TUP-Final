@@ -16,10 +16,8 @@
 </template>
 
 <script>
-import { dataFetchMixin } from '@/mixins/dataFetchMixin.js';
 
 export default {
-  mixins: [dataFetchMixin],
   props: {
     isVisible: Boolean,
     transaccion: Object,
