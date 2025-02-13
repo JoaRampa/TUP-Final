@@ -34,9 +34,9 @@ export const groupedProducts = {
   },
   groupProducts(transacciones = null) {
   const productMap = {};
-  let totalPriceSum = 0; //var para almacenar la suma de los costos
   let saleSum = 0;
   let earnSum = 0; //ganancias netas
+  let totalStockCostSum = 0;
 
   const transToProcess = transacciones || this.transacciones;
 
@@ -53,7 +53,8 @@ export const groupedProducts = {
           totalCompraPrice: 0,       // Precio total de compras
           totalSalePrice: 0,        // Precio total de ventas
           description: productDescription,
-          stock: 0
+          stock: 0,
+          ingresos: [] //para luego calcular el ppc
         };
       }
 
@@ -62,8 +63,9 @@ export const groupedProducts = {
         // Sumar solo si es una compra
         const compraTotal = parseFloat(detalle.precio * detalle.cantidad);
         productMap[key].totalCompraPrice += compraTotal;
-        totalPriceSum += compraTotal;  // Acumulando el costo
         productMap[key].stock += parseFloat(detalle.cantidad);
+
+        productMap[key].ingresos.push({ precio: detalle.precio, cantidad: detalle.cantidad });
       } else if (trans.tipo === 'venta') {
         const saleQuantity = parseFloat(detalle.cantidad);
         const totalSale = parseFloat(detalle.precio * saleQuantity);
@@ -76,6 +78,22 @@ export const groupedProducts = {
   });
 
   Object.values(productMap).forEach(prod => {
+    const ultimosIngresos = prod.ingresos.reverse().slice(0, 3); // Tomar los últimos 3
+
+    let totalCompraUlt = 0;
+    let cantidadUlt = 0;
+
+    ultimosIngresos.forEach(ingreso => {
+      totalCompraUlt += ingreso.precio * ingreso.cantidad;
+      cantidadUlt += ingreso.cantidad;
+    });
+
+    const ppc = cantidadUlt > 0 ? totalCompraUlt / cantidadUlt : 0;
+
+    prod.ppc = ppc;
+
+    totalStockCostSum += prod.stock * ppc; //mercaderia total en stock precio costo
+
     if (prod.totalSaleQuantity > 0) {
       // Calcular el costo promedio solo de las unidades vendidas
       const costoPromedioUnitario = prod.totalCompraPrice / prod.totalCompraQuantity;
@@ -90,15 +108,12 @@ export const groupedProducts = {
     totalCompraQuantity: trans.totalCompraQuantity,
     totalSaleQuantity: trans.totalSaleQuantity,
     stock: trans.stock,
-    averagePrice:
-      trans.totalCompraQuantity > 0
-        ? trans.totalCompraPrice / trans.totalCompraQuantity
-        : 0,
+    averagePrice: trans.ppc,
     description: trans.description,
   }));  
-  this.totalCostPriceSum = totalPriceSum;
-  this.totalSalesSum = saleSum;
-  this.totalNetEarnings = earnSum;
-},
+    this.totalCostPriceSum = totalStockCostSum;
+    this.totalSalesSum = saleSum;
+    this.totalNetEarnings = earnSum;
+  },
   }
 }

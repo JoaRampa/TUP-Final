@@ -22,7 +22,10 @@
         <h3 class="title" style="margin-top: .5rem;"><strong>Ganancia Total:</strong> ${{ (totalNetEarnings - billsSum).toFixed(2) }}</h3>
       </div>
       <div class="container">
-        <h3>Mercadería en Stock: ${{ stockValue }}</h3>
+        <h3>Total</h3>
+        <h3>Mercadería en Stock: ${{ stockValue.toFixed(2) }} <p style="font-size: 12px;">(precio costo)</p></h3>
+        <h3>Proyeccion total Ventas: ${{ stockSales.toFixed(2) }} <p style="font-size: 12px;">(margen de ganancias actual)</p></h3>
+        <h3>Proyeccion total Ganancias: ${{ stockEarns.toFixed(2) }}</h3>
       </div>
     </div>
   </div>
@@ -38,6 +41,8 @@ export default {
   data() {
     return {
       stockValue: 0,
+      stockSales: 0,
+      stockEarns: 0,
       filteredBills:[],
       billsSum: 0,
       selectedMonth: new Date().getMonth() + 1,
@@ -96,7 +101,9 @@ export default {
         this.groupProducts(res.data.transacciones); 
         //$nextTick garantiza la actualizacion del DOM
         this.$nextTick(() => {
-          this.stockValue = (this.totalCostPriceSum - this.totalSalesSum + this.totalNetEarnings).toFixed(2);
+          this.stockValue = this.totalCostPriceSum;
+          this.stockEarns = this.stockValue * (this.totalNetEarnings / this.totalSalesSum);
+          this.stockSales = parseFloat(this.stockValue + this.stockEarns);
         }); //calcula el valor total del stock $
       } catch (error) {
         console.error("Error al cargar Transacciones:", error);

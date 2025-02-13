@@ -2,9 +2,9 @@
   <div class="module">
     <div class="container">
         <h2 class="title">Venta</h2>
-        <input ref="searchQueryInput" v-model="currentProduct.searchQuery" list="productList" 
+        <input ref="searchQueryInput" v-model="currentProduct.searchQuery" list="productList"  
           placeholder="Selecciona o escribe un producto" @input="removeErrorBorder('searchQueryInput')"/>
-          <datalist id="productList">
+          <datalist id="productList" v-if="currentProduct.searchQuery.length >= 3">
             <option v-for="product in availableProducts" :key="product.id" :value="product.nombreProducto" :data-id="product.id">
               {{ product.nombreProducto }}
             </option>
@@ -27,11 +27,13 @@
       <h2 class="title">Productos Agregados</h2>
       <ul>
         <li class="li" v-for="(product, index) in selectedProducts" :key="index">
-          {{ product.nombreProducto }} - Cantidad: {{ product.amount }} - Precio: {{ product.price }}
+          {{ product.nombreProducto }} --- Cantidad: {{ product.amount }} --- Precio: ${{ product.price }} 
+          --- Suma: ${{ product.totalProd }}
           <span class="close" @click="removeProduct(index)">&times;</span>
         </li>
       </ul>
       <button type="submit" id="submit-id"><strong>Cargar Venta</strong></button>
+      <h4 style="margin: .75rem 0 .25rem;">TOTAL: ${{ total }}</h4>
     </form>
     </div>
   </div>
@@ -53,7 +55,8 @@ export default {
       selectedProducts: [], 
       selectedProductId: null, 
       isLoading: false,
-      msg: null
+      msg: null,
+      total: 0,
     };
   },
   computed: {
@@ -83,7 +86,9 @@ export default {
           amount: parseFloat(this.currentProduct.amount),
           price: parseFloat(this.currentProduct.price),
           idProduct: this.products.find(p => p.nombreProducto === this.currentProduct.searchQuery)?.id,
+          totalProd: parseFloat(this.currentProduct.amount * this.currentProduct.price)
         };
+        this.total += parseFloat(product.amount * product.price);
         this.selectedProducts.push(product);
         this.currentProduct = { searchQuery: "", amount: "", price: "" }; 
       } else { if (this.currentProduct.searchQuery === "") {
@@ -122,6 +127,7 @@ export default {
             this.isLoading = false;
           }, 3000);
           this.selectedProducts = [];
+          this.total= ""
       }
     },
   },

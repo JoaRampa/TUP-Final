@@ -18,6 +18,7 @@
           <router-link :to="{ name: 'summary' }">Analisis</router-link>
           <router-link :to="{ name: 'bills' }">Gastos Local</router-link> 
           <router-link :to="{ name: 'items' }">Historial Transacciones</router-link> 
+          <router-link :to="{ name: 'stock' }">Stock</router-link>
         </nav>
       </aside>
     </header>

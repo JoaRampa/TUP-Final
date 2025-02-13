@@ -29,6 +29,7 @@
   <EditIngresoModal
     :isVisible="isModalVisible"
     :transaccion="selectedTransaccion"
+    :getProductDescription="getProductDescription"
     @close="closeEditModal"
     @submit="updateTransaccion"
   />
@@ -83,32 +84,41 @@ export default {
       this.isModalVisible = false;
       this.selectedTransaccion = null;
     },
-    async updateTransaccion(updatedTransaccion) {
-      if (this.isSubmitting) return; // Evitar que se ejecute si ya está enviando la solicitud
+    async updateTransaccion(updatedTransacciones) {
+      if (this.isSubmitting) return; // Evitar múltiples envíos simultáneos
       this.isSubmitting = true;
       this.isLoading = true;
+
       try {
-        const res = await sStock.edit({
-          idTransaccion: updatedTransaccion.idTransaccion,
-          detalles: updatedTransaccion.detalles,
-        });
-        this.msg = "Transaccion actualizada!";
+        //Promise.all ejecuta todas las actualizaciones en paralelo
+        const results = await Promise.all(updatedTransacciones.map(async (transaccion) => {
+          return sStock.edit({
+            idTransaccion: transaccion.idTransaccion,
+            detalles: transaccion.detalles,
+          });
+        }));
+        this.msg = "Transacciones actualizadas!";
+
         // Actualizar la lista de transacciones en el frontend
-        const index = this.transacciones.findIndex(
-          (t) => t.idTransaccion === updatedTransaccion.idTransaccion
-        );
-        if (index !== -1) this.transacciones[index] = updatedTransaccion;
-        
-        console.log("respuesta" , res.data);
+        updatedTransacciones.forEach(updatedTransaccion => {
+          const index = this.transacciones.findIndex(
+            (t) => t.idTransaccion === updatedTransaccion.idTransaccion
+          );
+          if (index !== -1) this.transacciones[index] = updatedTransaccion;
+        });
+
+        console.log("Respuestas de actualización:", results.map(res => res.data));
         this.closeEditModal();
       } catch (error) {
-        this.msg = "Error al actualizar la transaccion", error;
-        console.error("Error al actualizar la transacción:", error);
-      } finally {      
+        this.msg = "Error al actualizar las transacciones";
+        console.error("Error al actualizar las transacciones:", error);
+      } finally {
         setTimeout(() => {
           this.isLoading = false;
-        }, 3000);}
-    },
+          this.isSubmitting = false;
+        }, 3000);
+      }
+    }
   },
 };
 </script>

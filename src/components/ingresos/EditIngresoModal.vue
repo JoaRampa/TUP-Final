@@ -7,7 +7,7 @@
         <div v-for="(producto, index) in localIngreso.detalles" :key="index" class="product-item">
           <p><strong>Producto:</strong> {{ getProductDescription(producto.idProduct) }}</p>
           <input v-model="producto.cantidad" type="decimal" placeholder="Cantidad" required />
-          <input v-model="producto.precio" type="number" placeholder="Precio" required />
+          <input v-model="producto.precio" type="decimal" placeholder="Precio" required />
         </div>
         <button type="submit" :disabled="isSubmitting">Guardar Cambios</button>
       </form>
@@ -21,6 +21,7 @@ export default {
   props: {
     isVisible: Boolean,
     transaccion: Object,
+    getProductDescription: Function
   },
   data() {
     return {
@@ -42,7 +43,7 @@ export default {
     },
     async submitEdit() {
       this.isSubmitting = true;
-      this.$emit('submit', this.localIngreso); 
+      this.$emit('submit', [this.localIngreso]);
       this.isSubmitting = false;
       this.closeModal();
     },

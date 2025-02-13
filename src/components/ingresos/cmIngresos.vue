@@ -4,7 +4,7 @@
         <h2 class="title">Ingreso</h2>
         <input ref="searchQueryInput" v-model="currentProduct.searchQuery" list="productList" 
           placeholder="Selecciona o escribe un producto" @input="removeErrorBorder('searchQueryInput')"/>
-        <datalist id="productList">
+        <datalist id="productList" v-if="currentProduct.searchQuery.length >= 3">
           <option v-for="product in products" :key="product.id" :value="product.nombreProducto" :data-id="product.id">
             {{ product.nombreProducto }}
           </option>
@@ -20,11 +20,13 @@
       <h2 class="title">Productos Agregados</h2>
       <ul>
         <li class="li" v-for="(product, index) in selectedProducts" :key="index">
-          {{ product.nombreProducto }} - Cantidad: {{ product.amount }} - Precio: {{ product.price }}
+          {{ product.nombreProducto }} --- Cantidad: {{ product.amount }} --- Precio: ${{ product.price }} 
+          --- Suma: ${{ product.totalProd }}
           <span class="close" @click="removeProduct(index)">&times;</span>
         </li>
       </ul>
       <button type="submit" id="submit-id"><strong>Cargar Ingreso</strong></button>
+      <h4 style="margin: .75rem 0 .25rem;">TOTAL: ${{ total }}</h4>
     </form>
     </div>
   </div>
@@ -43,10 +45,16 @@ export default {
       currentProduct: { searchQuery: "", amount: "", price: "" },
       selectedProducts: [],    
       isLoading: false,
-      msg: null 
+      msg: null,
+      total: 0
     };
   },
   computed: {...mapState(["products"])},
+  "currentProduct.searchQuery"(newQuery) {
+      const currentProduct = this.products.find(
+        (product) => product.nombreProducto === newQuery);
+      this.selectedProductId = currentProduct ? currentProduct.id : null;
+    },
   methods: {
     addProduct() {
       if(this.currentProduct.searchQuery !== "" && this.currentProduct.amount !== "" && this.currentProduct.price !== ""){
@@ -55,7 +63,9 @@ export default {
           amount: this.currentProduct.amount,
           price: this.currentProduct.price,
           idProduct: this.products.find(p => p.nombreProducto === this.currentProduct.searchQuery)?.id,
+          totalProd: parseFloat(this.currentProduct.amount * this.currentProduct.price)
         };
+        this.total += parseFloat(product.amount * product.price);
         this.selectedProducts.push(product);
         this.currentProduct = { searchQuery: "", amount: "", price: "" }; 
       } else { if (this.currentProduct.searchQuery === "") {
@@ -94,6 +104,7 @@ export default {
           this.isLoading = false;
         }, 3000);
         this.selectedProducts = [];
+        this.total = "";
       }
     },
   },

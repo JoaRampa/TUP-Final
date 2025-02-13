@@ -59,12 +59,11 @@ function createWindow() {
       contextIsolation: false,
     },
   });
-  mainWindow.setMenu(null);
   // Cargar la URL cuando el servidor esté listo
   waitForServer('http://localhost:5000', () => {
     mainWindow.loadURL('http://localhost:5000');
   });   
-
+  //mainWindow.setMenu(null);
   mainWindow.on('closed', () => {
     mainWindow = null;
   });

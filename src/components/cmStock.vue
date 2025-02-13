@@ -7,12 +7,14 @@
       <tr>
         <th><strong>Descripción</strong></th>
         <th><strong>Costo Promedio por unidad</strong></th>
+        <th><strong>Stock</strong></th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(trans, index) in filteredProducts" :key="index">
         <td><strong>{{ trans.description }}</strong></td>
         <td><strong>$ {{ trans.averagePrice ? trans.averagePrice.toFixed(2) : 'N/A' }}</strong></td>
+        <td><strong> {{ trans.stock }} </strong></td>
       </tr>
     </tbody>
   </table>
@@ -72,10 +74,6 @@ table {
 
 th, td {
   text-align: left;
-}
-
-th {
   padding: 0.25rem;
 }
-
 </style>

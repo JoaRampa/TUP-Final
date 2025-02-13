@@ -1,6 +1,6 @@
 <template>
   <cmLoader v-if="isLoading" :msg="msg || 'Producto editado!'"></cmLoader>
-  <input type="text" v-model="searchQuery" @input="filterProducts" placeholder="Buscar producto...&#128269;"
+  <input v-model="searchQuery"  placeholder="Buscar producto...&#128269;"
     style="border: 1px solid var(--border-color); width: 9rem; margin-left: 2rem;"/>
   <table>
         <thead>
@@ -14,7 +14,7 @@
         </thead>
         <tbody>
           <tr v-for="(prod, id) in filteredProducts" :key="id">
-            <td><strong>{{ prod.prodCod ?? ''}}</strong></td>
+            <td><strong>{{ prod.prodCod}}</strong></td>
             <td><strong>{{ prod.nombreProducto }}</strong></td>
             <td><strong>{{ prod.precioRef }}</strong></td>
             <td><strong>{{ prod.precioMayorista || ''}}</strong></td>
@@ -40,28 +40,27 @@ export default {
       isModalVisible: false,
       selectedProduct: null,
       searchQuery: "", 
-      filteredProducts: [], 
       isLoading: false,
       msg: null
     };
   },
   computed: {
-    ...mapGetters(["allProducts"])
+    ...mapGetters(["allProducts"]),
+    filteredProducts() {
+      const query = this.searchQuery.trim().toUpperCase();
+      if (!query) return this.allProducts; 
+      return this.allProducts.filter((prod) => {
+        const nombre = prod.nombreProducto ? String(prod.nombreProducto).toUpperCase() : "";
+        const cod = prod.prodCod ? String(prod.prodCod).toUpperCase() : "";
+        return nombre.includes(query) || cod.includes(query);
+      });
+    }
   },
   async mounted() { 
-    await this.fetchProducts(); // Ahora debería existir
-    this.filteredProducts = this.allProducts;
-  },
-  watch: {
-    allProducts: {
-      immediate: true,
-      handler(newProducts) {
-        this.filteredProducts = newProducts;
-      },
-    },
+    await this.fetchProducts();
   },
   methods: {
-    ...mapActions(["fetchProducts"]), // 🔹 Asegura que fetchProducts existe
+    ...mapActions(["fetchProducts"]), 
 
     openEditModal(prod) {
       this.selectedProduct = { ...prod };
@@ -76,7 +75,7 @@ export default {
       try {
         this.isLoading = true;
         await sProduct.edit(updatedProduct); 
-        await this.fetchProducts(); // 🔹 Recargar productos después de la edición
+        await this.fetchProducts(); 
         this.closeEditModal();
       } catch (error) {
         this.msg = "Error al editar el producto";
@@ -87,15 +86,7 @@ export default {
         }, 3000);
       }
     },
-    filterProducts() {
-      const query = this.searchQuery.toUpperCase();
-      this.filteredProducts = this.allProducts.filter((prod) => {
-        const nombre = prod.nombreProducto ? prod.nombreProducto.toUpperCase() : "";
-        const cod = prod.prodCod ? prod.prodCod.toUpperCase() : "";
-        return nombre.includes(query) || cod.includes(query);
-      });
-    },
-  }
+  },
 };
 </script>
 

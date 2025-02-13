@@ -99,6 +99,7 @@ export default {
             prodCod: product.prodCod
           });
           console.log("Respuesta del servidor:", response.data);
+          this.$store.dispatch("fetchProducts");
         }
       } catch (error) {
         this.msg = "Error al Agregar el Producto";

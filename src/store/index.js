@@ -18,9 +18,7 @@ const store = createStore({
     },
   },
   actions: {
-    async fetchProducts({ commit, state }) {
-      if (state.products.length > 0) return;
-
+    async fetchProducts({ commit }) {
       try {
         const res = await sProduct.getAll();
         commit("setProducts", res.data.products);
