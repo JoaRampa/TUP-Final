@@ -1,7 +1,7 @@
 <template>
   <div class="module">
     <div class="container">
-        <h2 class="title">Ingreso</h2>
+        <h3 class="title">Ingreso</h3>
         <input ref="searchQueryInput" v-model="currentProduct.searchQuery" list="productList" 
           placeholder="Selecciona o escribe un producto" @input="removeErrorBorder('searchQueryInput')"/>
         <datalist id="productList" v-if="currentProduct.searchQuery.length >= 3">
@@ -17,7 +17,7 @@
     </div>
     <div class="container">
       <form @submit.prevent="handleIngreso" class="id-input" id="form-sale">
-      <h2 class="title">Productos Agregados</h2>
+      <h3 class="title">Productos Agregados</h3>
       <ul>
         <li class="li" v-for="(product, index) in selectedProducts" :key="index">
           {{ product.nombreProducto }} --- Cantidad: {{ product.amount }} --- Precio: ${{ product.price }} 

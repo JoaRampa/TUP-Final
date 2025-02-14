@@ -14,6 +14,7 @@
           <router-link :to="{ name: 'sales' }">Ventas</router-link> 
           <router-link :to="{ name: 'ingreso' }">Ingresar Mercaderia</router-link>
           <router-link :to="{ name: 'listProducts' }">Lista de Productos</router-link> 
+          <router-link :to="{ name: 'listNegocio' }">Lista Negocios</router-link>
           <router-link :to="{ name: 'addProduct' }">Agregar Producto</router-link> 
           <router-link :to="{ name: 'summary' }">Analisis</router-link>
           <router-link :to="{ name: 'bills' }">Gastos Local</router-link> 

@@ -90,7 +90,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 table {
   margin: 0.25rem 2rem;
   width: 95%;

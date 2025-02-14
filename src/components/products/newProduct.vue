@@ -1,7 +1,7 @@
 <template>
   <div class="module">
     <div class="container">
-      <h2 class="title">Nuevo Producto</h2>
+      <h3 class="title">Nuevo Producto</h3>
         <input ref="nombreProductoInput" v-model="currentProduct.nombreProducto" type="text" id="nombreProducto" 
           placeholder="Nombre del Producto" @input="removeErrorBorder('nombreProductoInput')"/>
         <input ref="precioRefInput" v-model="currentProduct.precioRef" type="text" id="precioRef" 
@@ -12,7 +12,7 @@
     </div>
     <div class="container">
       <form @submit.prevent="handleProduct" class="id-input" id="form-product">
-        <h2 class="title">Productos Agregados</h2>
+        <h3 class="title">Productos Agregados</h3>
         <ul>
           <li class="li" v-for="(product, index) in selectedProducts" :key="index">
             {{ product.nombreProducto }} - Precio clientes: {{ product.precioRef }} - 
@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="container">
-    <h2 class="title">Agregar/Actualizar Productos y precios desde excel </h2>
+    <h3 class="title">Agregar/Actualizar Productos y precios desde excel </h3>
     <input type="file" @change="handleFileUpload" accept=".xls,.xlsx" style="background-color: var(--button-color);"/>
   </div>
   <cmLoader v-if="isLoading" :msg="msg || 'Producto/s cargados!'"></cmLoader>

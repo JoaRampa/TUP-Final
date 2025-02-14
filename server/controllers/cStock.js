@@ -54,7 +54,7 @@ const cStock = {
   },
   edit: async (req, res) => {
     try {
-      const { idTransaccion, detalles } = req.body;
+      const { idTransaccion, detalles, total } = req.body;
       // Actualizar cada detalle de la transacción
       for (const detalle of detalles) {
         const { idProduct, cantidad, precio } = detalle;
@@ -63,6 +63,9 @@ const cStock = {
         }
         await mStock.edit({ idTransaccion, idProduct, cantidad, precio });
       };
+
+      await mStock.editTotal({idTransaccion, total});
+
       res.json({ message: "Transacción actualizada exitosamente" });
     } catch (err) {
       error.e500(req, res, err);

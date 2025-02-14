@@ -2,7 +2,7 @@
   <div v-if="isVisible" class="modal">
     <div class="modal-content">
       <span class="close" @click="closeModal">&times;</span>
-      <h2>Editar Producto</h2>
+      <h3>Editar Producto</h3>
       <form @submit.prevent="submitEdit">
         <input v-model="localProduct.prodCod" type="text" placeholder="Codigo del Producto"/>
         <input v-model="localProduct.nombreProducto" type="text" placeholder="Nombre del Producto" required />
@@ -41,8 +41,8 @@ export default {
     async submitEdit() {
       this.isSubmitting = true;
       this.$emit('submit', this.localProduct); // Emitir el producto editado
-      this.closeModal();
       this.isSubmitting = false;
+      this.closeModal();
     },
   },
 };

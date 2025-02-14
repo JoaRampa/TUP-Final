@@ -42,7 +42,7 @@ const mStock = {
       throw { status: 500, msg: "Error al crear la venta" };
     }
   },
-  edit: async ({ idTransaccion, idProduct, cantidad, precio }) => {
+  edit: async ({ idTransaccion, idProduct, cantidad, precio}) => {
     try {
       await db.run(
         "UPDATE detalle_transacciones SET cantidad = ?, precio = ? WHERE idTransaccion = ? AND idProduct = ?",
@@ -52,6 +52,16 @@ const mStock = {
       throw { status: 500, msg: `Error al actualizar el detalle de la transacción ${idTransaccion}` };
     }
   },
+  editTotal: async ({ idTransaccion, total}) => {
+    try {       
+      await db.run(
+        "UPDATE transacciones SET total = ? WHERE id = ?",
+        [total, idTransaccion]
+      );
+    } catch (err) {
+      throw { status: 500, msg: `Error al actualizar el detalle de la transacción ${idTransaccion}` };
+    }
+  }
 };
 
 export default mStock;

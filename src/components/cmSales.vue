@@ -1,7 +1,7 @@
 <template>
   <div class="module">
     <div class="container">
-        <h2 class="title">Venta</h2>
+        <h3 class="title">Venta</h3>
         <input ref="searchQueryInput" v-model="currentProduct.searchQuery" list="productList"  
           placeholder="Selecciona o escribe un producto" @input="removeErrorBorder('searchQueryInput')"/>
           <datalist id="productList" v-if="currentProduct.searchQuery.length >= 3">
@@ -17,14 +17,15 @@
         <input ref="priceInput" v-model="currentProduct.price" type="number" 
           placeholder="Precio de venta" @input="removeErrorBorder('priceInput')"/>
         <p v-if="selectedProductId">
-          Precio Clientes: {{ products.find(p => p.id === selectedProductId)?.precioRef || 'Sin registrar' }}
-          Precio Mayorista: {{ products.find(p => p.id === selectedProductId)?.precioMayorista || 'Sin registrar' }}
+          Precios---
+           Clientes: {{ products.find(p => p.id === selectedProductId)?.precioRef || 'Sin registrar' }}
+          - Mayorista: {{ products.find(p => p.id === selectedProductId)?.precioMayorista || 'Sin registrar' }}
         </p>
         <button type="button" @click="addProduct"><strong>Agregar Producto</strong></button>
     </div>
     <div class="container">
       <form @submit.prevent="handleSale" class="id-input" id="form-sale">
-      <h2 class="title">Productos Agregados</h2>
+      <h3 class="title">Productos Agregados</h3>
       <ul>
         <li class="li" v-for="(product, index) in selectedProducts" :key="index">
           {{ product.nombreProducto }} --- Cantidad: {{ product.amount }} --- Precio: ${{ product.price }} 
@@ -37,6 +38,22 @@
     </form>
     </div>
   </div>
+  <table>
+        <thead> <h3 style="margin: 0 0 .5rem;">Info lista negocios</h3>
+          <tr>
+            <th>nombre</th>
+            <th>descripción</th>
+            <th>precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(prod, index) in selectedProductList" :key="index">
+            <td><strong>{{ prod.nombre}}</strong></td>
+            <td><strong>{{ prod.descripcion }}</strong></td>
+            <td><strong>{{ prod.precio}}</strong></td>
+          </tr>
+        </tbody>
+      </table>
   <cmLoader v-if="isLoading" :msg="msg || 'Venta cargada con éxito!'"></cmLoader>
 </template>
 
@@ -45,6 +62,7 @@ import sStock from '@/services/sStock';
 import { groupedProducts } from '@/mixins/groupedProducts';
 import cmLoader from '@/components/cmLoader.vue';
 import { mapState } from "vuex";
+import sList from '@/services/sList';
 
 export default {
   components: {cmLoader},
@@ -55,10 +73,12 @@ export default {
       selectedProducts: [], 
       selectedProductId: null, 
       isLoading: false,
+      list: [],
       msg: null,
       total: 0,
     };
   },
+  async created() {await this.fetchList();},
   computed: {
     ...mapState(["products"]),
     availableProducts() {
@@ -66,6 +86,9 @@ export default {
         const groupedProduct = this.groupedProducts.find(gp => gp.idProduct === product.id);
         return groupedProduct && groupedProduct.stock > 0;
       });
+    },
+    selectedProductList() {
+      return this.list.filter(product => product.nombre === this.currentProduct.searchQuery);
     }
   },
   watch: {
@@ -130,6 +153,16 @@ export default {
           this.total= ""
       }
     },
+    async fetchList() {
+      try {
+        const res = await sList.getAll();
+        this.list = res.data.list;
+        console.log(this.list)
+      } catch (error) {
+        console.error("Error al cargar la lista:", error);
+        this.list = [];
+      }
+    },
   },
 };
 </script>
@@ -138,5 +171,9 @@ export default {
 p {
   margin: 0.1rem;
   font-size: 12.5px;
+}
+
+table {
+  width: 40%;
 }
 </style>

@@ -9,6 +9,7 @@ import rProducts from "./routes/rProducts.js";
 import rStock from "./routes/rStock.js";
 import error from "./middlewares/error.js";
 import rBills from "./routes/rBills.js"
+import rList from "./routes/rList.js"
 
 const app = express();
 const port = 5000;
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: true}));
 app.use(rProducts);
 app.use(rStock);
 app.use(rBills);
+app.use(rList);
 
 app.use(express.static(path.join(__dirname, '../dist')));
 app.get('*', (req, res) => {

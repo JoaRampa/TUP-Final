@@ -7,6 +7,7 @@ import cmIngresos from '@/components/ingresos/cmIngresos.vue';
 import CmSummary from '@/components/cmSummary.vue';
 import cmBills from '@/components/cmBills.vue';
 import cmStock from '@/components/cmStock.vue';
+import cmList from '@/components/listNegocio/cmList.vue';
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path: '/stock',
     name: 'stock',
     component: cmStock,
+  },
+  {
+    path: '/listaNegocio',
+    name: 'listNegocio',
+    component: cmList,
   },
 ]
 

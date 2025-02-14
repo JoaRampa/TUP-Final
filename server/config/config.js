@@ -41,6 +41,13 @@ await db.exec(`
     precioMayorista REAL,
     prodCod TEXT
   );
+
+  CREATE TABLE IF NOT EXISTS list (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    descripcion TEXT,
+    precio REAL
+  );
 `);
 
 export default db;

@@ -43,6 +43,12 @@ export default {
     },
     async submitEdit() {
       this.isSubmitting = true;
+      this.localIngreso.detalles.forEach(detalle => {
+        detalle.precio = parseFloat(detalle.precio);
+        detalle.cantidad = parseFloat(detalle.cantidad)
+      });
+      const nuevoTotal = this.localIngreso.detalles.reduce((sum, item) => sum + item.cantidad * item.precio,0);
+      this.localIngreso.total = nuevoTotal
       this.$emit('submit', [this.localIngreso]);
       this.isSubmitting = false;
       this.closeModal();

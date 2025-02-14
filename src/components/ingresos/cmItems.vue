@@ -15,7 +15,9 @@
               <p><strong>Producto {{ index + 1 }}:</strong> {{ getProductDescription(detalle.idProduct) }}</p>
               <p>Cantidad: {{ detalle.cantidad }}</p>
               <p>Precio: ${{ detalle.precio }}</p>
+              <p>Suma: ${{ detalle.cantidad * detalle.precio }}</p>
             </div>
+            <h5>Total: {{ transaccion.total }}</h5>
           </div>
           </details>
         </div>
@@ -49,7 +51,7 @@ export default {
       selectedTransaccion: null,
       transacciones: [],
       isLoading: false,
-      msg: null
+      msg: null,
     };
   },
   computed: {...mapState(["products"])},
@@ -83,6 +85,7 @@ export default {
     closeEditModal() {
       this.isModalVisible = false;
       this.selectedTransaccion = null;
+      this.fetchTransacciones();
     },
     async updateTransaccion(updatedTransacciones) {
       if (this.isSubmitting) return; // Evitar múltiples envíos simultáneos
@@ -95,6 +98,7 @@ export default {
           return sStock.edit({
             idTransaccion: transaccion.idTransaccion,
             detalles: transaccion.detalles,
+            total: transaccion.total,
           });
         }));
         this.msg = "Transacciones actualizadas!";
@@ -133,7 +137,7 @@ export default {
 .nrotransaccion {
   border: 0.5px solid var(--border-color);
   border-radius: 0.5rem;
-  max-width: 17rem;
+  max-width: 20rem;
   overflow: hidden;
 
   display: flex;

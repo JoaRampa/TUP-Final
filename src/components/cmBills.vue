@@ -1,7 +1,7 @@
 <template>
   <div class="module">
     <div class="container">
-      <h2 class="title">Gastos del Local</h2>
+      <h3 class="title">Gastos del Local</h3>
       <form @submit.prevent="addBills" class="id-input" id="form-bills">
         <input v-model="descripcion" type="text" id="descripcion" placeholder="Nombre del gasto del local" required>
         <input v-model="total" type="decimal" id="total" placeholder="Total a pagar" required/>
@@ -9,7 +9,7 @@
       </form>
     </div>
     <div class="container">
-      <h2 class="title">Gastos del Mes</h2>
+      <h3 class="title">Gastos del Mes</h3>
       <ul>
         <li v-for="bill in filteredBills" :key="bill.id" class="li">
           {{ bill.descripcion }} --- ${{ bill.total }} --- {{ formatDate(bill.fecha) }}

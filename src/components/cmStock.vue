@@ -8,6 +8,7 @@
         <th><strong>Descripción</strong></th>
         <th><strong>Costo Promedio por unidad</strong></th>
         <th><strong>Stock</strong></th>
+        <th><strong>Valor</strong></th>
       </tr>
     </thead>
     <tbody>
@@ -15,6 +16,7 @@
         <td><strong>{{ trans.description }}</strong></td>
         <td><strong>$ {{ trans.averagePrice ? trans.averagePrice.toFixed(2) : 'N/A' }}</strong></td>
         <td><strong> {{ trans.stock }} </strong></td>
+        <td><strong> ${{ (trans.stock * trans.averagePrice) }} </strong></td>
       </tr>
     </tbody>
   </table>
