@@ -1,7 +1,7 @@
 <template>
   <div class="table">
   <input style="border: 1px solid var(--border-color); width: 9rem;" type="text" v-model="searchQuery" 
-    @input="filterProducts" placeholder="Buscar producto...&#128269;"/>
+    @input="filterProducts" placeholder="Buscar producto...&#128269;" id="serach"/>
   <table>
     <thead>
       <tr>

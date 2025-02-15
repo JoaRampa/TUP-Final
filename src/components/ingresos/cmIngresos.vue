@@ -2,16 +2,16 @@
   <div class="module">
     <div class="container">
         <h3 class="title">Ingreso</h3>
-        <input ref="searchQueryInput" v-model="currentProduct.searchQuery" list="productList" 
+        <input ref="searchQueryInput" v-model="currentProduct.searchQuery" list="productList" id="queryIngreso"
           placeholder="Selecciona o escribe un producto" @input="removeErrorBorder('searchQueryInput')"/>
         <datalist id="productList" v-if="currentProduct.searchQuery.length >= 3">
           <option v-for="product in products" :key="product.id" :value="product.nombreProducto" :data-id="product.id">
             {{ product.nombreProducto }}
           </option>
         </datalist>
-        <input ref="amountInput" v-model="currentProduct.amount" type="decimal" 
+        <input ref="amountInput" v-model="currentProduct.amount" type="decimal" id="amountIngreso"
           placeholder="Cantidad Ingresada" @input="removeErrorBorder('amountInput')"/>
-        <input ref="priceInput" v-model="currentProduct.price" type="number" 
+        <input ref="priceInput" v-model="currentProduct.price" type="number" id="priceIngreso"
           placeholder="Precio de Costo" @input="removeErrorBorder('priceInput')"/>
         <button type="button" @click="addProduct"><strong>Agregar Producto</strong></button>
     </div>

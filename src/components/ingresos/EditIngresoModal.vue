@@ -6,8 +6,8 @@
       <form @submit.prevent="submitEdit">
         <div v-for="(producto, index) in localIngreso.detalles" :key="index" class="product-item">
           <p><strong>Producto:</strong> {{ getProductDescription(producto.idProduct) }}</p>
-          <input v-model="producto.cantidad" type="decimal" placeholder="Cantidad" required />
-          <input v-model="producto.precio" type="decimal" placeholder="Precio" required />
+          <input v-model="producto.cantidad" type="decimal" placeholder="Cantidad" required id="editIngreso"/>
+          <input v-model="producto.precio" type="decimal" placeholder="Precio" required id="editpriceIngreso" />
         </div>
         <button type="submit" :disabled="isSubmitting">Guardar Cambios</button>
       </form>

@@ -2,12 +2,14 @@ import { createRouter, createWebHashHistory  } from 'vue-router'
 import listProducts from '../components/products/listProducts.vue'
 import cmSales from '@/components/cmSales.vue';
 import cmItems from '@/components/ingresos/cmItems.vue';
-import newProduct from '@/components/products/newProduct.vue';
+//import newProduct from '@/components/products/newProduct.vue';
 import cmIngresos from '@/components/ingresos/cmIngresos.vue';
 import CmSummary from '@/components/cmSummary.vue';
 import cmBills from '@/components/cmBills.vue';
 import cmStock from '@/components/cmStock.vue';
-import cmList from '@/components/listNegocio/cmList.vue';
+//import cmList from '@/components/listNegocio/cmList.vue';
+import vListNegocio from '@/views/vListNegocio.vue';
+import vAddProducts from '@/views/vAddProducts.vue';
 
 const routes = [
   {
@@ -17,8 +19,8 @@ const routes = [
   },
   {
     path: '/addProduct',
-    name: 'addProduct',
-    component: newProduct,
+    name: 'vAddProducts',
+    component: vAddProducts,
   },
   {
     path: '/listProducts',
@@ -52,8 +54,8 @@ const routes = [
   },
   {
     path: '/listaNegocio',
-    name: 'listNegocio',
-    component: cmList,
+    name: 'vListNegocio',
+    component: vListNegocio,
   },
 ]
 

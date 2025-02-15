@@ -4,10 +4,10 @@
       <span class="close" @click="closeModal">&times;</span>
       <h3>Editar Producto</h3>
       <form @submit.prevent="submitEdit">
-        <input v-model="localProduct.prodCod" type="text" placeholder="Codigo del Producto"/>
-        <input v-model="localProduct.nombreProducto" type="text" placeholder="Nombre del Producto" required />
-        <input v-model="localProduct.precioRef" type="text" placeholder="Precio Publico" required />
-        <input v-model="localProduct.precioMayorista" type="text" placeholder="Precio Mayorista" />
+        <input v-model="localProduct.prodCod" type="text" placeholder="Codigo del Producto" id="cod"/>
+        <input id="nombreProd" v-model="localProduct.nombreProducto" type="text" placeholder="Nombre del Producto" required />
+        <input id="precioRef" v-model="localProduct.precioRef" type="text" placeholder="Precio Publico" required />
+        <input id="precioMay" v-model="localProduct.precioMayorista" type="text" placeholder="Precio Mayorista" />
         <button type="submit" :disabled="isSubmitting">Guardar Cambios</button>
       </form>
     </div>

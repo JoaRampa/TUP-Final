@@ -1,26 +1,27 @@
 <template>
   <div class="module">
     <div class="container">
-        <h3 class="title">Venta</h3>
-        <input ref="searchQueryInput" v-model="currentProduct.searchQuery" list="productList" id="nombre" 
+        <h3 class="title">Venta Negocios</h3>
+        <input ref="searchQueryInput" v-model="currentProduct.searchQuery" list="productList" id="listP" 
           placeholder="Selecciona o escribe un producto" @input="removeErrorBorder('searchQueryInput')"/>
           <datalist id="productList" v-if="currentProduct.searchQuery.length >= 3">
             <option v-for="product in availableProducts" :key="product.id" :value="product.nombreProducto" :data-id="product.id">
               {{ product.nombreProducto }}
             </option>
           </datalist>
-        <input ref="amountInput" v-model="currentProduct.amount" type="decimal" id="amount"
-          placeholder="Cantidad Vendida" @input="removeErrorBorder('amountInput')"/>
+          <div class="module">
+            <input v-model="currentProduct.amount" type="decimal" placeholder="Botellas Vendidas" id="saleBottle"/>
+            <select v-model="selectedSize">
+              <option value="0.5">500ml</option>
+              <option value="1">1</option>
+              <option value="1.5">1.5L</option>
+            </select>
+          </div>
         <p>Stock disponible: {{groupedProducts.find((product) => product.idProduct === selectedProductId)
           ?.stock || 0}}
         </p>
-        <input ref="priceInput" v-model="currentProduct.price" type="number" id="price"
-          placeholder="Precio de venta" @input="removeErrorBorder('priceInput')"/>
-        <p v-if="selectedProductId">
-          Precios---
-           Clientes: {{ products.find(p => p.id === selectedProductId)?.precioRef || 'Sin registrar' }}
-          - Mayorista: {{ products.find(p => p.id === selectedProductId)?.precioMayorista || 'Sin registrar' }}
-        </p>
+        <input v-model="currentProduct.price" type="number" id="bottlePrice"
+          placeholder="PRECIO POR BOTELLA / FINAL A NEGOCIO"/>
         <button type="button" @click="addProduct"><strong>Agregar Producto</strong></button>
     </div>
     <div class="container">
@@ -28,8 +29,7 @@
       <h3 class="title">Productos Agregados</h3>
       <ul>
         <li class="li" v-for="(product, index) in selectedProducts" :key="index">
-          {{ product.nombreProducto }} --- Cantidad: {{ product.amount }} --- Precio: ${{ product.price }} 
-          --- Suma: ${{ product.totalProd }}
+          {{ product.nombreProducto }} --- Suma: ${{ product.totalProd }}
           <span class="close" @click="removeProduct(index)">&times;</span>
         </li>
       </ul>
@@ -52,12 +52,13 @@ export default {
   mixins: [groupedProducts],
   data() {
     return {
-      currentProduct: { searchQuery: "", amount: "", price: "" }, // Producto actual en el formulario
+      currentProduct: { searchQuery: "", amount: 1, price: "" },
       selectedProducts: [], 
       selectedProductId: null, 
       isLoading: false,
       msg: null,
       total: 0,
+      selectedSize: 0.5,
     };
   },
   computed: {
@@ -79,28 +80,24 @@ export default {
   methods: {
     addProduct() {
       const selectedGroupedProduct = this.groupedProducts.find((product) => product.idProduct === this.selectedProductId);
+      const cantidadEnLitros = parseFloat(this.currentProduct.amount) * parseFloat(this.selectedSize);
+      const precioEnLitros = parseFloat(this.currentProduct.price) / parseFloat(this.selectedSize);
       //verifica que haya stock disponible (ingresos)
       if(selectedGroupedProduct && this.currentProduct.searchQuery !== "" && 
-        this.currentProduct.amount <= selectedGroupedProduct.stock && this.currentProduct.price !== ""){
+        cantidadEnLitros <= selectedGroupedProduct.stock){
         const product = {
           nombreProducto: this.currentProduct.searchQuery,
-          amount: parseFloat(this.currentProduct.amount),
-          price: parseFloat(this.currentProduct.price),
+          amount: cantidadEnLitros,
+          price: precioEnLitros,
           idProduct: this.products.find(p => p.nombreProducto === this.currentProduct.searchQuery)?.id,
-          totalProd: parseFloat(this.currentProduct.amount * this.currentProduct.price)
+          totalProd: cantidadEnLitros * precioEnLitros
         };
-        this.total += parseFloat(product.amount * product.price);
+        this.total += product.totalProd;
         this.selectedProducts.push(product);
-        this.currentProduct = { searchQuery: "", amount: "", price: "" }; 
+        this.currentProduct = { searchQuery: "", amount: 1, price: "" }; 
       } else { if (this.currentProduct.searchQuery === "") {
         this.$refs.searchQueryInput.classList.add('error-border');
         this.$refs.searchQueryInput.focus();
-      } else if (this.currentProduct.amount === "" || this.currentProduct.amount > selectedGroupedProduct.stock) {
-        this.$refs.amountInput.classList.add('error-border');
-        this.$refs.amountInput.focus();
-      } else if (this.currentProduct.price === "") {
-        this.$refs.priceInput.classList.add('error-border');
-        this.$refs.priceInput.focus();
       }}
     },
     removeProduct(index) {
@@ -134,10 +131,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-p {
-  margin: 0.1rem;
-  font-size: 12.5px;
-}
-</style>

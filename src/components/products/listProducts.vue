@@ -1,6 +1,6 @@
 <template>
   <cmLoader v-if="isLoading" :msg="msg || 'Producto editado!'"></cmLoader>
-  <input v-model="searchQuery"  placeholder="Buscar producto...&#128269;"
+  <input v-model="searchQuery"  placeholder="Buscar producto...&#128269;" id="search"
     style="border: 1px solid var(--border-color); width: 9rem; margin-left: 2rem;"/>
   <table>
         <thead>

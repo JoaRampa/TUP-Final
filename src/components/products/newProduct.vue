@@ -8,7 +8,7 @@
           placeholder="Precio clientes" @input="removeErrorBorder('precioRefInput')"/>
         <input v-model="currentProduct.precioMayorista" type="text" id="precioMayorista" placeholder="Precio Mayoristas"/>
         <input v-model="currentProduct.prodCod" type="text" id="cod" placeholder="Codigo"/>
-        <button type="button" @click="addProduct">Agregar Producto</button>
+        <button type="button" @click="addProduct"><strong>Agregar Producto</strong></button>
     </div>
     <div class="container">
       <form @submit.prevent="handleProduct" class="id-input" id="form-product">
@@ -26,7 +26,8 @@
   </div>
   <div class="container">
     <h3 class="title">Agregar/Actualizar Productos y precios desde excel </h3>
-    <input type="file" @change="handleFileUpload" accept=".xls,.xlsx" style="background-color: var(--button-color);"/>
+    <input id="fileUpload" type="file" @change="handleFileUpload" accept=".xls,.xlsx" 
+    style="background-color: var(--button-color);"/>
   </div>
   <cmLoader v-if="isLoading" :msg="msg || 'Producto/s cargados!'"></cmLoader>
 </template>

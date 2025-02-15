@@ -14,8 +14,8 @@
           <router-link :to="{ name: 'sales' }">Ventas</router-link> 
           <router-link :to="{ name: 'ingreso' }">Ingresar Mercaderia</router-link>
           <router-link :to="{ name: 'listProducts' }">Lista de Productos</router-link> 
-          <router-link :to="{ name: 'listNegocio' }">Lista Negocios</router-link>
-          <router-link :to="{ name: 'addProduct' }">Agregar Producto</router-link> 
+          <router-link :to="{ name: 'vListNegocio' }">Venta Negocios</router-link>
+          <router-link :to="{ name: 'vAddProducts' }">Agregar Producto</router-link> 
           <router-link :to="{ name: 'summary' }">Analisis</router-link>
           <router-link :to="{ name: 'bills' }">Gastos Local</router-link> 
           <router-link :to="{ name: 'items' }">Historial Transacciones</router-link> 
@@ -43,7 +43,11 @@ import { mapActions } from "vuex";
       this.fetchProducts();
     },
     mounted() {
-    this.initScrollTopButton(".scroll-top-btn"); 
+      this.initScrollTopButton(".scroll-top-btn"); 
+      window.addEventListener("keydown", this.handleKeyPress);
+    },
+    beforeUnmount() {
+      window.removeEventListener("keydown", this.handleKeyPress);
     },
     methods: {
     ...mapActions(["fetchProducts"]),
@@ -69,6 +73,34 @@ import { mapActions } from "vuex";
           });
         }
       });
+    },
+    handleKeyPress(event) {
+      if (["Enter", "ArrowDown", "ArrowUp", "Space"].includes(event.code)) {
+        event.preventDefault(); 
+
+        const focusableElements = Array.from(
+          document.querySelectorAll("input, select, textarea, button")
+        );
+        const currentIndex = focusableElements.indexOf(document.activeElement);
+        //atajos de teclas para los formularios
+        if (event.code === "Enter") {
+          const activeElement = document.activeElement;
+          if (activeElement.tagName === "BUTTON") {
+            activeElement.click(); // Ejecuta la acción del botón
+          } else {
+            const nextElement = focusableElements[currentIndex + 1];
+            if (nextElement) nextElement.focus();
+          }
+        } else if (event.code === "ArrowDown") {
+          const nextElement = focusableElements[currentIndex + 1];
+          if (nextElement) nextElement.focus();
+        } else if (event.code === "ArrowUp") {
+          const prevElement = focusableElements[currentIndex - 1];
+          if (prevElement) prevElement.focus();
+        } else if (event.code === "Space") {
+          this.toggleMenu();
+        }
+      }
     },
   },
 };

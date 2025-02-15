@@ -4,8 +4,8 @@
       <span class="close" @click="closeModal">&times;</span>
       <h2>Editar Lista</h2>
       <form @submit.prevent="submitEdit">
-        <input v-model="localList.descripcion" type="text" placeholder="Descripcion"/>
-        <input v-model="localList.precio" type="decimal" placeholder="Precio"/>
+        <input v-model="localList.descripcion" type="text" placeholder="Descripcion" id="editListDesc"/>
+        <input v-model="localList.precio" type="decimal" placeholder="Precio" id="editListPrice"/>
         <button type="submit" :disabled="isSubmitting">Guardar Cambios</button>
       </form>
     </div>
