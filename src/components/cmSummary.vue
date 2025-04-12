@@ -14,12 +14,12 @@
         <h3 class="title">Análisis Mensual</h3>
         <div class="content">
           <p><strong>Mercaderia Ingresada:</strong> ${{ totalCostPriceSum.toFixed(2) }}</p>
-          <p><strong>Costos del Local:</strong> ${{ billsSum.toFixed(2) }}</p>
           <p><strong>Ventas Totales:</strong> ${{ totalSalesSum.toFixed(2) }}</p>
+          <p><strong>Costos del Local:</strong> ${{ billsSum.toFixed(2) }}</p>
           <p><strong>Ventas Ganancia Neta:</strong> ${{ totalNetEarnings.toFixed(2) }}</p>
           <p><strong>Margen de Ganancia Promedio:</strong> {{ ((totalNetEarnings / totalSalesSum) * 100).toFixed(2) }}%</p>
         </div>
-        <h3 class="title" style="margin-top: .5rem;"><strong>Ganancia Total:</strong> ${{ (totalNetEarnings - billsSum).toFixed(2) }}</h3>
+        <h3 class="title" style="margin-top: .5rem;"><strong>Ganancia Total:</strong> ${{ (totalNetEarnings - billsSum - totalCostPriceSum).toFixed(2) }}</h3>
       </div>
       <div class="container">
         <h3>Total</h3>

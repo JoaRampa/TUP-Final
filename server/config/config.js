@@ -39,6 +39,7 @@ await db.exec(`
     nombreProducto TEXT NOT NULL,
     precioRef REAL NOT NULL,
     precioMayorista REAL,
+    stock REAL NOT NULL,
     prodCod TEXT
   );
 
