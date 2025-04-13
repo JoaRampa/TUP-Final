@@ -1,4 +1,5 @@
-<template>
+<template>summary</template>
+<!--<template>
   <div>    
     <div class="month">
       <select id="month" v-model="selectedMonth">
@@ -32,7 +33,6 @@
 </template>
 
 <script>
-import { groupedProducts } from '@/mixins/groupedProducts';
 import sBill from "@/services/sBill";
 import sStock from '@/services/sStock';
 
@@ -129,4 +129,4 @@ export default {
 .module {
   margin: 1rem;
 }
-</style>
+</style>-->

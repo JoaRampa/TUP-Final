@@ -5,7 +5,8 @@
       :id="name"
       :name="name"
       :type="type"
-      v-model="modelValue"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
       :class="['form-control', { 'is-invalid': error }]"
     />
     <p v-if="error" class="error">{{ error }}</p>
@@ -28,7 +29,6 @@ export default {
     },
     error: String
   },
-  emits: ['update:modelValue']
 }
 </script>
 

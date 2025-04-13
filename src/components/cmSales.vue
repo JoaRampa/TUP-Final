@@ -43,13 +43,10 @@
 
 <script>
 import sStock from '@/services/sStock';
-import { groupedProducts } from '@/mixins/groupedProducts';
 import cmLoader from '@/components/cmLoader.vue';
-import { mapState } from "vuex";
 
 export default {
   components: {cmLoader},
-  mixins: [groupedProducts],
   data() {
     return {
       currentProduct: { searchQuery: "", amount: "", price: "" }, // Producto actual en el formulario
@@ -60,15 +57,6 @@ export default {
       total: 0,
     };
   },
-  computed: {
-    ...mapState(["products"]),
-    availableProducts() {
-      return this.products.filter(product => {
-        const groupedProduct = this.groupedProducts.find(gp => gp.idProduct === product.id);
-        return groupedProduct && groupedProduct.stock > 0;
-      });
-    },
-  },
   watch: {
     "currentProduct.searchQuery"(newQuery) {
       const currentProduct = this.products.find(
@@ -78,10 +66,7 @@ export default {
   },
   methods: {
     addProduct() {
-      const selectedGroupedProduct = this.groupedProducts.find((product) => product.idProduct === this.selectedProductId);
-      //verifica que haya stock disponible (ingresos)
-      if(selectedGroupedProduct && this.currentProduct.searchQuery !== "" && 
-        this.currentProduct.amount <= selectedGroupedProduct.stock && this.currentProduct.price !== ""){
+      if(this.currentProduct.searchQuery !== ""){
         const product = {
           nombreProducto: this.currentProduct.searchQuery,
           amount: parseFloat(this.currentProduct.amount),
@@ -95,7 +80,7 @@ export default {
       } else { if (this.currentProduct.searchQuery === "") {
         this.$refs.searchQueryInput.classList.add('error-border');
         this.$refs.searchQueryInput.focus();
-      } else if (this.currentProduct.amount === "" || this.currentProduct.amount > selectedGroupedProduct.stock) {
+      } else if (this.currentProduct.amount === "") {
         this.$refs.amountInput.classList.add('error-border');
         this.$refs.amountInput.focus();
       } else if (this.currentProduct.price === "") {

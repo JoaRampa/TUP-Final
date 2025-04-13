@@ -11,15 +11,13 @@
       </button>
       <aside class="panel" :class="{ 'is-active': isActive }" @click="toggleMenu">
         <nav class="menu">
-          <router-link :to="{ name: 'sales' }">Ventas</router-link> 
+          <router-link :to="{ name: 'listProducts' }">Lista de Productos</router-link>
+          <!--<router-link :to="{ name: 'sales' }">Ventas</router-link> 
           <router-link :to="{ name: 'ingreso' }">Ingresar Mercaderia</router-link>
-          <router-link :to="{ name: 'listProducts' }">Lista de Productos</router-link> 
-          <router-link :to="{ name: 'vListNegocio' }">Venta Negocios</router-link>
           <router-link :to="{ name: 'vAddProducts' }">Agregar Producto</router-link> 
           <router-link :to="{ name: 'summary' }">Analisis</router-link>
           <router-link :to="{ name: 'bills' }">Gastos Local</router-link> 
-          <router-link :to="{ name: 'items' }">Historial Transacciones</router-link> 
-          <router-link :to="{ name: 'stock' }">Stock</router-link>
+          <router-link :to="{ name: 'items' }">Historial Transacciones</router-link>-->
         </nav>
       </aside>
     </header>
@@ -31,16 +29,11 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
   export default {
     data() {
       return {
         isActive: false,
       };
-    },
-    created() {
-      this.fetchProducts();
     },
     mounted() {
       this.initScrollTopButton(".scroll-top-btn"); 
@@ -50,7 +43,6 @@ import { mapActions } from "vuex";
       window.removeEventListener("keydown", this.handleKeyPress);
     },
     methods: {
-    ...mapActions(["fetchProducts"]),
     toggleMenu() {
       this.isActive = !this.isActive;
     },

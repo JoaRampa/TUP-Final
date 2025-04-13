@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import sProduct from "@/services/sProduct";
 import * as XLSX from "xlsx";
 import cmLoader from "../cmLoader.vue"
 
@@ -81,8 +80,8 @@ export default {
           this.$refs.nombreProductoInput.focus();
           return;
         }
-        const res = await sProduct.getAll();
-        const productos = res.data.products;
+        /*const res = await sProduct.getAll();
+        const productos = res.data.products;*/
 
         const nombresExistentes = productos.map(p => p.nombreProducto.trim().toUpperCase());
         this.isLoading = true;
@@ -93,14 +92,13 @@ export default {
             continue; // Saltar al siguiente producto
           }   
 
-          const response = await sProduct.add({
+          /*const response = await sProduct.add({
             nombreProducto: product.nombreProducto.toUpperCase(),
             precioRef: product.precioRef,
             precioMayorista: product.precioMayorista,
             prodCod: product.prodCod
-          });
+          });*/
           console.log("Respuesta del servidor:", response.data);
-          this.$store.dispatch("fetchProducts");
         }
       } catch (error) {
         this.msg = "Error al Agregar el Producto";
@@ -112,7 +110,7 @@ export default {
         }, 5000);
       }
     }, 
-    handleFileUpload(event) {
+    /*handleFileUpload(event) {
       this.isLoading = true;
       const file = event.target.files[0];
       if (!file) {
@@ -169,7 +167,7 @@ export default {
         setTimeout(() => {
           this.isLoading = false;
         }, 10000);}
-    },
+    },*/
   },
 };
 </script>
