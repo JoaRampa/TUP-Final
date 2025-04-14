@@ -1,5 +1,9 @@
 <template>
   <div>
+    <Button label="Add product" @click="openModal" />
+    <Modal v-if="showModal" @close="closeModal">
+      <NewProduct @product-added="fetchProducts" @close="closeModal"/>
+    </Modal>
     <p v-if="error">Error: {{ error }}</p>
     <p v-if="!products.length">No hay productos</p>
     <table v-else>
@@ -26,21 +30,26 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { supabase } from '@/lib/supabase';
+import { Button } from '../custom/button';
+import Modal from '../custom/cModal.vue';
+import NewProduct from './newProduct.vue';
 
 const products = ref([]);
 const error = ref(null);
+const showModal = ref(false);
 
-onMounted(async () => {
+const fetchProducts = async () => {
   const { data, error: fetchError } = await supabase.from('products').select('*');
-  console.log("Supabase DATA:", data);
-  console.log("Supabase ERROR:", fetchError);
-
   if (fetchError) {
     error.value = fetchError.message;
   } else {
     products.value = data;
   }
-});
+};
+
+onMounted(fetchProducts);
+const openModal = () => showModal.value = true
+const closeModal = () => showModal.value = false
 </script>
 
 <style>

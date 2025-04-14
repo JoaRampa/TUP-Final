@@ -11,7 +11,7 @@
       </button>
       <aside class="panel" :class="{ 'is-active': isActive }" @click="toggleMenu">
         <nav class="menu">
-          <router-link :to="{ name: 'listProducts' }">Lista de Productos</router-link>
+          <router-link :to="{ name: 'listProducts' }">Products list</router-link>
           <!--<router-link :to="{ name: 'sales' }">Ventas</router-link> 
           <router-link :to="{ name: 'ingreso' }">Ingresar Mercaderia</router-link>
           <router-link :to="{ name: 'vAddProducts' }">Agregar Producto</router-link> 
@@ -67,7 +67,7 @@
       });
     },
     handleKeyPress(event) {
-      if (["Enter", "ArrowDown", "ArrowUp", "Space"].includes(event.code)) {
+      if (["Enter", "ArrowDown", "ArrowUp"].includes(event.code)) {
         event.preventDefault(); 
 
         const focusableElements = Array.from(
@@ -89,8 +89,6 @@
         } else if (event.code === "ArrowUp") {
           const prevElement = focusableElements[currentIndex - 1];
           if (prevElement) prevElement.focus();
-        } else if (event.code === "Space") {
-          this.toggleMenu();
         }
       }
     },

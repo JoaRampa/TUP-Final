@@ -6,30 +6,24 @@
       :name="name"
       :type="type"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="updateValue"
       :class="['form-control', { 'is-invalid': error }]"
     />
     <p v-if="error" class="error">{{ error }}</p>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CustomInput',
-  props: {
-    name: String,
-    label: String,
-    type: {
-      type: String,
-      default: 'text'
-    },
-    modelValue: {
-      type: [String, Number],
-      default: ''
-    },
-    error: String
-  },
-}
+<script setup>
+defineProps({
+  name: String,
+  label: String,
+  type: { type: String, default: 'text' },
+  modelValue: [String, Number],
+  error: String
+})
+
+const emit = defineEmits(['update:modelValue'])
+const updateValue = (e) => emit('update:modelValue', e.target.value)
 </script>
 
 <style scoped>
