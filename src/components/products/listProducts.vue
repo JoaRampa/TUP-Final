@@ -1,8 +1,11 @@
 <template>
   <div>
-    <Button label="Add product" @click="openModal" />
-    <Modal v-if="showModal" @close="closeModal">
-      <NewProduct @product-added="fetchProducts" @close="closeModal"/>
+    <Button label="Add product" @click="newModal" />
+    <Modal v-if="newProductModal" @close="closeModal">
+      <productForm mode="new" @save="fetchProducts" @close="closeModal"/>
+    </Modal>
+    <Modal v-if="editProductModal" @close="closeModal">
+      <productForm mode="edit" :product="selectedProduct" @close="closeModal" @save="fetchProducts"/>
     </Modal>
     <p v-if="error">Error: {{ error }}</p>
     <p v-if="!products.length">No hay productos</p>
@@ -13,14 +16,16 @@
           <th>Stock</th>
           <th>Sale price</th>
           <th>Cost price</th>
+          <th>Edit</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="prod in products" :key="prod.id">
-          <td><strong>{{ prod.name }}</strong></td>
-          <td><strong>{{ prod.stock }}</strong></td>
-          <td><strong>{{ prod.sale_price }}</strong></td>
-          <td><strong>{{ prod.cost_price }}</strong></td>
+          <td>{{ prod.name }}</td>
+          <td>{{ prod.stock }}</td>
+          <td>{{ prod.sale_price }}</td>
+          <td>{{ prod.cost_price }}</td>
+          <td><Button label="Edit" @click="editModal(prod)"/></td>
         </tr>
       </tbody>
     </table>
@@ -32,11 +37,13 @@ import { ref, onMounted } from 'vue';
 import { supabase } from '@/lib/supabase';
 import { Button } from '../custom/button';
 import Modal from '../custom/cModal.vue';
-import NewProduct from './newProduct.vue';
+import productForm from './productForm.vue';
 
 const products = ref([]);
 const error = ref(null);
-const showModal = ref(false);
+const newProductModal = ref(false);
+const editProductModal = ref(false);
+const selectedProduct = ref(null);
 
 const fetchProducts = async () => {
   const { data, error: fetchError } = await supabase.from('products').select('*');
@@ -48,8 +55,16 @@ const fetchProducts = async () => {
 };
 
 onMounted(fetchProducts);
-const openModal = () => showModal.value = true
-const closeModal = () => showModal.value = false
+const editModal = (prod) => {
+  selectedProduct.value = prod;
+  editProductModal.value = true;
+}
+const newModal = () => newProductModal.value = true
+const closeModal = () => {
+  newProductModal.value = false;
+  editProductModal.value = false;
+  selectedProduct.value = null;
+};
 </script>
 
 <style>

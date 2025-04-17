@@ -2,7 +2,7 @@
   <div class="overlay" @click.self="close">
     <div class="modal">
       <slot />
-      <button class="close-modal" @click="close">Cerrar</button>
+      <button class="close-modal" @click="close">Close</button>
     </div>
   </div>
 </template>
@@ -25,14 +25,10 @@ const close = () => {emit('close')}
 }
 
 .modal {
-  background: white;
+  background-color: var(--main-modal-color);
   padding: 2rem;
   border-radius: 10px;
   max-width: 500px;
   width: 100%;
-}
-
-.close-modal {
-  margin-top: 1rem;
 }
 </style>
