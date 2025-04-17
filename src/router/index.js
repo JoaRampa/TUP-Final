@@ -1,25 +1,20 @@
 import { createRouter, createWebHashHistory  } from 'vue-router'
 import listProducts from '../components/products/listProducts.vue'
-/*import cmSales from '@/components/cmSales.vue';
-import cmItems from '@/components/ingresos/cmItems.vue';
+import cmSales from '@/components/cmSales.vue';
+/*import cmItems from '@/components/ingresos/cmItems.vue';
 import cmIngresos from '@/components/ingresos/cmIngresos.vue';
 import CmSummary from '@/components/cmSummary.vue';
 import cmBills from '@/components/cmBills.vue';
 import vAddProducts from '@/views/vAddProducts.vue';*/
 
 const routes = [
-  /*{
+  {
     path: '/',
     name: 'sales',
     component: cmSales,
   },
   {
-    path: '/addProduct',
-    name: 'vAddProducts',
-    component: vAddProducts,
-  },*/
-  {
-    path: '/',
+    path: '/stock',
     name: 'listProducts',
     component: listProducts,
   },

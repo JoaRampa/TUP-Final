@@ -11,9 +11,9 @@
       </button>
       <aside class="panel" :class="{ 'is-active': isActive }" @click="toggleMenu">
         <nav class="menu">
-          <router-link :to="{ name: 'listProducts' }">Products list</router-link>
-          <!--<router-link :to="{ name: 'sales' }">Ventas</router-link> 
-          <router-link :to="{ name: 'ingreso' }">Ingresar Mercaderia</router-link>
+          <router-link :to="{ name: 'sales' }">Home</router-link>
+          <router-link :to="{ name: 'listProducts' }">Stock</router-link> 
+          <!--<router-link :to="{ name: 'ingreso' }">Ingresar Mercaderia</router-link>
           <router-link :to="{ name: 'summary' }">Analisis</router-link>
           <router-link :to="{ name: 'bills' }">Gastos Local</router-link> 
           <router-link :to="{ name: 'items' }">Historial Transacciones</router-link>-->
