@@ -34,32 +34,22 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { supabase } from '@/lib/supabase';
 import { Button } from '../custom/button';
 import Modal from '../custom/cModal.vue';
 import productForm from './productForm.vue';
+import { fetchProducts, products, error } from '@/server';
 
-const products = ref([]);
-const error = ref(null);
 const newProductModal = ref(false);
 const editProductModal = ref(false);
 const selectedProduct = ref(null);
 
-const fetchProducts = async () => {
-  const { data, error: fetchError } = await supabase.from('products').select('*');
-  if (fetchError) {
-    error.value = fetchError.message;
-  } else {
-    products.value = data;
-  }
-};
-
 onMounted(fetchProducts);
+
 const editModal = (prod) => {
   selectedProduct.value = prod;
   editProductModal.value = true;
 }
-const newModal = () => newProductModal.value = true
+const newModal = () => newProductModal.value = true;
 const closeModal = () => {
   newProductModal.value = false;
   editProductModal.value = false;
