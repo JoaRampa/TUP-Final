@@ -13,16 +13,12 @@
         <nav class="menu">
           <router-link :to="{ name: 'vHome' }">Home</router-link>
           <router-link :to="{ name: 'listProducts' }">Stock</router-link> 
-          <!--<router-link :to="{ name: 'ingreso' }">Ingresar Mercaderia</router-link>
-          <router-link :to="{ name: 'summary' }">Analisis</router-link>
-          <router-link :to="{ name: 'bills' }">Gastos Local</router-link> 
-          <router-link :to="{ name: 'items' }">Historial Transacciones</router-link>-->
+          <router-link :to="{ name: 'transactions' }">Transactions</router-link>
         </nav>
       </aside>
     </header>
     <main>
       <router-view/>
-      <button class="scroll-top-btn hidden">&#11014;</button>
     </main>
   </body>
 </template>
@@ -35,7 +31,6 @@
       };
     },
     mounted() {
-      this.initScrollTopButton(".scroll-top-btn"); 
       window.addEventListener("keydown", this.handleKeyPress);
     },
     beforeUnmount() {
@@ -44,26 +39,6 @@
     methods: {
     toggleMenu() {
       this.isActive = !this.isActive;
-    },
-    initScrollTopButton(selector) {
-      const scrollBtn = document.querySelector(selector);
-      window.addEventListener("scroll", () => {
-        const scrollTop = document.documentElement.scrollTop;
-        if (scrollTop > 400) {
-          scrollBtn.classList.remove("hidden");
-        } else {
-          scrollBtn.classList.add("hidden");
-        }
-      });
-
-      document.addEventListener("click", (e) => {
-        if (e.target.matches(selector)) {
-          window.scrollTo({
-            behavior: "smooth",
-            top: 0,
-          });
-        }
-      });
     },
     handleKeyPress(event) {
       if (["Enter", "ArrowDown", "ArrowUp"].includes(event.code)) {
@@ -221,54 +196,6 @@ p {
 .hidden {
   visibility: hidden;
   opacity: 0;
-}
-
-.scroll-top-btn {
-  position: fixed;
-  z-index: 999;
-  bottom: 1vh;
-  right: 1vw;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  font-size: 2rem;
-  font-weight: bold;
-  background-color: var(--main-color);
-  color: var(--second-modal-color);
-  outline: 0;
-  border: 0;
-  transition: all 0.25s ease-out;
-}
-
-/* cards formularios  */ 
-.title {
-  text-align: center;
-  padding: 0 1rem .5rem 1rem;
-  margin: 0;
-}
-.container {
-  text-align: center;
-  width: 99%;
-  padding: 1.5rem;
-  margin: 0 0.5rem 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.306);
-  border-radius: 1rem;
-  transform: translateY(-10px);
-  animation: fadeIn 0.5s ease-in-out forwards;
-  border: 1px solid var(--border-color);
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .error-border {

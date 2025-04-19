@@ -1,8 +1,7 @@
 import { createRouter, createWebHashHistory  } from 'vue-router'
 import listProducts from '../components/products/listProducts.vue'
 import vHome from '@/views/vHome.vue'
-/*import CmSummary from '@/components/cmSummary.vue';
-import cmBills from '@/components/cmBills.vue';*/
+import cmTransactions from '../components/cmTransactions.vue';
 
 const routes = [
   {
@@ -15,16 +14,11 @@ const routes = [
     name: 'listProducts',
     component: listProducts,
   },
-  /*{
-    path: '/summary',
-    name: 'summary',
-    component: CmSummary,
-  },
   {
-    path: '/bills',
-    name: 'bills',
-    component: cmBills,
-  },*/
+    path: '/transactions',
+    name: 'transactions',
+    component: cmTransactions,
+  },
 ]
 
 const router = createRouter({
