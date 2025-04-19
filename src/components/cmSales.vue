@@ -10,10 +10,7 @@
         </option>
       </select>
     </div>
-    <div>
-      <label for="quantity">Quantity</label>
-      <input type="number" v-model.number="quantity" min="1" />
-    </div>
+    <cInput v-model.number="quantity" type="number" label="Quantity" min="1" />
     <Button label="Confirm" @click="registerSale" />
   </Modal>
 </template>
@@ -24,6 +21,7 @@ import { supabase } from '@/lib/supabase';
 import { Button } from './custom/button';
 import { products, fetchProducts } from '@/server';
 import Modal from './custom/cModal.vue';
+import cInput from './custom/cInput.vue';
 
 const saleModal = ref(false);
 const selectedProductId = ref(null);

@@ -11,7 +11,7 @@
       </button>
       <aside class="panel" :class="{ 'is-active': isActive }" @click="toggleMenu">
         <nav class="menu">
-          <router-link :to="{ name: 'sales' }">Home</router-link>
+          <router-link :to="{ name: 'vHome' }">Home</router-link>
           <router-link :to="{ name: 'listProducts' }">Stock</router-link> 
           <!--<router-link :to="{ name: 'ingreso' }">Ingresar Mercaderia</router-link>
           <router-link :to="{ name: 'summary' }">Analisis</router-link>
@@ -241,10 +241,6 @@ p {
 }
 
 /* cards formularios  */ 
-.module {
-  display: flex;
-}
-
 .title {
   text-align: center;
   padding: 0 1rem .5rem 1rem;

@@ -1,10 +1,10 @@
 <template>
   <form @submit.prevent="handleSubmit">
     <h3>{{ mode === 'edit' ? 'Edit Product' : 'New Product' }}</h3>
-    <cInput v-model="form.name" type="text" label="Name" placeholder="Name" required />
-    <cInput v-model="form.stock" type="number" label="Stock" placeholder="Stock" required />
-    <cInput v-model="form.sale_price" type="number" label="Sale price" placeholder="Sale price" required />
-    <cInput v-model="form.cost_price" type="number" label="Cost price" placeholder="Cost price" required />
+    <cInput v-model="form.name" type="text" label="Name" required />
+    <cInput v-model="form.stock" type="number" label="Stock" required />
+    <cInput v-model="form.sale_price" type="number" label="Sale price" required />
+    <cInput v-model="form.cost_price" type="number" label="Cost price" required />
     <button type="submit">{{ mode === 'edit' ? 'Update' : 'Save' }}</button>
   </form>
 </template>
