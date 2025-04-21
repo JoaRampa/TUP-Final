@@ -12,6 +12,7 @@
       <router-link :to="{ name: 'vHome' }">Home</router-link>
       <router-link :to="{ name: 'listProducts' }">Stock</router-link> 
       <router-link :to="{ name: 'transactions' }">Transactions</router-link>
+      <router-link :to="{name: 'balance'}">Balance</router-link>
     </nav>
   </aside>
 </template>

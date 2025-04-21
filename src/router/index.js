@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory  } from 'vue-router'
 import listProducts from '../components/products/listProducts.vue'
 import vHome from '@/views/vHome.vue'
 import cmTransactions from '../components/cmTransactions.vue';
+import balance from '../components/balance.vue';
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/transactions',
     name: 'transactions',
     component: cmTransactions,
+  },
+  {
+    path: '/balance',
+    name: 'balance',
+    component: balance,
   },
 ]
 

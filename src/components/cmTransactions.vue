@@ -1,8 +1,9 @@
 <template>
   <h1>sales</h1>
   <div v-for="sale in sales" :key="sale.id" :value="sale.id">
-    <p>{{ sale.price }} - {{ sale.quantity }} - {{ sale.created_at }} -
-      {{ products.find(p => p.id === sale.id_product)?.name || 'Product not found' }}
+    <p>Prod:{{ products.find(p => p.id === sale.id_product).name || 'Product not found' }} - 
+      Total:{{ products.find(p => p.id === sale.id_product).sale_price * sale.quantity }} - 
+      Benefit:{{ sale.benefit }} - Quantity:{{ sale.quantity }} - Date:{{ sale.created_at }}
     </p>
   </div>
   <h1>expenses</h1>

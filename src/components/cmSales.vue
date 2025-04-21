@@ -40,11 +40,11 @@ const registerSale = async () => {
     return alert('No hay stock suficiente');
   }
 
-  const salePrice = product.sale_price;
+  const benefit = (product.sale_price - product.cost_price) * quantity.value;
 
   const { error: insertError } = await supabase.from('sales').insert([
     {
-      price: salePrice,
+      benefit,
       quantity: quantity.value,
       id_product: selectedProductId.value,
     }
