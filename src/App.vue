@@ -1,21 +1,7 @@
 <template>
   <body>
     <header>
-      <img src="./assets/logo.png" alt="Logo">
-      <h3>LB Articulos de Limpieza</h3>
-      <button class="panel-btn hamburger--emphatic" type="button"
-      :class="{ 'is-active': isActive }" @click="toggleMenu">
-        <span class="hamburger-box">
-          <span class="hamburger-inner"></span>
-        </span>
-      </button>
-      <aside class="panel" :class="{ 'is-active': isActive }" @click="toggleMenu">
-        <nav class="menu">
-          <router-link :to="{ name: 'vHome' }">Home</router-link>
-          <router-link :to="{ name: 'listProducts' }">Stock</router-link> 
-          <router-link :to="{ name: 'transactions' }">Transactions</router-link>
-        </nav>
-      </aside>
+      <Nav />
     </header>
     <main>
       <router-view/>
@@ -24,12 +10,9 @@
 </template>
 
 <script>
+  import Nav from './components/nav.vue';
   export default {
-    data() {
-      return {
-        isActive: false,
-      };
-    },
+    components:{Nav},
     mounted() {
       window.addEventListener("keydown", this.handleKeyPress);
     },
@@ -37,9 +20,6 @@
       window.removeEventListener("keydown", this.handleKeyPress);
     },
     methods: {
-    toggleMenu() {
-      this.isActive = !this.isActive;
-    },
     handleKeyPress(event) {
       if (["Enter", "ArrowDown", "ArrowUp"].includes(event.code)) {
         event.preventDefault(); 
@@ -105,22 +85,6 @@ body {
   font-family: "Calibre", "San Francisco", "SF Pro Text", sans-serif;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  z-index: 997;
-  top: 0;
-  padding: .25rem;
-  margin-bottom: 0.9rem;
-}
-
-header img {
-  width: 3.3rem;
-  border-radius: 100%;
-}
-
 button, input, select {
   border: none;
   width: 100%;
@@ -136,59 +100,6 @@ button:hover {
   background-color: var(--main-color);
 }
 
-/* menu */
-.panel {
-  position: fixed;
-  z-index: 998;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow-y: auto;
-  width: 100%;
-  background-color: var(--transparent-color);
-  transition: transform 0.15s ease;
-  transform: translate(0,-100%);
-}
-
-.panel.is-active {
-  transform: translate(0,0);
-}
-
-.panel-btn {
-  z-index: 999;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  border: hidden;
-  background-color: var(--second-color);
-}
-
-.menu {
-  width: inherit;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  text-align: center;
-}
-
-.menu a {
-  padding: 2rem;
-  width: inherit;
-  display: block;
-  font-size: 1.5rem;
-  text-decoration: none;
-  color: var(--second-modal-color);
-  transition: all 0.3s ease;
-}
-
-.menu a:hover {
-  font-weight: bold;
-  background-color: var(--main-color);
-}
-/* ---------- */
-
 p {
   margin: 0; 
 }
@@ -196,9 +107,5 @@ p {
 .hidden {
   visibility: hidden;
   opacity: 0;
-}
-
-.error-border {
-  background-color: red;
 }
 </style>
