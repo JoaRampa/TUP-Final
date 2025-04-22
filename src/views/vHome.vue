@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="center">
     <cmExpenses/>
     <cmSales/>
   </div>
@@ -17,7 +17,9 @@ components: {
 </script>
 
 <style>
-.home {
+.center {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

@@ -6,17 +6,21 @@
       <label for="product">Product</label>
       <select v-model="selectedProductId">
         <option v-for="prod in products" :key="prod.id" :value="prod.id">
-          {{ prod.name }} (Stock: {{ prod.stock }})
+          {{ prod.name }} (Stock: {{ prod.stock }}) (Price: {{ prod.sale_price }})
         </option>
       </select>
     </div>
     <cInput v-model.number="quantity" type="number" label="Quantity" min="1" />
+    <div class="center">
+      <cInput v-model.number="discount" type="number" label="Discount (%)" min="0" max="100" />
+      <label>Total: {{ total }}</label>
+    </div>
     <Button label="Confirm" @click="registerSale" />
   </Modal>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { supabase } from '@/lib/supabase';
 import { Button } from './custom/button';
 import { products, fetchProducts } from '@/server';
@@ -26,6 +30,14 @@ import cInput from './custom/cInput.vue';
 const saleModal = ref(false);
 const selectedProductId = ref(null);
 const quantity = ref(1);
+const discount = ref(0);
+
+const selectedProduct = computed(() =>
+  products.value.find(p => p.id === selectedProductId.value)
+);
+const total = computed(() =>
+  ((selectedProduct.value ? selectedProduct.value.sale_price * quantity.value : 0) * (1 - discount.value / 100)).toFixed(2)
+);
 
 const sell = () => saleModal.value = true;
 const closeModal = () => saleModal.value = false;
@@ -36,12 +48,9 @@ const registerSale = async () => {
   const product = products.value.find(p => p.id === selectedProductId.value);
   if (!product) return alert('Seleccioná un producto');
 
-  if (quantity.value > product.stock) {
-    return alert('No hay stock suficiente');
-  }
+  if (quantity.value > product.stock) return alert('No hay stock suficiente');
 
-  const benefit = (product.sale_price - product.cost_price) * quantity.value;
-
+  const benefit = total.value - (product.cost_price * quantity.value);
   const { error: insertError } = await supabase.from('sales').insert([
     {
       benefit,
