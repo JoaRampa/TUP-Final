@@ -1,5 +1,5 @@
 <template>
-  <Button label="SELL" @click="sell" />
+  <Button label="SELL" @click="sell" class="btnSales btnHome" />
   <Modal v-if="saleModal" @close="closeModal">
     <h3>New sale</h3>
     <div>
@@ -66,3 +66,13 @@ const registerSale = async () => {
   }
 };
 </script>
+
+<style>
+ .btnSales {
+  background-color: rgb(11, 88, 51);
+  color: rgb(27, 230, 131);
+ }
+ .btnSales:hover {
+  background-color: rgb(15, 129, 74)
+ }
+</style>

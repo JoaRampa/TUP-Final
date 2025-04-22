@@ -82,7 +82,6 @@ html {
 body {
   margin: 0;
   overflow-x: hidden;
-  font-family: "Calibre", "San Francisco", "SF Pro Text", sans-serif;
 }
 
 button, input, select {
@@ -96,16 +95,7 @@ button, input, select {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-button:hover {
-  background-color: var(--main-color);
-}
-
 p {
   margin: 0; 
-}
-
-.hidden {
-  visibility: hidden;
-  opacity: 0;
 }
 </style>

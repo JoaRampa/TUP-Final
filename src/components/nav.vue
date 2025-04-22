@@ -1,6 +1,6 @@
 <template>
   <img src="../assets/logo.png" alt="Logo">
-  <h3>LB Articulos de Limpieza</h3>
+  <h3>LB Cleaning Products</h3>
   <button class="panel-btn hamburger--emphatic" type="button"
     :class="{ 'is-active': isActive }" @click="toggleMenu">
       <span class="hamburger-box">

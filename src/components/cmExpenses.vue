@@ -1,5 +1,5 @@
 <template>
-  <Button label="New expense" @click="addExpense" />
+  <Button label="New expense" @click="addExpense" class="btnExpense btnHome"/>
   <Modal v-if="expenseModal" @close="closeModal">
     <h3>New expense</h3>
     <cInput type="text" v-model="description" label="Description" />
@@ -40,3 +40,19 @@ const registerExpense = async () => {
   closeModal();
 }
 </script>
+
+<style>
+.btnHome {
+  height: 150px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+.btnExpense {
+  background-color: #911919;
+  color: rgb(216, 124, 124);
+ }
+ .btnExpense:hover {
+  background-color: rgb(176, 19, 19)
+ }
+</style>

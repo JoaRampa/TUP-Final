@@ -1,6 +1,8 @@
 <template>
-  <cmExpenses/>
-  <cmSales/>
+  <div class="home">
+    <cmExpenses/>
+    <cmSales/>
+  </div>
 </template>
 
 <script>
@@ -13,3 +15,9 @@ components: {
 },
 };
 </script>
+
+<style>
+.home {
+  display: flex;
+}
+</style>
