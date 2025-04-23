@@ -2,12 +2,13 @@
   <div class="overlay" @click.self="close">
     <div class="modal">
       <slot />
-      <button class="close-modal" @click="close">Close</button>
+      <Button label="Close" @click="close" />
     </div>
   </div>
 </template>
 
 <script setup>
+import {Button} from './button'
 const emit = defineEmits(['close'])
 const close = () => {emit('close')}
 </script>

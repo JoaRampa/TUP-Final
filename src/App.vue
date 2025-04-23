@@ -91,7 +91,7 @@ button, input, select {
   border-radius: .8rem;
   padding: .5rem;
   cursor: pointer;
-  margin: 0.15rem;
+  margin-bottom: 0.25rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 

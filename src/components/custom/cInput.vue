@@ -26,9 +26,9 @@ const emit = defineEmits(['update:modelValue'])
 const updateValue = (e) => emit('update:modelValue', e.target.value)
 </script>
 
-<style scoped>
+<style>
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
 }
 .form-control {
   width: 100%;
@@ -36,10 +36,11 @@ const updateValue = (e) => emit('update:modelValue', e.target.value)
   box-sizing: border-box;
 }
 .is-invalid {
+  border: 1px solid var(--border-color);
   border-color: red;
 }
 .error {
   color: red;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
 }
 </style>
