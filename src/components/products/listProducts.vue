@@ -7,28 +7,14 @@
     <Modal v-if="editProductModal" @close="closeModal">
       <productForm mode="edit" :product="selectedProduct" @close="closeModal" @save="fetchProducts"/>
     </Modal>
-    <p v-if="error">Error: {{ error }}</p>
-    <p v-if="!products.length">No hay productos</p>
-    <table v-else>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Stock</th>
-          <th>Sale price</th>
-          <th>Cost price</th>
-          <th>Edit</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="prod in products" :key="prod.id">
-          <td>{{ prod.name }}</td>
-          <td>{{ prod.stock }}</td>
-          <td>{{ prod.sale_price }}</td>
-          <td>{{ prod.cost_price }}</td>
-          <td><Button label="Edit" @click="editModal(prod)"/></td>
-        </tr>
-      </tbody>
-    </table>
+    <Table title="Stock" :headers="['Name','Stock','Sale price','Cost price', ' ']"
+      :fields="['name', 'stock', 'sale_price', 'cost_price', 'actions' ]"
+      :rows="products"
+    >
+    <template #cell-actions="{ row }">
+      <Button label="Edit" @click="editModal(row)" />
+    </template>
+    </Table>
   </div>
 </template>
 
@@ -36,8 +22,9 @@
 import { ref, onMounted } from 'vue';
 import { Button } from '../custom/button';
 import Modal from '../custom/cModal.vue';
+import Table from '../custom/table.vue'
 import productForm from './productForm.vue';
-import { fetchProducts, products, error } from '@/server';
+import { fetchProducts, products } from '@/server';
 
 const newProductModal = ref(false);
 const editProductModal = ref(false);
@@ -63,7 +50,6 @@ table {
   width: 95%;
   border-radius: .5rem;
   border: 1px solid var(--border-color);
-  background-color:var(--main-modal-color);
   padding: 0.5rem
 }
 

@@ -1,19 +1,35 @@
 <template>
-  <h1>sales</h1>
-  <div v-for="sale in sales" :key="sale.id" :value="sale.id">
-    <p>Prod:{{ products.find(p => p.id === sale.id_product).name || 'Product not found' }} - 
-      Benefit:{{ sale.benefit }} - Quantity:{{ sale.quantity }} - Date:{{ sale.created_at }}
-    </p>
-  </div>
-  <h1>expenses</h1>
-  <div v-for="expense in expenses" :key="expense.id" :value="expense.id">
-    <p>{{ expense.price }} - {{ expense.description }} - {{ expense.created_at }}</p>
-  </div>
+  <Table
+    title="Sales"
+    :headers="['Name','Benefit','Quantity','Date']"
+    :fields="['id_product','benefit','quantity','created_at']"
+    :rows="sales"
+  >
+  <!-- si no hay slot se muestra solo row[field] -->
+    <template #cell-id_product="{ row }">
+      {{ products.find(p => p.id === row.id_product)?.name || 'Product not found' }}
+    </template>
+    <template #cell-created_at="{ row }">
+      {{ formatDate(row.created_at) }}
+    </template>
+  </Table>
+  <Table
+    title="Expenses"
+    :headers="['Description','Price','Date']"
+    :fields="['description','price','created_at']"
+    :rows="expenses"
+  >
+    <template #cell-created_at="{ row }">
+      {{ formatDate(row.created_at) }}
+    </template>
+  </Table>
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
 import { fetchSales, sales, fetchProducts, products, expenses, fetchExpenses } from '@/server';
+import {formatDate} from '../utils/formatDate'
+import Table from './custom/table.vue'
 
 onMounted(() => {
   fetchSales();
