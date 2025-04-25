@@ -12,3 +12,8 @@ export const saleSchema = Yup.object().shape({
   selectedProductId: Yup.number().required('Required').typeError('Select a product'),
   discount: Yup.number().min(0, 'At least 0').max(100, 'Max 100').typeError('Invalid')
 })
+
+export const expenseSchema = Yup.object().shape({
+  description: Yup.string().required('Required').min(3, 'Minimun 3 chars'),
+  price: Yup.number().required('Required').min(0.01, 'At least 0.01')
+})
