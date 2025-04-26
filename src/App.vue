@@ -52,17 +52,16 @@
 
 <style>
 #app {
-  --main-font: sans-serif;
-  --font-size: 14px;
-  --main-color:  #0f5c9b ;
   --second-color: rgb(7, 62, 126);
-  --main-modal-color:#0a192f;
+  --main-color:#0a192f;
   --transparent-color: rgba(34,34,34,0.85);
-  --button-color: rgba(19, 78, 133, 0.5);
-  --second-modal-color: #dfd3d3;
+  --text-color: #dfd3d3;
   --border-color: #c5bfc74e;
-  --second-border-color: #000;
   --container-width: 1200px;
+  --text-green: rgb(27, 230, 131);
+  --back-green: rgb(11, 88, 51);
+  --text-red: rgb(216, 124, 124);
+  --back-red: #911919;
 }
 html {
   box-sizing: border-box;
@@ -87,7 +86,7 @@ body {
 button, input, select {
   border: none;
   width: 100%;
-  background-color: var(--second-modal-color);
+  background-color: var(--text-color);
   border-radius: .8rem;
   padding: .5rem;
   cursor: pointer;

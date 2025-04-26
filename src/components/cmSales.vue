@@ -1,7 +1,7 @@
 <template>
   <Button label="SELL" @click="sell" class="btnSales btnHome" />
   <Modal v-if="saleModal" @close="closeModal">
-    <h3>New sale</h3>
+    <h3 style="color: var(--text-green);">New sale</h3>
     <div>
       <label for="product">Product</label>
       <select v-model="selectedProductId" :class="{'is-invalid': errors.selectedProductId}">
@@ -94,8 +94,8 @@ const registerSale = async () => {
 
 <style>
  .btnSales {
-  background-color: rgb(11, 88, 51);
-  color: rgb(27, 230, 131);
+  background-color: var(--back-green);
+  color: var(--text-green);
  }
  .btnSales:hover {
   background-color: rgb(15, 129, 74)

@@ -26,7 +26,7 @@ const close = () => {emit('close')}
 }
 
 .modal {
-  background-color: var(--main-modal-color);
+  background-color: var(--main-color);
   padding: 2rem;
   border-radius: 10px;
   max-width: 500px;

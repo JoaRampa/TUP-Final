@@ -91,12 +91,12 @@ header img {
   display: block;
   font-size: 1.5rem;
   text-decoration: none;
-  color: var(--second-modal-color);
+  color: var(--text-color);
   transition: all 0.3s ease;
 }
 
 .menu a:hover {
   font-weight: bold;
-  background-color: var(--main-color);
+  background-color: var(--second-color);
 }
 </style>
