@@ -2,16 +2,19 @@
   <Button label="SELL" @click="sell" class="btnSales btnHome" />
   <Modal v-if="saleModal" @close="closeModal">
     <h3 style="color: var(--text-green);">New sale</h3>
-    <div>
-      <label for="product">Product</label>
-      <select v-model="selectedProductId" :class="{'is-invalid': errors.selectedProductId}">
-        <option v-for="prod in products" :key="prod.id" :value="prod.id">
-          {{ prod.name }} (Stock: {{ prod.stock }}) (Price: {{ prod.sale_price }})
-        </option>
-      </select>
-      <p v-if="errors.selectedProductId" class="error">{{ errors.selectedProductId }}</p>
+    <div v-for="(item, idx) in saleProds" :key="idx">
+      <div class="center">
+        <cInput v-model.number="item.id_product" list="product-list" label="Product" :errors="errors[idx].id_product" />
+          <datalist id="product-list">
+            <option v-for="prod in products" :key="prod.id" :value="prod.id">
+              {{ prod.name }} (Stock: {{ prod.stock }}) (Price: {{ prod.sale_price }})
+            </option>
+          </datalist>
+        <cInput v-model.number="item.quantity" type="number" label="Quantity" min="1" :error="errors[idx].quantity" />
+        <Button label="X" @click="removeLine(idx)" />
+      </div>
     </div>
-    <cInput v-model.number="quantity" type="number" label="Quantity" min="1" :error="errors.quantity" />
+    <Button label="Add" @click="addLine" />
     <div class="center">
       <cInput v-model.number="discount" type="number" label="Discount (%)" min="0" max="100" :error="errors.discount"/>
       <label>Total: {{ total }}</label>
@@ -30,33 +33,31 @@ import cInput from './custom/cInput.vue';
 import { saleSchema } from '../utils/schema';
 
 const saleModal = ref(false);
-const selectedProductId = ref(null);
-const quantity = ref(0);
+const saleProds = ref([{id_product:null, quantity:1}]);
 const discount = ref(0);
-const errors = ref({})
-const form = ref({
-  quantity: 0,
-  selectedProductId: null,
-  discount: 0
-})
-const selectedProduct = computed(() =>
-  products.value.find(p => p.id === selectedProductId.value)
-);
+const errors = ref([{id_product:null, quantity: null}])
+
+const prodTotal = idx => {
+  const item = saleProds.value[idx];
+  const prod = products.value.find(p => p.id === item.id_product)
+  if (!prod) return 0
+  else return prod.sale_price * item.quantity;
+}
 const total = computed(() =>
-  ((selectedProduct.value ? selectedProduct.value.sale_price * quantity.value : 0) * (1 - discount.value / 100)).toFixed(2)
+  ((saleProds.value.reduce((sum, _, i) => sum + prodTotal(i),0)) * (1 - discount.value / 100)).toFixed(2)
 );
 
+const addLine = () => {
+  saleProds.value.push({ id_product: null, quantity: 1 });
+  errors.value.push({});
+}
+const removeLine = idx => saleProds.value.splice(idx, 1);
 const sell = () => saleModal.value = true;
 const closeModal = () => saleModal.value = false;
 
 onMounted(fetchProducts);
 
 const registerSale = async () => {
-  form.value = {
-    selectedProductId: selectedProductId.value,
-    quantity: quantity.value,
-    discount: discount.value,
-  };
   try {
     await saleSchema.validate(form.value, { abortEarly: false });
     const product = products.value.find(p => p.id === selectedProductId.value);

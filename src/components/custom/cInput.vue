@@ -8,6 +8,7 @@
       :value="modelValue"
       @input="updateValue"
       :class="['form-control', { 'is-invalid': error }]"
+      :list="list"
     />
     <p v-if="error" class="error">{{ error }}</p>
   </div>
@@ -19,7 +20,8 @@ defineProps({
   label: String,
   type: { type: String, default: 'text' },
   modelValue: [String, Number],
-  error: String
+  error: String,
+  list: String 
 })
 
 const emit = defineEmits(['update:modelValue'])
