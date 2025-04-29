@@ -8,10 +8,10 @@ export const productSchema = Yup.object().shape({
 });
 
 export const saleSchema = Yup.object().shape({
-  quantity: Yup.number().required('Required').min(1, 'At least 1').typeError('Invalid quantity'),
-  selectedProductId: Yup.number().required('Required').typeError('Select a product'),
-  discount: Yup.number().min(0, 'At least 0').max(100, 'Max 100').typeError('Invalid')
+  id_product: Yup.number().required('Required'),
+  quantity: Yup.number().min(1, 'At least 1').required('Required'),
 })
+export const discountSchema = Yup.number().min(0, 'Must be between 0 and 100').max(100, 'Must be between 0 and 100');
 
 export const expenseSchema = Yup.object().shape({
   description: Yup.string().required('Required').min(3, 'Minimun 3 chars'),

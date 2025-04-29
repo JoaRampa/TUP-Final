@@ -4,7 +4,7 @@
     <h3 style="color: var(--text-green);">New sale</h3>
     <div v-for="(item, idx) in saleProds" :key="idx">
       <div class="center">
-        <cInput v-model.number="item.id_product" list="product-list" label="Product" :errors="errors[idx].id_product" />
+        <cInput v-model.number="item.id_product" list="product-list" label="Product" :error="errors[idx].id_product"/>
           <datalist id="product-list">
             <option v-for="prod in products" :key="prod.id" :value="prod.id">
               {{ prod.name }} (Stock: {{ prod.stock }}) (Price: {{ prod.sale_price }})
@@ -16,7 +16,7 @@
     </div>
     <Button label="Add" @click="addLine" />
     <div class="center">
-      <cInput v-model.number="discount" type="number" label="Discount (%)" min="0" max="100" :error="errors.discount"/>
+      <cInput v-model.number="discount" type="number" label="Discount (%)" :error="discountErr"/>
       <label>Total: {{ total }}</label>
     </div>
     <Button label="Confirm" @click="registerSale" />
@@ -30,12 +30,13 @@ import { Button } from './custom/button';
 import { products, fetchProducts } from '@/server';
 import Modal from './custom/cModal.vue';
 import cInput from './custom/cInput.vue';
-import { saleSchema } from '../utils/schema';
+import { saleSchema, discountSchema } from '../utils/schema';
 
 const saleModal = ref(false);
-const saleProds = ref([{id_product:null, quantity:1}]);
+const saleProds = ref([{id_product:null, quantity:0}]);
 const discount = ref(0);
-const errors = ref([{id_product:null, quantity: null}])
+const errors = ref([{id_product:null, quantity: null}]);
+const discountErr = ref(null) 
 
 const prodTotal = idx => {
   const item = saleProds.value[idx];
@@ -48,47 +49,81 @@ const total = computed(() =>
 );
 
 const addLine = () => {
+  const lastIdx = saleProds.value.length - 1;
+  const lastItem = saleProds.value[lastIdx];
+
+  if (!lastItem.id_product) {
+    errors.value[lastIdx].id_product = 'Select a product';
+    return;
+  }
   saleProds.value.push({ id_product: null, quantity: 1 });
   errors.value.push({});
 }
-const removeLine = idx => saleProds.value.splice(idx, 1);
+const removeLine = idx => {
+  saleProds.value.splice(idx, 1);
+  errors.value.splice(idx, 1);
+}
 const sell = () => saleModal.value = true;
 const closeModal = () => saleModal.value = false;
 
 onMounted(fetchProducts);
 
 const registerSale = async () => {
+  errors.value = saleProds.value.map(() => ({id_product: null, quantity: null}));
+  discountErr.value = null;
   try {
-    await saleSchema.validate(form.value, { abortEarly: false });
-    const product = products.value.find(p => p.id === selectedProductId.value);
-    const benefit = total.value - (product.cost_price * quantity.value);
-    const { error: insertError } = await supabase.from('sales').insert([
-      {
-        benefit,
-        quantity: quantity.value,
-        id_product: selectedProductId.value,
-      }
-    ]);
-
-    const newStock = product.stock - quantity.value;
-    const { error: updateError } = await supabase
-      .from('products')
-      .update({ stock: newStock })
-      .eq('id', selectedProductId.value);
-
-    if (insertError || updateError) {
-      console.error(insertError || updateError);
-      alert('Error al registrar la venta');
-    } else {
-      alert('Venta registrada correctamente');
-      closeModal();
-      fetchProducts(); 
+    await discountSchema.validate(discount.value, {abortEarly: false})
+    for(let i = 0; i < saleProds.value.length; i++){
+      await saleSchema.validate(saleProds.value[i], { abortEarly: false });
     }
-  } catch (validationError){
-    errors.value = {}
-    validationError.inner.forEach(err => {
-      errors.value[err.path] = err.message
-    })
+    const { error: insertError } = await supabase.from('sales').insert(
+      saleProds.value.map(item => {
+        const product = products.value.find(p => p.id === item.id_product);
+        const subtotal = product.sale_price * item.quantity;
+        const discounted = subtotal * (1 - discount.value / 100);
+        const benefit = discounted - (product.cost_price * item.quantity);
+
+        return {
+          id_product: item.id_product,
+          quantity: item.quantity,
+          benefit: benefit.toFixed(2),
+        };
+      })
+    );
+
+    if (insertError) throw insertError;
+
+    for (let item of saleProds.value) {
+      const product = products.value.find(p => p.id === item.id_product);
+      const newStock = product.stock - item.quantity;
+
+      const { error: updateError } = await supabase
+        .from('products')
+        .update({ stock: newStock })
+        .eq('id', product.id);
+
+      if (updateError) throw updateError;
+    }
+    alert('Ventas registradas correctamente');
+    closeModal();
+    saleProds.value = [{ id_product: null, quantity: 1 }];
+    discount.value = 0;
+    fetchProducts(); 
+  } catch (ValidationError) {
+    if (err.name === '') {
+      if(err.path === 'discount') {
+        discountErr.value = err.message;
+      } else {
+        err.inner.forEach(e => {
+          const idx = saleProds.value.findIndex(item => item[e.path] === e.value);
+          if (idx >= 0) {
+            errors.value[idx][e.path] = e.message;
+          }
+        });
+      }
+    } else {
+      alert('Error loading sale')
+    }
   }
 };
 </script>
