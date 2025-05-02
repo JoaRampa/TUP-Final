@@ -71,11 +71,29 @@ onMounted(fetchProducts);
 const registerSale = async () => {
   errors.value = saleProds.value.map(() => ({id_product: null, quantity: null}));
   discountErr.value = null;
+  let hasErrors = false;
+
   try {
-    await discountSchema.validate(discount.value, {abortEarly: false})
-    for(let i = 0; i < saleProds.value.length; i++){
+    await discountSchema.validate(discount.value, {abortEarly: false});
+  } catch (discountError) {
+    discountErr.value = discountError.errors[0];
+    hasErrors = true;
+  }
+
+  for(let i = 0; i < saleProds.value.length; i++){
+    try {
       await saleSchema.validate(saleProds.value[i], { abortEarly: false });
+    } catch (productError) {
+      productError.inner.forEach(err => {
+        errors.value[i][err.path] = err.message;
+      });
+      hasErrors = true;
     }
+  }
+
+  if (hasErrors) return;
+
+  try {
     const { error: insertError } = await supabase.from('sales').insert(
       saleProds.value.map(item => {
         const product = products.value.find(p => p.id === item.id_product);
@@ -96,34 +114,20 @@ const registerSale = async () => {
     for (let item of saleProds.value) {
       const product = products.value.find(p => p.id === item.id_product);
       const newStock = product.stock - item.quantity;
-
       const { error: updateError } = await supabase
         .from('products')
         .update({ stock: newStock })
         .eq('id', product.id);
-
       if (updateError) throw updateError;
     }
-    alert('Ventas registradas correctamente');
+    alert('Sales registred');
     closeModal();
-    saleProds.value = [{ id_product: null, quantity: 1 }];
+    saleProds.value = [{ id_product: null, quantity: 0 }];
     discount.value = 0;
     fetchProducts(); 
-  } catch (ValidationError) {
-    if (err.name === '') {
-      if(err.path === 'discount') {
-        discountErr.value = err.message;
-      } else {
-        err.inner.forEach(e => {
-          const idx = saleProds.value.findIndex(item => item[e.path] === e.value);
-          if (idx >= 0) {
-            errors.value[idx][e.path] = e.message;
-          }
-        });
-      }
-    } else {
-      alert('Error loading sale')
-    }
+  } catch (dbError) {
+    console.error('Error', dbError);
+    alert('Ups! error ocurred');
   }
 };
 </script>
