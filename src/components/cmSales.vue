@@ -11,7 +11,7 @@
             </option>
           </datalist>
         <cInput v-model.number="item.quantity" type="number" label="Quantity" min="1" :error="errors[idx].quantity" />
-        <Button label="X" @click="removeLine(idx)" />
+        <Button label="X" @click="removeLine(idx)" class="remove"/>
       </div>
     </div>
     <Button label="Add" @click="addLine" />
@@ -51,14 +51,27 @@ const total = computed(() =>
 const addLine = () => {
   const lastIdx = saleProds.value.length - 1;
   const lastItem = saleProds.value[lastIdx];
+  const prod = products.value.find(p => p.id === lastItem.id_product);
+  let hasError = false;
+
+  errors.value[lastIdx] = { id_product: null, quantity: null };
 
   if (!lastItem.id_product) {
     errors.value[lastIdx].id_product = 'Select a product';
-    return;
+    hasError = true;
   }
-  saleProds.value.push({ id_product: null, quantity: 1 });
+  if (lastItem.quantity <= 0) {
+    errors.value[lastIdx].quantity = 'At least 1';
+    hasError = true;
+  }
+  if (prod && lastItem.quantity > prod.stock) {
+    errors.value[lastIdx].quantity = `Available stock ${prod.stock}`;
+    hasError = true;
+  }
+  if (hasError) return;
+  saleProds.value.push({ id_product: null, quantity: 0 });
   errors.value.push({});
-}
+};
 const removeLine = idx => {
   saleProds.value.splice(idx, 1);
   errors.value.splice(idx, 1);
@@ -139,5 +152,16 @@ const registerSale = async () => {
  }
  .btnSales:hover {
   background-color: rgb(15, 129, 74)
+ }
+ .remove {
+  background-color: var(--main-color);
+  box-shadow: none;
+  color: var(--text-red);
+  width: 4rem;
+  font-weight: 700;
+  font-size:larger;
+ }
+ .remove:hover {
+  color: var(--back-red);
  }
 </style>
