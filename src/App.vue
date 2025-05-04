@@ -60,6 +60,7 @@
   --container-width: 1200px;
   --text-green: rgb(27, 230, 131);
   --back-green: rgb(11, 88, 51);
+  --green-hover: rgb(15, 129, 74);
   --text-red: rgb(216, 124, 124);
   --back-red: #911919;
 }

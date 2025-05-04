@@ -6,7 +6,9 @@
       :name="name"
       :type="type"
       :value="modelValue"
+      :placeholder="placeholder"
       @input="updateValue"
+      @keyup.enter="emitFilter"
       :class="['form-control', { 'is-invalid': error }]"
       :list="list"
     />
@@ -21,11 +23,13 @@ defineProps({
   type: { type: String, default: 'text' },
   modelValue: [String, Number],
   error: String,
-  list: String 
+  list: String,
+  placeholder: { type: String, default: '' }
 })
 
-const emit = defineEmits(['update:modelValue'])
-const updateValue = (e) => emit('update:modelValue', e.target.value)
+const emit = defineEmits(['update:modelValue', 'filter']);
+const updateValue = (e) => emit('update:modelValue', e.target.value);
+const emitFilter = () => emit('filter', props.modelValue);
 </script>
 
 <style>

@@ -26,7 +26,7 @@
 <script>
 export default {
   props: {
-    title: { type: String, required: true },
+    title: { type: String, required: false, default: "" },
     headers: { type: Array, required: true },
     fields: { type: Array, required: true },
     rows: { type: Array, required: true }

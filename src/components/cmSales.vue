@@ -1,5 +1,5 @@
 <template>
-  <Button label="SELL" @click="sell" class="btnSales btnHome" />
+  <Button label="SELL" @click="sell" class="btnSales btnHome weight-spacing" />
   <Modal v-if="saleModal" @close="closeModal">
     <h3 style="color: var(--text-green);">New sale</h3>
     <div v-for="(item, idx) in saleProds" :key="idx">
@@ -151,7 +151,7 @@ const registerSale = async () => {
   color: var(--text-green);
  }
  .btnSales:hover {
-  background-color: rgb(15, 129, 74)
+  background-color: var(--green-hover);
  }
  .remove {
   background-color: var(--main-color);

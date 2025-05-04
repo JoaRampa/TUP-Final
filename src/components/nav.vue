@@ -1,6 +1,6 @@
 <template>
   <img src="../assets/logo.png" alt="Logo">
-  <h3>LB Cleaning Products</h3>
+  <h3 class="weight-spacing" style="margin: 0">LB Cleaning Products</h3>
   <button class="panel-btn hamburger--emphatic" type="button"
     :class="{ 'is-active': isActive }" @click="toggleMenu">
       <span class="hamburger-box">
@@ -40,13 +40,17 @@ header {
   position: sticky;
   z-index: 997;
   top: 0;
-  padding: .25rem;
-  margin-bottom: 0.9rem;
+  padding: 0.25rem .5rem;
+  margin-bottom: 1.9rem;
 }
 
 header img {
   width: 3.3rem;
   border-radius: 100%;
+}
+.weight-spacing {
+  font-weight: 700;
+  letter-spacing: .05em;
 }
 /* menu */
 .panel {
@@ -69,9 +73,9 @@ header img {
 
 .panel-btn {
   z-index: 999;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
+  width: 3.3rem;
+  height: 3.3rem;
+  border-radius: 100%;
   border: hidden;
   background-color: var(--second-color);
 }

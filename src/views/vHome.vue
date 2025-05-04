@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="center cmp">
     <cmExpenses/>
     <cmSales/>
   </div>
@@ -20,6 +20,11 @@ components: {
 .center {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  margin: 0.25rem 2rem;
+  width: 95%;
+}
+
+.cmp *{
+  margin: 0 3px;
 }
 </style>

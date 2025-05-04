@@ -1,5 +1,5 @@
 <template>
-  <Button label="New expense" @click="addExpense" class="btnExpense btnHome"/>
+  <Button label="New expense" @click="addExpense" class="btnExpense btnHome weight-spacing"/>
   <Modal v-if="expenseModal" @close="closeModal">
     <h3 style="color: var(--text-red);">New expense</h3>
     <cInput type="text" v-model="description" label="Description" :error="errors.description"/>
@@ -63,8 +63,6 @@ const registerExpense = async () => {
 .btnHome {
   height: 150px;
   font-size: 15px;
-  font-weight: 700;
-  letter-spacing: .1em;
 }
 .btnExpense {
   background-color: var(--back-red);
