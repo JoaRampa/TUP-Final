@@ -30,7 +30,7 @@ export default {
     headers: { type: Array, required: true },
     fields: { type: Array, required: true },
     rows: { type: Array, required: true },
-    rowClass: {type: [String, Function], default: ""}
+    rowClass: {type: String, default: ""}
   }
 };
 </script>
