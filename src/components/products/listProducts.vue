@@ -60,6 +60,10 @@ const closeModal = () => {
 .headerProd * {
   margin: auto;
 }
+.headerProd {
+  width: 95%;
+  margin: 0 2rem;
+}
 table {
   margin: 0 2rem;
   width: 95%;
