@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="center vhome">
     <cmExpenses/>
     <cmSales/>
   </div>
@@ -21,5 +21,8 @@ components: {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.vhome * {
+  margin: 0 .35rem;
 }
 </style>

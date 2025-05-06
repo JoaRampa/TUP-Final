@@ -14,6 +14,7 @@
     <Table :headers="['Name','Stock','Sale price','Cost price', ' ']"
       :fields="['name', 'stock', 'sale_price', 'cost_price', 'actions' ]"
       :rows="searchProduct"
+      :rowClass="getRowClass"
     >
     <template #cell-actions="{ row }">
       <Button label="Edit" @click="editModal(row)" />
@@ -38,6 +39,7 @@ const filter = ref('');
 
 onMounted(fetchProducts);
 
+const getRowClass = (row) => { return row.stock === 0 ? 'no-stock' : ''; }
 const searchProduct = computed(() => {
   if (!filter.value) return products.value;
   return products.value.filter(p =>
@@ -85,5 +87,8 @@ th, td {
 }
 .btnAdd:hover {
   background-color: var(--green-hover);
+}
+.no-stock {
+  color: var(--text-red);
 }
 </style>

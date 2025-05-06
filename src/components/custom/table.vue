@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+        <tr v-for="(row, rowIndex) in rows" :key="rowIndex" :class="typeof rowClass === 'function' ? rowClass(row) : rowClass">
           <td v-for="(field, colIndex) in fields" :key="colIndex">
             <slot :name="`cell-${field}`" :row="row">
               {{ row[field] }}
@@ -29,7 +29,8 @@ export default {
     title: { type: String, required: false, default: "" },
     headers: { type: Array, required: true },
     fields: { type: Array, required: true },
-    rows: { type: Array, required: true }
+    rows: { type: Array, required: true },
+    rowClass: {type: [String, Function], default: ""}
   }
 };
 </script>
