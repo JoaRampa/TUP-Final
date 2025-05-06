@@ -107,19 +107,31 @@ const registerSale = async () => {
   if (hasErrors) return;
 
   try {
+    // calculo totalBenefit
+    let totalBenefit = 0;
+    const salesEntries = saleProds.value.map(item => {
+      const product = products.value.find(p => p.id === item.id_product);
+      const subtotal = product.sale_price * item.quantity;
+      const discounted = subtotal * (1 - discount.value / 100);
+      const benefit = discounted - (product.cost_price * item.quantity);
+      totalBenefit += benefit;
+      return {
+        id_product: item.id_product,
+        quantity: item.quantity,
+        benefit: benefit.toFixed(2),
+      };
+    });
+    //insert to transaction
+    const { data: transactionData, error: transactionError } = await supabase
+      .from('transaction').insert([{ total: totalBenefit.toFixed(2) }]).select().single();
+    
+    if (transactionError) throw transactionError;
+    //insert sales with id_transaction
     const { error: insertError } = await supabase.from('sales').insert(
-      saleProds.value.map(item => {
-        const product = products.value.find(p => p.id === item.id_product);
-        const subtotal = product.sale_price * item.quantity;
-        const discounted = subtotal * (1 - discount.value / 100);
-        const benefit = discounted - (product.cost_price * item.quantity);
-
-        return {
-          id_product: item.id_product,
-          quantity: item.quantity,
-          benefit: benefit.toFixed(2),
-        };
-      })
+      salesEntries.map(entry => ({
+        ...entry,
+        id_transaction: transactionData.id
+      }))
     );
 
     if (insertError) throw insertError;

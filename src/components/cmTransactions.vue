@@ -1,17 +1,12 @@
 <template>
   <Table
-    title="Sales"
-    :headers="['Name','Benefit','Quantity','Date']"
-    :fields="['id_product','benefit','quantity','created_at']"
-    :rows="sales"
+    title="Grouped Sales"
+    :headers="['Sale nro', 'Total', 'Date', 'Info']"
+    :fields="['id', 'total', 'created_at', 'info']"
+    :rows="transactions"
   >
-  <!-- si no hay slot se muestra solo row[field] -->
-    <template #cell-id_product="{ row }">
-      {{ products.find(p => p.id === row.id_product)?.name || 'Product not found' }}
-    </template>
-    <template #cell-created_at="{ row }">
-      {{ formatDate(row.created_at) }}
-    </template>
+    <template #cell-created_at="{ row }">{{ formatDate(row.created_at) }}</template>
+    <template #cell-info><Button label="Info" /></template>
   </Table>
   <Table
     title="Expenses"
@@ -19,20 +14,19 @@
     :fields="['description','price','created_at']"
     :rows="expenses"
   >
-    <template #cell-created_at="{ row }">
-      {{ formatDate(row.created_at) }}
-    </template>
+    <template #cell-created_at="{ row }">{{ formatDate(row.created_at) }}</template>
   </Table>
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
-import { fetchSales, sales, fetchProducts, products, expenses, fetchExpenses } from '@/server';
+import { fetchTransaction, transactions, fetchProducts, expenses, fetchExpenses } from '@/server';
 import {formatDate} from '../utils/formatDate'
 import Table from './custom/table.vue'
+import {Button} from './custom/button'
 
 onMounted(() => {
-  fetchSales();
+  fetchTransaction();
   fetchProducts();
   fetchExpenses();
 });
