@@ -157,7 +157,7 @@ const registerSale = async () => {
 };
 </script>
 
-<style>
+<style scoped>
  .btnSales {
   background-color: var(--back-green);
   color: var(--text-green);
