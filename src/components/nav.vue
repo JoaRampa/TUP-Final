@@ -1,53 +1,16 @@
 <template>
-  <img src="../assets/logo.png" alt="Logo">
-  <h3 class="weight-spacing" style="margin: 0">LB Cleaning Products</h3>
-  <button class="panel-btn hamburger--emphatic" type="button"
-    :class="{ 'is-active': isActive }" @click="toggleMenu">
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
-  </button>
-  <aside class="panel" :class="{ 'is-active': isActive }" @click="toggleMenu">
+  <aside class="panel">
+    <h2><i class="fa-solid fa-box"></i>LBStock</h2>
     <nav class="menu">
-      <router-link :to="{ name: 'vHome' }">Home</router-link>
-      <router-link :to="{ name: 'listProducts' }">Stock</router-link> 
-      <router-link :to="{ name: 'transactions' }">Transactions</router-link>
-      <router-link :to="{name: 'balance'}">Balance</router-link>
+      <router-link :to="{ name: 'vHome' }"><i class="fa-solid fa-house"></i>Home</router-link>
+      <router-link :to="{ name: 'listProducts' }"><i class="fa-solid fa-boxes-stacked"></i>Stock</router-link> 
+      <router-link :to="{ name: 'transactions' }"><i class="fa-solid fa-chart-line"></i>Transactions</router-link>
+      <router-link :to="{name: 'balance'}"><i class="fa-solid fa-scale-balanced"></i>Balance</router-link>
     </nav>
   </aside>
 </template>
 
-<script>
-  export default {
-    data() {
-      return {
-        isActive: false,
-      };
-    },
-    methods: {
-      toggleMenu() {
-      this.isActive = !this.isActive;
-    },
-    }
-  }
-</script>
-
 <style>
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  z-index: 997;
-  top: 0;
-  padding: 0.25rem .5rem;
-  margin-bottom: 1.9rem;
-}
-
-header img {
-  width: 3.3rem;
-  border-radius: 100%;
-}
 .weight-spacing {
   font-weight: 700;
   letter-spacing: .05em;
@@ -55,52 +18,32 @@ header img {
 /* menu */
 .panel {
   position: fixed;
-  z-index: 998;
+  z-index: 9999;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  overflow-y: auto;
-  width: 100%;
-  background-color: var(--transparent-color);
-  transition: transform 0.15s ease;
-  transform: translate(0,-100%);
-}
-
-.panel.is-active {
-  transform: translate(0,0);
-}
-
-.panel-btn {
-  z-index: 999;
-  width: 3.3rem;
-  height: 3.3rem;
-  border-radius: 100%;
-  border: hidden;
-  background-color: var(--second-color);
-}
-
-.menu {
-  width: inherit;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  text-align: center;
+  width: 13rem;
+  background-color: var(--main-color);
+  padding: 1rem 0.3rem;
 }
 
 .menu a {
-  padding: 2rem;
-  width: inherit;
+  padding: .8rem;
+  margin: 6px 0;
   display: block;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  border-radius: .5rem;
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--white-color);
   transition: all 0.3s ease;
 }
 
 .menu a:hover {
-  font-weight: bold;
   background-color: var(--second-color);
+}
+
+i {
+  margin-right: .75rem;
 }
 </style>

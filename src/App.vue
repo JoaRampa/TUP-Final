@@ -1,8 +1,6 @@
 <template>
   <body>
-    <header>
-      <Nav />
-    </header>
+    <Nav />
     <main>
       <router-view/>
     </main>
@@ -52,10 +50,10 @@
 
 <style>
 #app {
-  --second-color: rgb(7, 62, 126);
-  --main-color:#0a192f;
+  --second-color: #2F559770;
+  --main-color:#173761;
   --transparent-color: rgba(34,34,34,0.85);
-  --text-color: #dfd3d3;
+  --white-color: #ffffff;
   --border-color: #c5bfc74e;
   --container-width: 1200px;
   --text-green: rgb(27, 230, 131);
@@ -66,11 +64,10 @@
 }
 html {
   box-sizing: border-box;
-  font-family: var(--main-font);
-  font-size: var(--font-size);
+  font-family: 'Montserrat', sans-serif;
   scroll-behavior: smooth;
-  background-color: #0a192f;
-  color: #dfd9d9;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 *,
@@ -80,7 +77,7 @@ html {
 }
 
 body {
-  margin: 0;
+  margin-left: 8rem;
   overflow-x: hidden;
 }
 
