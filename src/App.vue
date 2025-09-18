@@ -78,6 +78,7 @@ html {
 
 body {
   margin-left: 8rem;
+  margin-top: 1.5rem;
   overflow-x: hidden;
 }
 
@@ -85,7 +86,7 @@ button, input, select {
   border: none;
   width: 100%;
   background-color: var(--text-color);
-  border-radius: .8rem;
+  border-radius: .3rem;
   padding: .5rem;
   cursor: pointer;
   margin-bottom: 0.25rem;
@@ -98,5 +99,11 @@ button, input, select {
 
 p {
   margin: 0; 
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

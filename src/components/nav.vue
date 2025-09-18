@@ -1,6 +1,6 @@
 <template>
   <aside class="panel">
-    <h2><i class="fa-solid fa-box"></i>LBStock</h2>
+    <h2 class="title"><i class="fa-solid fa-box"></i>LBStock</h2>
     <nav class="menu">
       <router-link :to="{ name: 'vHome' }"><i class="fa-solid fa-house"></i>Home</router-link>
       <router-link :to="{ name: 'listProducts' }"><i class="fa-solid fa-boxes-stacked"></i>Stock</router-link> 
@@ -11,9 +11,12 @@
 </template>
 
 <style>
-.weight-spacing {
+.title {
+  padding: .8rem;
   font-weight: 700;
-  letter-spacing: .05em;
+  margin: 0 0 20px 0;
+  letter-spacing: .02em;
+  color: var(--white-color);
 }
 /* menu */
 .panel {

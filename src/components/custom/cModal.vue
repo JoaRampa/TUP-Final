@@ -22,11 +22,11 @@ const close = () => {emit('close')}
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 9999;
 }
 
 .modal {
-  background-color: var(--main-color);
+  background-color: var(--white-color);
   padding: 2rem;
   border-radius: 10px;
   max-width: 500px;
