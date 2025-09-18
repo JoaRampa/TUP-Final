@@ -1,15 +1,26 @@
 <template>
   <h2>Dashboard</h2>
   <div class="dashboard-style">
-    <div class="date-box">
-      <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+    <div class="box-center">
+      <i class="fa-solid fa-calendar-day" aria-hidden="true" style="margin-right: .75rem;"></i>
       <label type="text" class="date-input"> Hoy, {{ formatDate(today) }}</label>
     </div>
   </div>
   <div class="grid-dashboard">
-    <cmExpenses/>
-    <cmSales/>
-    <cmExpenses/>
+    <div class="dashboard-style box-center">
+      <cmExpenses/>
+      <h4>Expenses</h4>
+    </div>
+    <div class="dashboard-style box-center">
+      <cmSales/>
+      <h4>Sell</h4>
+    </div>
+    <div class="dashboard-style box-center">
+      <button class="btnRegisterCash">
+        <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
+      </button>
+      <h4>Today balance</h4>
+    </div>
   </div>
   <div class="dashboard-style">
     <div class="grid-info ">
@@ -32,13 +43,16 @@ const today = Date.now();
 
 <style>
 .dashboard-style {
-  padding: 0.5rem 1rem;
-  border: 1px solid #00000050;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
   border-radius: .3rem;
-  margin: 2rem 0;
-  background-color: aliceblue;
+  margin: 1.5rem 0;
+  box-shadow: 0 0 1px 2px rgba(0,0,0,0.02);
 }
-.date-box {
+.dashboard-style button {
+  border-radius: 1000px;
+}
+.box-center {
   display: flex;
   align-items: center;
 }
@@ -46,7 +60,7 @@ const today = Date.now();
 .grid-dashboard {
  display: grid;
  grid-template-columns: repeat(3, 1fr);
- grid-gap: 10px;
+ grid-gap: 3rem;
 }
 
 .grid-info {
@@ -56,5 +70,12 @@ const today = Date.now();
 
 h4 {
   margin: 0;
+}
+
+.btnRegisterCash {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #0d9cc4;
+  margin-right: 1rem;
 }
 </style>

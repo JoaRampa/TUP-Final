@@ -1,7 +1,7 @@
 <template>
-  <Button label="New expense" @click="addExpense" class="btnExpense btnHome weight-spacing"/>
+  <button @click="addExpense" class="btnExpense"><i class="fa-solid fa-arrow-down"></i></button>
   <Modal v-if="expenseModal" @close="closeModal">
-    <h3 style="color: var(--text-red);">New expense</h3>
+    <h3>New expense</h3>
     <cInput type="text" v-model="description" label="Description" :error="errors.description"/>
     <cInput type="number" v-model.number="price" label="Price" :error="errors.price"/>
     <Button label="Confirm" @click="registerExpense" />
@@ -59,16 +59,11 @@ const registerExpense = async () => {
 }
 </script>
 
-<style>
-.btnHome {
-  height: 150px;
-  font-size: 15px;
-}
-.btnExpense {
-  background-color: var(--back-red);
-  color: var(--text-red);
- }
- .btnExpense:hover {
-  background-color: rgb(176, 19, 19)
- }
+<style scoped>
+  .btnExpense {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #c40d0d;
+    margin-right: 1rem;
+  }
 </style>

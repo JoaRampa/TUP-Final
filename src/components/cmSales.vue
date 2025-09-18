@@ -1,5 +1,5 @@
 <template>
-  <Button label="SELL" @click="sell" class="btnSales btnHome weight-spacing" />
+  <button @click="sell" class="btnSales"><i class="fa-solid fa-cart-shopping"></i></button>
   <Modal v-if="saleModal" @close="closeModal">
     <h3 style="color: var(--text-green);">New sale</h3>
     <div v-for="(item, idx) in saleProds" :key="idx">
@@ -158,22 +158,10 @@ const registerSale = async () => {
 </script>
 
 <style scoped>
- .btnSales {
-  background-color: var(--back-green);
-  color: var(--text-green);
- }
- .btnSales:hover {
-  background-color: var(--green-hover);
- }
- .remove {
-  background-color: var(--main-color);
-  box-shadow: none;
-  color: var(--text-red);
-  width: 4rem;
-  font-weight: 700;
-  font-size:larger;
- }
- .remove:hover {
-  color: var(--back-red);
- }
+  .btnSales {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #0dc428;
+    margin-right: 1rem;
+  }
 </style>

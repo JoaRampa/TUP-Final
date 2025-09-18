@@ -10,7 +10,7 @@
   </aside>
 </template>
 
-<style>
+<style scoped>
 .title {
   padding: .8rem;
   font-weight: 700;

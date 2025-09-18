@@ -52,15 +52,8 @@
 #app {
   --second-color: #2F559770;
   --main-color:#173761;
-  --transparent-color: rgba(34,34,34,0.85);
   --white-color: #ffffff;
-  --border-color: #c5bfc74e;
-  --container-width: 1200px;
-  --text-green: rgb(27, 230, 131);
-  --back-green: rgb(11, 88, 51);
-  --green-hover: rgb(15, 129, 74);
-  --text-red: rgb(216, 124, 124);
-  --back-red: #911919;
+  --border-color: #00000050;
 }
 html {
   box-sizing: border-box;
@@ -77,20 +70,25 @@ html {
 }
 
 body {
-  margin-left: 8rem;
-  margin-top: 1.5rem;
+  margin: 1.75rem 4rem 0 9rem;
   overflow-x: hidden;
 }
 
-button, input, select {
+input, select {
   border: none;
   width: 100%;
-  background-color: var(--text-color);
+  background-color: var(--white-color);
   border-radius: .3rem;
   padding: .5rem;
   cursor: pointer;
   margin-bottom: 0.25rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  border: none;
+  padding: .5rem;
+  cursor: pointer;
 }
 
 .button:hover {
