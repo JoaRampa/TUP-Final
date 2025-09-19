@@ -12,14 +12,14 @@
         <cmExpenses/>
         <h4>Daily expenses</h4>
       </div>
-      <p class="dashboard-P">${{ formatNumber(totalExpense) }}</p>
+      <p class="dashboard-P">${{ formatNumber(todayExpense) }}</p>
     </div>
     <div class="dashboard-style">
       <div class="box-center">
         <cmSales/>
         <h4>Sell</h4>
       </div>
-      <p class="dashboard-P">$</p>
+      <p class="dashboard-P">${{ formatNumber(todayBenefit) }}</p>
     </div>
     <div class="dashboard-style">
       <div class="box-center">
@@ -28,7 +28,7 @@
         </button>
         <h4>Today balance</h4>
       </div>
-      <p class="dashboard-P">$</p>
+      <p class="dashboard-P">${{ formatNumber(todayBenefit - todayExpense) }}</p>
     </div>
   </div>
   <div class="dashboard-style">
@@ -46,24 +46,33 @@
 <script setup>
 import cmExpenses from '@/components/cmExpenses.vue';
 import cmSales from '@/components/cmSales.vue';
-import { expenses, fetchExpenses} from '@/server'
+import { expenses, fetchExpenses, sales, fetchSales} from '@/server'
 import { formatDate } from '@/utils/formatDate';
 import { formatNumber } from '@/utils/formatNumber';
 import { onMounted, ref } from 'vue';
 
-const totalExpense = ref(0);
+const todayExpense = ref(0);
+const todayBenefit = ref(0);
 const currentDay = new Date().getDay();
 const today = Date.now();
 
 onMounted(async () => {
-  await Promise.all([fetchExpenses()]);
-  totalExpense.value = expenses.value
+  await Promise.all([fetchExpenses(), fetchSales()]);
+  todayExpense.value = expenses.value
     .filter(expense => {
       const expenseDate = new Date(expense.created_at);
       return expenseDate.getDay() === currentDay;
     })
     .reduce((total, expense) => {
     return total + expense.price
+  }, 0)
+  todayBenefit.value = sales.value
+    .filter(sale => {
+      const saleDate = new Date(sale.created_at);
+      return saleDate.getDay() === currentDay;
+    })
+    .reduce((total, sale) => {
+    return total + sale.benefit
   }, 0)
 })
 </script>
