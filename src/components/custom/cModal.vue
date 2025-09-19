@@ -1,8 +1,8 @@
 <template>
   <div class="overlay" @click.self="close">
     <div class="modal">
+      <Button label="X" @click="close" class="btnClose"/>
       <slot />
-      <Button label="Close" @click="close" class="btnClose"/>
     </div>
   </div>
 </template>
@@ -13,7 +13,7 @@ const emit = defineEmits(['close'])
 const close = () => {emit('close')}
 </script>
 
-<style scoped>
+<style>
 .overlay {
   position: fixed;
   top: 0; left: 0;
@@ -26,13 +26,25 @@ const close = () => {emit('close')}
 }
 
 .modal {
+  position: relative;
   background-color: var(--white-color);
   padding: 2rem;
   border-radius: 10px;
   max-width: 500px;
   width: 100%;
 }
+
+.btnClose {
+  position: absolute;     
+  right: 0.5rem;      
+  width: 3rem;
+  background-color: var(--white-color);
+  color: var(--red-color);
+  font-weight: 700;
+  font-size: 14px;
+}
 .btnClose:hover {
-  background-color: var(--back-red);
+  background-color: var(--red-color);
+  color: var(--white-color);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <button @click="sell" class="btnSales"><i class="fa-solid fa-cart-shopping"></i></button>
+  <button @click="sell" class="btnSales btnDashboard"><i class="fa-solid fa-cart-shopping"></i></button>
   <Modal v-if="saleModal" @close="closeModal">
     <h3 style="color: var(--text-green);">New sale</h3>
     <div v-for="(item, idx) in saleProds" :key="idx">
@@ -159,9 +159,6 @@ const registerSale = async () => {
 
 <style scoped>
   .btnSales {
-    width: 2.5rem;
-    height: 2.5rem;
     background-color: #0dc428;
-    margin-right: 1rem;
   }
 </style>

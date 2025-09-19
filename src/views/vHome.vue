@@ -16,7 +16,7 @@
       <h4>Sell</h4>
     </div>
     <div class="dashboard-style box-center">
-      <button class="btnRegisterCash">
+      <button class="btnRegisterCash btnDashboard">
         <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
       </button>
       <h4>Today balance</h4>
@@ -72,10 +72,12 @@ h4 {
   margin: 0;
 }
 
-.btnRegisterCash {
+.btnDashboard{
   width: 2.5rem;
   height: 2.5rem;
-  background-color: #0d9cc4;
   margin-right: 1rem;
+}
+.btnRegisterCash {
+  background-color: #0d9cc4;
 }
 </style>

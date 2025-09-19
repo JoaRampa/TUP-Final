@@ -54,6 +54,7 @@
   --main-color:#173761;
   --white-color: #ffffff;
   --border-color: #00000050;
+  --red-color: #c40d0d;
 }
 html {
   box-sizing: border-box;
@@ -98,7 +99,9 @@ button {
 p {
   margin: 0; 
 }
-
+h3 {
+  margin-top: 0;
+}
 .center {
   display: flex;
   align-items: center;

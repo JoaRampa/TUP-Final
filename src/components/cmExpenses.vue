@@ -1,5 +1,5 @@
 <template>
-  <button @click="addExpense" class="btnExpense"><i class="fa-solid fa-arrow-down"></i></button>
+  <button @click="addExpense" class="btnExpense btnDashboard"><i class="fa-solid fa-arrow-down"></i></button>
   <Modal v-if="expenseModal" @close="closeModal">
     <h3>New expense</h3>
     <cInput type="text" v-model="description" label="Description" :error="errors.description"/>
@@ -61,9 +61,6 @@ const registerExpense = async () => {
 
 <style scoped>
   .btnExpense {
-    width: 2.5rem;
-    height: 2.5rem;
-    background-color: #c40d0d;
-    margin-right: 1rem;
+    background-color: var(--red-color);
   }
 </style>
