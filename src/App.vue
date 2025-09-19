@@ -55,6 +55,7 @@
   --white-color: #ffffff;
   --border-color: #00000050;
   --red-color: #c40d0d;
+  --green-color: #0dc428;
 }
 html {
   box-sizing: border-box;
@@ -76,18 +77,20 @@ body {
 }
 
 input, select {
-  border: none;
+  border: 1px solid var(--border-color);
   width: 100%;
   background-color: var(--white-color);
   border-radius: .3rem;
   padding: .5rem;
+  margin: 8px 0;
   cursor: pointer;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 button {
   border: none;
+  margin: 8px 0;
   padding: .5rem;
   cursor: pointer;
 }
@@ -96,11 +99,14 @@ button {
   background-color: var(--second-color);
 }
 
-p {
+p, h4 {
   margin: 0; 
 }
 h3 {
   margin-top: 0;
+}
+.modalFormDiv {
+  padding: .5rem;
 }
 .center {
   display: flex;

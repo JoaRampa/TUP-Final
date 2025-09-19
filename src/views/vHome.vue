@@ -68,10 +68,6 @@ const today = Date.now();
   grid-template-columns: repeat(2, 1fr);
 }
 
-h4 {
-  margin: 0;
-}
-
 .btnDashboard{
   width: 2.5rem;
   height: 2.5rem;

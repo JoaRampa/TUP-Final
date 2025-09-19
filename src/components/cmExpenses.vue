@@ -2,9 +2,11 @@
   <button @click="addExpense" class="btnExpense btnDashboard"><i class="fa-solid fa-arrow-down"></i></button>
   <Modal v-if="expenseModal" @close="closeModal">
     <h3>New expense</h3>
-    <cInput type="text" v-model="description" label="Description" :error="errors.description"/>
-    <cInput type="number" v-model.number="price" label="Price" :error="errors.price"/>
-    <Button label="Confirm" @click="registerExpense" />
+    <div class="modalFormDiv">
+      <cInput type="text" v-model="description" label="Description" :error="errors.description"/>
+      <cInput type="number" v-model.number="price" label="Price" :error="errors.price"/>
+      <Button label="Confirm" @click="registerExpense" />
+    </div>
   </Modal>
 </template>
 

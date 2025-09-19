@@ -41,7 +41,8 @@ const close = () => {emit('close')}
   background-color: var(--white-color);
   color: var(--red-color);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
+  margin: 0;
 }
 .btnClose:hover {
   background-color: var(--red-color);
