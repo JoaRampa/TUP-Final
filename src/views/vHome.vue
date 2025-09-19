@@ -7,19 +7,28 @@
     </div>
   </div>
   <div class="grid-dashboard">
-    <div class="dashboard-style box-center">
-      <cmExpenses/>
-      <h4>Expenses</h4>
+    <div class="dashboard-style">
+      <div class="box-center">
+        <cmExpenses/>
+        <h4>Daily expenses</h4>
+      </div>
+      <p class="dashboard-P">${{ formatNumber(totalExpense) }}</p>
     </div>
-    <div class="dashboard-style box-center">
-      <cmSales/>
-      <h4>Sell</h4>
+    <div class="dashboard-style">
+      <div class="box-center">
+        <cmSales/>
+        <h4>Sell</h4>
+      </div>
+      <p class="dashboard-P">$</p>
     </div>
-    <div class="dashboard-style box-center">
-      <button class="btnRegisterCash btnDashboard">
-        <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
-      </button>
-      <h4>Today balance</h4>
+    <div class="dashboard-style">
+      <div class="box-center">
+        <button class="btnRegisterCash btnDashboard">
+          <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
+        </button>
+        <h4>Today balance</h4>
+      </div>
+      <p class="dashboard-P">$</p>
     </div>
   </div>
   <div class="dashboard-style">
@@ -37,8 +46,26 @@
 <script setup>
 import cmExpenses from '@/components/cmExpenses.vue';
 import cmSales from '@/components/cmSales.vue';
+import { expenses, fetchExpenses} from '@/server'
 import { formatDate } from '@/utils/formatDate';
+import { formatNumber } from '@/utils/formatNumber';
+import { onMounted, ref } from 'vue';
+
+const totalExpense = ref(0);
+const currentDay = new Date().getDay();
 const today = Date.now();
+
+onMounted(async () => {
+  await Promise.all([fetchExpenses()]);
+  totalExpense.value = expenses.value
+    .filter(expense => {
+      const expenseDate = new Date(expense.created_at);
+      return expenseDate.getDay() === currentDay;
+    })
+    .reduce((total, expense) => {
+    return total + expense.price
+  }, 0)
+})
 </script>
 
 <style>
@@ -60,7 +87,7 @@ const today = Date.now();
 .grid-dashboard {
  display: grid;
  grid-template-columns: repeat(3, 1fr);
- grid-gap: 3rem;
+ grid-gap: 2rem;
 }
 
 .grid-info {
@@ -75,5 +102,10 @@ const today = Date.now();
 }
 .btnRegisterCash {
   background-color: #0d9cc4;
+}
+.dashboard-P {
+  margin: 0 12px;
+  font-size: 28px;
+  font-weight: 600;
 }
 </style>

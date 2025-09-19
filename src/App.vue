@@ -115,11 +115,14 @@ button:disabled {
   cursor: not-allowed;
 }
 
-p, h4 {
+p,h4 {
   margin: 0; 
 }
 h3 {
   margin-top: 0;
+}
+h4 {
+  font-size: 18px;
 }
 .modalFormDiv {
   padding: .5rem;
