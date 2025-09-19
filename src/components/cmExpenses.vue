@@ -5,7 +5,7 @@
     <div class="modalFormDiv">
       <cInput type="text" v-model="description" label="Description" :error="errors.description"/>
       <cInput type="number" v-model.number="price" label="Price" :error="errors.price"/>
-      <Button label="Confirm" @click="registerExpense" />
+      <Button class="btnConfirmAction" label="Confirm" @click="registerExpense" />
     </div>
   </Modal>
 </template>

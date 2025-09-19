@@ -10,7 +10,7 @@
             <select v-model.number="item.id_product" @change="onProductChange(idx)" class="product-select">
               <option :value="null">-- Select product --</option>
               <option v-for="prod in availableProducts" :key="prod.id" :value="prod.id">
-                {{ prod.id }} - {{ prod.name }} (${{ prod.sale_price }})
+                {{ prod.id }} - {{ prod.name }} (${{ prod.sale_price }}) (Stock {{ prod.stock }})
               </option>
             </select>
         </label>
@@ -22,7 +22,7 @@
       <cInput v-model.number="discount" type="number" label="Discount (%)" :error="discountErr"/>
       <label>Total: {{ total }}</label>
     </div>
-    <Button label="Confirm" @click="registerSale" />
+    <button class="btnConfirmAction" @click="registerSale" :disabled="!canConfirm">Confirm</button>
     </div>
   </Modal>
 </template>
@@ -44,6 +44,9 @@ const discountErr = ref(null);
 
 const availableProducts = computed(() => {
   return products.value ? products.value.filter(p => Number(p.stock) > 0) : [];
+});
+const canConfirm = computed(() => {
+  return saleProds.value.some(p => p.id_product && p.quantity > 0);
 });
 const prodTotal = idx => {
   const item = saleProds.value[idx];
@@ -92,6 +95,13 @@ const registerSale = async () => {
   errors.value = saleProds.value.map(() => ({ id_product: null, quantity: null }));
   discountErr.value = null;
   let hasErrors = false;
+
+  //Valida que haya un prod
+  const validLines = saleProds.value.filter(i => i.id_product);
+  if (validLines.length === 0) {
+    alert('Debe cargar al menos un producto para registrar la venta');
+    return;
+  }
 
   try {
     await discountSchema.validate(discount.value, { abortEarly: false });
@@ -164,7 +174,7 @@ const registerSale = async () => {
 };
 </script>
 
-<style>
+<style scoped>
   .btnSales {
     background-color: var(--green-color);
   }

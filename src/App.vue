@@ -56,6 +56,7 @@
   --border-color: #00000050;
   --red-color: #c40d0d;
   --green-color: #0dc428;
+  --black: #000000
 }
 html {
   box-sizing: border-box;
@@ -87,16 +88,30 @@ input, select {
   margin-bottom: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+.btnConfirmAction {
+  width: 100%;
+  background-color: var(--second-color);
+  border: 1px solid var(--main-color);
+  color: var(--black);
+  font-weight: 600;
+}
 
 button {
   border: none;
   margin: 8px 0;
   padding: .5rem;
   cursor: pointer;
+  font-weight: 500;
 }
 
-.button:hover {
-  background-color: var(--second-color);
+button:hover {
+  background-color: var(--main-color);
+  color: var(--white-color);
+  font-weight: 600;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 p, h4 {
