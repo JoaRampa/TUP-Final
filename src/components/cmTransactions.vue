@@ -1,12 +1,12 @@
 <template>
   <Table
     title="Grouped Sales"
-    :headers="['Sale nro', 'Total', 'Date', 'Info']"
+    :headers="['Sale nro', 'Total', 'Date', 'Sale information']"
     :fields="['id', 'total', 'created_at', 'info']"
     :rows="transactions"
   >
     <template #cell-created_at="{ row }">{{ formatDate(row.created_at) }}</template>
-    <template #cell-info="{ row }"><Button label="i" class="btnInfo" @click="infoModal(row)"/></template>
+    <template #cell-info="{ row }"><Button label="i" class="btnConfirmAction btnInfo" @click="infoModal(row)"/></template>
   </Table>
   <Modal v-if="infoSaleModal" @close="closeModal">
     <template #default>
@@ -29,7 +29,7 @@
     :fields="['description','price','created_at']"
     :rows="expenses"
   >
-    <template #cell-created_at="{ row }">{{ formatDate(row.created_at) }}</template>
+    <template #cell-created_at="{ row }">{{ formatDate(row.created_at) }}<button class="btnSupport">-</button></template>
   </Table>
 </template>
 
@@ -64,11 +64,16 @@ onMounted(() => {
 </script>
 
 <style>
-.btnInfo {
-  width: 2rem;
-  background-color: var(--main-color);
-  border: 1px solid var(--text-color);
-  color: var(--text-color);
-  border-radius: 100%;
-}
+ .btnInfo {
+  width: 3rem;
+  border-radius: 100px;
+ }
+ .btnSupport {
+  background-color: var(--white-color);
+  cursor: auto;
+  color: var(--white-color);
+ }
+ .btnSupport:hover{
+  background-color: var(--white-color);
+ }
 </style>
