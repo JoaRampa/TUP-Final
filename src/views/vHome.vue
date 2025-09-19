@@ -59,13 +59,6 @@ onMounted(async () => {
 </script>
 
 <style>
-.dashboard-style {
-  padding: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: .3rem;
-  margin: 1.5rem 0;
-  box-shadow: 0 0 1px 2px rgba(0,0,0,0.02);
-}
 .dashboard-style button {
   border-radius: 1000px;
 }

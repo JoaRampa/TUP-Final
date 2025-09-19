@@ -2,11 +2,22 @@
   <div class="dashboard-style">
     <div class="grid-info ">
       <div>
-        <h4>Sales</h4>
+        <monthlyChart/>
       </div>
       <div>
-        <h4>Best sellers</h4>
+        <topProductsChart/>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+  import monthlyChart from '../monthlyChart.vue';
+  import topProductsChart from '../topProductsChart.vue';
+</script>
+
+<style scoped>
+.dashboard-style{
+  padding: 0;
+}
+</style>

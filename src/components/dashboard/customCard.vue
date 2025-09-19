@@ -11,6 +11,13 @@
 </template>
 
 <style>
+  .dashboard-style {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: .3rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  }
   .box-center {
     display: flex;
     align-items: center;
