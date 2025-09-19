@@ -3,7 +3,7 @@
     <div class="center headerProd">
       <cInput v-model="filter" @filter="searchProduct" placeholder="Search..." style="margin: 0;"/>
       <h2>Stock</h2>
-      <Button label="+Add product" @click="newModal" class="btnAdd"/>
+      <Button label="+New product" @click="newModal" class="btnAdd"/>
     </div>
     <Modal v-if="newProductModal" @close="closeModal">
       <productForm mode="new" @save="fetchProducts" @close="closeModal"/>
@@ -17,7 +17,7 @@
       :rowClass="getRowClass"
     >
     <template #cell-actions="{ row }">
-      <Button label="Edit" @click="editModal(row)" />
+      <Button class="btnConfirmAction" label="Edit" @click="editModal(row)" />
     </template>
     </Table>
   </div>
@@ -63,12 +63,12 @@ const closeModal = () => {
   margin: auto;
 }
 .headerProd {
-  width: 95%;
+  width: 90%;
   margin: 0 2rem;
 }
 table {
+  width: 90%;
   margin: 0 2rem;
-  width: 95%;
   border-radius: .5rem;
   border: 1px solid var(--border-color);
   padding: 0 0.5rem;
@@ -81,14 +81,17 @@ th, td {
 .btnAdd {
   width: 8rem;
   margin: 0;
-  background-color: var(--back-green);
-  color: var(--text-green);
-  font-weight: 700;
+  background-color: var(--white-color);
+  color: var(--green-color);
+  border: 1px solid var(--green-color);
+  font-weight: 600;
 }
 .btnAdd:hover {
-  background-color: var(--green-hover);
+  background-color: var(--green-color);
+  color: var(--white-color);
 }
 .no-stock {
-  color: var(--text-red);
+  color: var(--red-color);
+  font-weight: 800;
 }
 </style>

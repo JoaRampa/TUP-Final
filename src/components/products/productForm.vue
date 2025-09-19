@@ -1,11 +1,13 @@
 <template>
   <form @submit.prevent="handleSubmit">
     <h3>{{ mode === 'edit' ? 'Edit Product' : 'New Product' }}</h3>
-    <cInput v-model="form.name" type="text" label="Name" :error="errors.name" required />
-    <cInput v-model="form.stock" type="number" label="Stock" :error="errors.stock" required />
-    <cInput v-model="form.sale_price" type="number" label="Sale price" :error="errors.sale_price" required />
-    <cInput v-model="form.cost_price" type="number" label="Cost price" :error="errors.cost_price" required />
-    <button type="submit">{{ mode === 'edit' ? 'Update' : 'Save' }}</button>
+    <div class="modalFormDiv">
+      <cInput v-model="form.name" type="text" label="Name" :error="errors.name" required />
+      <cInput v-model="form.stock" type="number" label="Stock" :error="errors.stock" required />
+      <cInput v-model="form.sale_price" type="number" label="Sale price" :error="errors.sale_price" required />
+      <cInput v-model="form.cost_price" type="number" label="Cost price" :error="errors.cost_price" required />
+      <button type="submit" class="btnConfirmAction">{{ mode === 'edit' ? 'Update' : 'Save' }}</button>
+    </div>
   </form>
 </template>
 

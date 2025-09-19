@@ -102,6 +102,7 @@ button {
   padding: .5rem;
   cursor: pointer;
   font-weight: 500;
+  border-radius: .3rem;
 }
 
 button:hover {
