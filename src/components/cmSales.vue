@@ -4,7 +4,7 @@
     <h3>New sale</h3>
     <div class="modalFormDiv">
       <div v-for="(item, idx) in saleProds" :key="idx">
-      <div class="center">
+      <div class="sale-inputs-div">
         <label class="form-group">
             Product
             <select v-model.number="item.id_product" @change="onProductChange(idx)" class="product-select">
@@ -15,7 +15,10 @@
             </select>
         </label>
         <cInput v-model.number="item.quantity" type="number" label="Quantity" min="1" :error="errors[idx].quantity"/>
-        <Button v-if="idx !== 0" label="X" @click="removeLine(idx)"/>
+        <div class="removeBtn">
+          <Button v-if=" (item.id_product !== null || item.quantity > 0)" 
+            label="X" @click="removeLine(idx)" class="btnClose"/>
+        </div>
       </div>
     </div>
     <div class="center">
@@ -177,5 +180,19 @@ const registerSale = async () => {
 <style scoped>
   .btnSales {
     background-color: var(--green-color);
+  }
+  .btnClose {
+    width: auto;
+    font-size: 12px;
+  }
+  .sale-inputs-div {
+    display: flex;
+    align-items: center; 
+  }
+  .removeBtn {
+    display: flex;
+    align-items: center;   
+    justify-content: center;
+    margin-top: 1.1rem;
   }
 </style>

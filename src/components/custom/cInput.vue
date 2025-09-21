@@ -34,6 +34,9 @@ const emitFilter = () => emit('filter', props.modelValue);
 
 <style>
 .form-group {
+  margin: 0 .5rem 0 .5rem;
+}
+.form-group label {
   margin-bottom: .5rem;
 }
 .form-control {
@@ -42,8 +45,7 @@ const emitFilter = () => emit('filter', props.modelValue);
   box-sizing: border-box;
 }
 .is-invalid {
-  border: 1px solid var(--border-color);
-  border-color: red;
+  border: 1px solid var(--red-color);
 }
 .error {
   color: red;
