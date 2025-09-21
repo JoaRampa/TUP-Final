@@ -10,7 +10,7 @@
   </aside>
 </template>
 
-<style scoped>
+<style>
 .title {
   padding: .8rem;
   font-weight: 700;
@@ -46,7 +46,27 @@
   background-color: var(--second-color);
 }
 
-i {
+.menu i {
   margin-right: .75rem;
+}
+@media (max-width: 920px) {
+  .panel {
+    width: 100%;
+    top: 0;
+    bottom: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+  }
+  .title {
+    margin: 0;
+  }
+  .menu {
+    display: flex;
+  }
+  body {
+    margin: 85px 10px !important;
+  }
 }
 </style>
