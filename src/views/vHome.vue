@@ -30,32 +30,29 @@ import cmSales from '@/components/cmSales.vue';
 import dashboardTitle from '@/components/dashboard/title.vue';
 import dashboardFooter from '@/components/dashboard/footer.vue';
 import customCard from '@/components/dashboard/customCard.vue';
-import { expenses, fetchExpenses, sales, fetchSales} from '@/server';
+import { expenses, fetchExpenses, transactions, fetchTransaction} from '@/server';
 import { formatNumber } from '@/utils/formatNumber';
 import { onMounted, ref } from 'vue';
 import CmExpenses from '@/components/cmExpenses.vue';
 
 const todayExpense = ref(0);
 const todayBenefit = ref(0);
-const currentDay = new Date().getDay();
+const isSameDay = (date1, date2) =>
+  date1.getDate() === date2.getDate() &&
+  date1.getMonth() === date2.getMonth() &&
+  date1.getFullYear() === date2.getFullYear();
 
 onMounted(async () => {
-  await Promise.all([fetchExpenses(), fetchSales()]);
+  await Promise.all([fetchExpenses(), fetchTransaction()]);
   todayExpense.value = expenses.value
-    .filter(expense => {
-      const expenseDate = new Date(expense.created_at);
-      return expenseDate.getDay() === currentDay;
-    })
+    .filter(expense => isSameDay(new Date(expense.created_at), new Date()))
     .reduce((total, expense) => {
-    return total + expense.price
+    return total + expense.price 
   }, 0)
-  todayBenefit.value = sales.value
-    .filter(sale => {
-      const saleDate = new Date(sale.created_at);
-      return saleDate.getDay() === currentDay;
-    })
+  todayBenefit.value = transactions.value
+    .filter(sale => isSameDay(new Date(sale.created_at), new Date()))
     .reduce((total, sale) => {
-    return total + sale.benefit
+    return total + sale.total
   }, 0)
 })
 </script>
