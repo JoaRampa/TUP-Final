@@ -3,7 +3,7 @@
     title="Grouped Sales"
     :headers="['Sale nro', 'Total', 'Date', 'Sale information']"
     :fields="['id', 'total', 'created_at', 'info']"
-    :rows="transactions"
+    :rows="sortedTransactions"
   >
     <template #cell-created_at="{ row }">{{ formatDate(row.created_at) }}</template>
     <template #cell-info="{ row }"><Button label="i" class="btnConfirmAction btnInfo" @click="infoModal(row)"/></template>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { fetchTransaction, transactions, fetchProducts, expenses, fetchExpenses, fetchSaleDetails } from '@/server';
 import {formatDate} from '../utils/formatDate'
 import Table from './custom/table.vue'
@@ -44,6 +44,10 @@ import {Button} from './custom/button'
 const infoSaleModal = ref(false);
 const selectedSale = ref(null);
 const saleDetails = ref([]);
+
+const sortedTransactions = computed(() => {
+  return [...transactions.value].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+});
 
 const infoModal = async (sale) => {
   selectedSale.value = sale;
@@ -56,7 +60,7 @@ const closeModal = () => {
   saleDetails.value = [];
 }
 
-onMounted(() => {
+onMounted(async() => {
   fetchTransaction();
   fetchProducts();
   fetchExpenses();
