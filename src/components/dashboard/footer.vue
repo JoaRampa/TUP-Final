@@ -20,4 +20,8 @@
 .dashboard-style{
   padding: 0;
 }
+.grid-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
 </style>

@@ -2,21 +2,23 @@
   <dashboardTitle/>
   <div class="grid-dashboard">
     <customCard>
-      <template #media><cmExpenses/></template>
-      <template #title><h4>Daily expenses</h4></template>
+      <template #media="{hovered}"><CmExpenses><h4>{{ hovered ? 'ADD' : '' }}</h4></CmExpenses></template>
+      <template #title="{hovered}"><h4>{{ hovered ? '' : 'Today expenses' }}</h4></template>
       <template #value>{{ formatNumber(todayExpense) }}</template>
     </customCard>
     <customCard>
-      <template #media><cmSales/></template>
-      <template #title><h4>Sell</h4></template>
+      <template #media="{hovered}"><cmSales><h4>{{ hovered ? 'ADD' : '' }}</h4></cmSales></template>
+      <template #title="{hovered}"><h4>{{ hovered ? '' : 'Sales' }}</h4></template>
       <template #value>{{ formatNumber(todayBenefit) }}</template>
     </customCard>
     <customCard>
-      <template #media>
+      <template #media="{hovered}">
         <button class="btnRegisterCash btnDashboard">
           <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
-        </button></template>
-      <template #title><h4>Today balance</h4></template>
+          <h4>{{ hovered ? 'DETAILS' : '' }}</h4>
+        </button>
+      </template>
+      <template #title="{hovered}"><h4>{{ hovered ? '' : 'Register cash' }}</h4></template>
       <template #value>{{ formatNumber(todayBenefit - todayExpense) }}</template>
     </customCard>
   </div>
@@ -24,7 +26,6 @@
 </template>
 
 <script setup>
-import cmExpenses from '@/components/cmExpenses.vue';
 import cmSales from '@/components/cmSales.vue';
 import dashboardTitle from '@/components/dashboard/title.vue';
 import dashboardFooter from '@/components/dashboard/footer.vue';
@@ -32,6 +33,7 @@ import customCard from '@/components/dashboard/customCard.vue';
 import { expenses, fetchExpenses, sales, fetchSales} from '@/server';
 import { formatNumber } from '@/utils/formatNumber';
 import { onMounted, ref } from 'vue';
+import CmExpenses from '@/components/cmExpenses.vue';
 
 const todayExpense = ref(0);
 const todayBenefit = ref(0);
@@ -60,12 +62,20 @@ onMounted(async () => {
 
 <style>
 .dashboard-style button {
-  border-radius: 1000px;
+  border-radius: 8px;
+}
+.grid-dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
 }
 .btnDashboard{
-  width: 2.5rem;
+  width: 5rem;
   height: 2.5rem;
   margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .btnRegisterCash {
   background-color: #0d9cc4;

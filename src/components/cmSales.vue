@@ -1,5 +1,5 @@
 <template>
-  <button @click="sell" class="btnSales btnDashboard"><i class="fa-solid fa-cart-shopping"></i></button>
+  <button @click="sell" class="btnSales btnDashboard"><i class="fa-solid fa-cart-shopping"></i><slot/></button>
   <Modal v-if="saleModal" @close="closeModal">
     <h3>New sale</h3>
     <div class="modalFormDiv">

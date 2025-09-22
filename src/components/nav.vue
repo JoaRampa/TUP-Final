@@ -49,7 +49,7 @@
 .menu i {
   margin-right: .75rem;
 }
-@media (max-width: 920px) {
+@media (max-width: 1024px) {
   .panel {
     width: 100%;
     top: 0;

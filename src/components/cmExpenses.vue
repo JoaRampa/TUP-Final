@@ -1,5 +1,5 @@
 <template>
-  <button @click="addExpense" class="btnExpense btnDashboard"><i class="fa-solid fa-arrow-down"></i></button>
+  <button @click="addExpense" class="btnExpense btnDashboard"><i class="fa-solid fa-arrow-down"></i><slot/></button>
   <Modal v-if="expenseModal" @close="closeModal">
     <h3>New expense</h3>
     <div class="modalFormDiv">
