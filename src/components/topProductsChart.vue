@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped>
+<style>
 .card { padding: 18px; }
 .chart-wrapper { height: 220px; }
 .chart-title { display:flex; justify-content:space-between; align-items:center }
