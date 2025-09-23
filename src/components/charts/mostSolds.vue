@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <h3>Sales</h3>
+    <h3>Most solds</h3>
     <div class="chart-wrapper">
       <canvas ref="canvas2" role="img" aria-label="Gráfico de ventas por mes"></canvas>
     </div>

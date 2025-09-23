@@ -1,19 +1,15 @@
 <template>
   <div class="dashboard-style">
     <div class="grid-info ">
-      <div>
-        <monthlyChart/>
-      </div>
-      <div>
-        <topProductsChart/>
-      </div>
+      <mostSolds/>
+      <betterBenefits/>
     </div>
   </div>
 </template>
 
 <script setup>
-  import monthlyChart from '../monthlyChart.vue';
-  import topProductsChart from '../topProductsChart.vue';
+  import mostSolds from '../charts/mostSolds.vue';
+  import betterBenefits from '../charts/betterBenefits.vue';
 </script>
 
 <style scoped>

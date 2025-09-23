@@ -1,7 +1,7 @@
 <template>
   <div class="card" role="region" aria-label="Top 5 best sellers">
     <div class="chart-title">
-      <h3>Top 5 best sellers</h3>
+      <h3>Better benefits</h3>
       <small>Last 30 days</small>
     </div>
     <div class="chart-wrapper">
