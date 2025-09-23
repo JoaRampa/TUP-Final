@@ -34,3 +34,20 @@ export default {
   }
 };
 </script>
+
+<style>
+table {
+  width: 90%;
+  margin: .5rem 2rem;
+  border-radius: .5rem;
+  border: 1px solid var(--border-color);
+  padding: 0 0.5rem;
+}
+th {
+  padding: 1rem 0;
+}
+td, th {
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+</style>

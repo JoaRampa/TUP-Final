@@ -1,8 +1,8 @@
 <template>
-  <div class="card" role="region" aria-label="Top 5 productos más vendidos">
+  <div class="card" role="region" aria-label="Top 5 best sellers">
     <div class="chart-title">
-      <h3>Productos más vendidos (Top 5)</h3>
-      <small>Últimos 30 días</small>
+      <h3>Top 5 best sellers</h3>
+      <small>Last 30 days</small>
     </div>
     <div class="chart-wrapper">
       <canvas ref="canvas" aria-label="Gráfico de barras horizontales: productos más vendidos" role="img"></canvas>
@@ -11,32 +11,57 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue';
 import { Chart, registerables } from 'chart.js';
+import { fetchSales, sales, products } from '@/server';
 Chart.register(...registerables);
 
 const canvas = ref(null);
 let chartInstance = null;
-
-// Datos de ejemplo (reemplazar o alimentar desde props/fetch)
-const labels = ['Producto A','Producto B','Producto C','Producto D','Producto E'];
-const values = [1200, 950, 875, 640, 520];
 const accent = '#2F5597';
 
-onMounted(() => {
-  const ctx = canvas.value.getContext('2d');
+const groupedSales = computed(() => {
+  const map = new Map();
+  for (const item of sales.value) {
+    const name = item.id_product;
+    
+    if (!map.has(name)) {
+      const product = products.value.find(p => p.id === name);
+      map.set(name, {
+        id_product: product ? product.name : name,
+        benefit: 0,
+        q_sold: 0,
+        total_sales: 0,
+      });
+    }
+    
+    const entry = map.get(name);
+    entry.benefit += item.benefit;
+    entry.q_sold += item.quantity;
+    entry.total_sales += 1;
+  }
+  return Array.from(map.values())
+    .sort((a, b) => b.benefit - a.benefit)
+    .slice(0, 5);
+});
 
+function renderChart() {
+  if (!canvas.value) return;
+
+  const ctx = canvas.value.getContext('2d');
   const gradient = ctx.createLinearGradient(0, 0, 400, 0);
   gradient.addColorStop(0, 'rgba(47,85,151,0.95)');
   gradient.addColorStop(1, 'rgba(47,85,151,0.75)');
 
+  if (chartInstance) chartInstance.destroy();
+
   chartInstance = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels,
+      labels: groupedSales.value.map(i => i.id_product),
       datasets: [{
-        label: 'Cantidad vendida',
-        data: values,
+        label: 'Benefit',
+        data: groupedSales.value.map(i => i.benefit),
         backgroundColor: gradient,
         borderColor: accent,
         borderWidth: 0,
@@ -52,7 +77,7 @@ onMounted(() => {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: function(context) {
+            label: function (context) {
               return context.dataset.label + ': ' + context.parsed.x.toLocaleString();
             }
           }
@@ -70,25 +95,22 @@ onMounted(() => {
       }
     }
   });
-});
+}
 
+onMounted(() => {
+  fetchSales();
+  renderChart();
+});
+watch(groupedSales, () => {
+  renderChart();
+});
 onBeforeUnmount(() => {
   if (chartInstance) chartInstance.destroy();
 });
-
-/* Exporta una función para actualizar desde fuera (o usa props/events)
-export function updateChart(newLabels, newValues) {
-  if (!chartInstance) return;
-  chartInstance.data.labels = newLabels;
-  chartInstance.data.datasets[0].data = newValues;
-  chartInstance.update();
-}*/
 </script>
 
 <style scoped>
-.card {
-  padding: 18px;
-}
+.card { padding: 18px; }
 .chart-wrapper { height: 220px; }
 .chart-title { display:flex; justify-content:space-between; align-items:center }
 </style>
