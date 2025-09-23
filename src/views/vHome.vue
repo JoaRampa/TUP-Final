@@ -13,10 +13,10 @@
     </customCard>
     <customCard>
       <template #media="{hovered}">
-        <button class="btnRegisterCash btnDashboard">
+        <router-link :to="{ name: 'transactions' }" class="btnRegisterCash btnDashboard">
           <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
           <h4>{{ hovered ? 'DETAILS' : '' }}</h4>
-        </button>
+        </router-link>
       </template>
       <template #title="{hovered}"><h4>{{ hovered ? '' : 'Register cash' }}</h4></template>
       <template #value>{{ formatNumber(todayBenefit - todayExpense) }}</template>
@@ -58,9 +58,6 @@ onMounted(async () => {
 </script>
 
 <style>
-.dashboard-style button {
-  border-radius: 8px;
-}
 .grid-dashboard {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -73,8 +70,11 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 8px;
 }
 .btnRegisterCash {
   background-color: #0d9cc4;
+  text-decoration: none;
+  color: var(--black);
 }
 </style>
