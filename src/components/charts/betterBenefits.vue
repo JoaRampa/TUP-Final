@@ -11,39 +11,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { Chart, registerables } from 'chart.js';
-import { fetchSales, sales, products } from '@/server';
+import { fetchSales } from '@/server';
+import { useGroupedSales } from '@/utils/groupedSales';
 Chart.register(...registerables);
 
 const canvas = ref(null);
 let chartInstance = null;
 const accent = '#2F5597';
 
-const groupedSales = computed(() => {
-  const map = new Map();
-  for (const item of sales.value) {
-    const name = item.id_product;
-    
-    if (!map.has(name)) {
-      const product = products.value.find(p => p.id === name);
-      map.set(name, {
-        id_product: product ? product.name : name,
-        benefit: 0,
-        q_sold: 0,
-        total_sales: 0,
-      });
-    }
-    
-    const entry = map.get(name);
-    entry.benefit += item.benefit;
-    entry.q_sold += item.quantity;
-    entry.total_sales += 1;
-  }
-  return Array.from(map.values())
-    .sort((a, b) => b.benefit - a.benefit)
-    .slice(0, 5);
-});
+const groupedSales = useGroupedSales(result =>
+  result.sort((a, b) => b.benefit - a.benefit).slice(0, 5)
+);
 
 function renderChart() {
   if (!canvas.value) return;
