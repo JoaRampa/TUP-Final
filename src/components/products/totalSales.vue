@@ -1,7 +1,7 @@
 <template>
   <Table title="Total products sales"
-    :headers="['Name','Total benefit','Quantity sold', 'Total sales']"
-    :fields="['id_product','benefit','q_sold', 'total_sales']"
+    :headers="['Name','Sumed benefit', 'Product earn','Quantity sold', 'Total sales']"
+    :fields="['id_product','totalBenefit', 'singleBenefit', 'q_sold', 'total_sales']"
     :rows="groupedSales"
   />
 </template>

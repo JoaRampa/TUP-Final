@@ -22,7 +22,7 @@ let chartInstance = null;
 const accent = '#2F5597';
 
 const groupedSales = useGroupedSales(result =>
-  result.sort((a, b) => b.benefit - a.benefit).slice(0, 5)
+  result.sort((a, b) => b.totalBenefit - a.totalBenefit).slice(0, 5)
 );
 
 function renderChart() {
@@ -41,7 +41,7 @@ function renderChart() {
       labels: groupedSales.value.map(i => i.id_product),
       datasets: [{
         label: 'Benefit',
-        data: groupedSales.value.map(i => i.benefit),
+        data: groupedSales.value.map(i => i.totalBenefit),
         backgroundColor: gradient,
         borderColor: accent,
         borderWidth: 0,

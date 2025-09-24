@@ -27,7 +27,7 @@ onMounted(async () => {
   await Promise.all([fetchExpenses(), fetchSales(), fetchProducts()]);
 
   totalBenefit.value = sales.value.reduce((total, sale) => {
-    return total + (sale.benefit)
+    return total + (sale.sale_price - sale.cost_price)
   }, 0)
   totalExpense.value = expenses.value.reduce((total, expense) => {
     return total + expense.price

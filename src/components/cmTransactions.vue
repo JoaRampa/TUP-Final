@@ -16,7 +16,7 @@
       <h3>Products Sold:</h3>
       <ul>
         <li v-for="item in saleDetails" :key="item.id">
-          {{ item.product.name }} - Quantity: {{ item.quantity }} - Sale benefit: ${{ item.benefit }}
+          {{ item.product.name }} - Quantity: {{ item.quantity }} - Sale benefit: ${{ item.sale_price }}
         </li>
       </ul>
     </template>

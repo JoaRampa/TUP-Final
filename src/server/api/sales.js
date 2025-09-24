@@ -16,15 +16,16 @@ export const fetchSales = async () => {
 export const fetchSaleDetails = async (transactionId) => {
   const { data, error } = await supabase.from('sales').select(`
     id,
-    id_transaction,
-    id_product,
     quantity,
-    benefit,
+    sale_price,
+    cost_price,
+    discount,
+    id_product,
+    id_transaction,
     created_at,
     product:products ( name )
   `).eq('id_transaction', transactionId);
   
-  //console.log(data)
   if (error) {
     return [];
   } else {

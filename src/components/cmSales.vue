@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="center">
-      <cInput v-model.number="discount" type="number" label="Discount (%)" :error="discountErr"/>
+      <!--<cInput v-model.number="discount" type="number" label="Discount (%)" :error="discountErr"/>-->
       <label>Total: {{ total }}</label>
     </div>
     <button class="btnConfirmAction" @click="registerSale" :disabled="!canConfirm">Confirm</button>
@@ -140,7 +140,9 @@ const registerSale = async () => {
         return {
           id_product: item.id_product,
           quantity: item.quantity,
-          benefit: benefit.toFixed(2),
+          sale_price: product.sale_price,
+          cost_price: product.cost_price,
+          discount: discount.value
         };
       });
 

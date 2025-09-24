@@ -16,15 +16,17 @@ export function useGroupedSales(transform) {
         const product = products.value.find(p => p.id === name);
         map.set(name, {
           id_product: product ? product.name : name,
-          benefit: 0,
+          singleBenefit: 0,
+          totalBenefit: 0,
           q_sold: 0,
           total_sales: 0,
         });
       }
 
       const entry = map.get(name);
-      entry.benefit += item.benefit;
+      entry.singleBenefit += (item.sale_price - item.cost_price);
       entry.q_sold += item.quantity;
+      entry.totalBenefit += (item.sale_price - item.cost_price) * entry.q_sold;
       entry.total_sales += 1;
     }
 
