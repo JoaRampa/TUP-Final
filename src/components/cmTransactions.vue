@@ -1,6 +1,5 @@
 <template>
-  <Table
-    title="Grouped Sales"
+  <Table title="Grouped Sales"
     :headers="['Sale nro', 'Total', 'Date', 'Sale information']"
     :fields="['id', 'total', 'created_at', 'info']"
     :rows="sortedTransactions"
@@ -22,15 +21,17 @@
       </ul>
     </template>
   </Modal>
+  <totalSales />
 </template>
 
 <script setup>
 import { onMounted, ref, computed } from 'vue';
 import { fetchTransaction, transactions, fetchProducts, fetchSaleDetails } from '@/server';
-import {formatDate} from '../utils/formatDate'
-import Table from './custom/table.vue'
-import Modal from './custom/cModal.vue'
-import {Button} from './custom/button'
+import {formatDate} from '../utils/formatDate';
+import Table from './custom/table.vue';
+import Modal from './custom/cModal.vue';
+import {Button} from './custom/button';
+import totalSales from './products/totalSales.vue';
 
 const infoSaleModal = ref(false);
 const selectedSale = ref(null);

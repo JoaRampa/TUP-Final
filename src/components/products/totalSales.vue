@@ -1,6 +1,5 @@
 <template>
-  <Table
-    title="Total products sales"
+  <Table title="Total products sales"
     :headers="['Name','Total benefit','Quantity sold', 'Total sales']"
     :fields="['id_product','benefit','q_sold', 'total_sales']"
     :rows="groupedSales"
