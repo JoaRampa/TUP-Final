@@ -2,24 +2,23 @@
   <dashboardTitle/>
   <div class="grid-dashboard">
     <customCard>
-      <template #media="{hovered}"><formNewExp><h4>{{ hovered ? 'ADD' : '' }}</h4></formNewExp></template>
-      <template #title="{hovered}"><h4>{{ hovered ? '' : 'Today expenses' }}</h4></template>
-      <template #value>{{ formatNumber(todayExpense) }}</template>
+      <template #media><formNewExp/></template>
+      <template #title=><h4>Today expenses</h4></template>
+      <template #value>{{formatNumber(todayExpense)}}</template> 
     </customCard>
     <customCard>
-      <template #media="{hovered}"><cmSales><h4>{{ hovered ? 'ADD' : '' }}</h4></cmSales></template>
-      <template #title="{hovered}"><h4>{{ hovered ? '' : 'Sales' }}</h4></template>
-      <template #value>{{ formatNumber(todayBenefit) }}</template>
+      <template #media><cmSales/></template>
+      <template #title><h4>Sales</h4></template>
+      <template #value>{{formatNumber(todayBenefit)}}</template>
     </customCard>
     <customCard>
-      <template #media="{hovered}">
+      <template #media>
         <router-link :to="{ name: 'sales' }" class="btnRegisterCash btnDashboard">
           <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
-          <h4>{{ hovered ? 'DETAILS' : '' }}</h4>
         </router-link>
       </template>
-      <template #title="{hovered}"><h4>{{ hovered ? '' : 'Register cash' }}</h4></template>
-      <template #value>{{ formatNumber(todayBenefit - todayExpense) }}</template>
+      <template #title><h4>Register cash</h4></template>
+      <template #value>{{formatNumber(todayBenefit - todayExpense)}}</template>
     </customCard>
   </div>
   <dashboardFooter/>
@@ -74,7 +73,9 @@ onMounted(async () => {
 }
 .btnRegisterCash {
   background-color: #0d9cc4;
-  text-decoration: none;
   color: var(--black);
+}
+.btnRegisterCash:hover {
+  color: var(--white-color);
 }
 </style>
