@@ -33,20 +33,14 @@ const emitFilter = () => emit('filter', props.modelValue);
 </script>
 
 <style>
-.form-group {
-  margin: 0 .5rem 0 .5rem;
-}
-.form-group label {
-  margin-bottom: .5rem;
-}
+.form-group { margin: 0 .5rem 0 .5rem; }
+.form-group label { margin-bottom: .5rem; }
 .form-control {
   width: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
 }
-.is-invalid {
-  border: 1px solid var(--red-color);
-}
+.is-invalid { border: 1px solid var(--red-color); }
 .error {
   color: red;
   font-size: 0.85rem;

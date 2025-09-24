@@ -15,5 +15,6 @@ export const discountSchema = Yup.number().min(0, 'Must be between 0 and 100').m
 
 export const expenseSchema = Yup.object().shape({
   description: Yup.string().required('Required').min(3, 'Minimun 3 chars'),
-  price: Yup.number().required('Required').min(0.01, 'At least 0.01')
+  price: Yup.number().required('Required').min(0.01, 'At least 0.01'),
+  date: Yup.date().required("Required").max(new Date(), "Date cannot be in the future")
 })

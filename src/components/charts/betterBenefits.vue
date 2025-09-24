@@ -22,7 +22,7 @@ let chartInstance = null;
 const accent = '#2F5597';
 
 const groupedSales = useGroupedSales(result =>
-  result.sort((a, b) => b.totalBenefit - a.totalBenefit).slice(0, 5)
+  result.sort((a, b) => b.totalBenefit - a.totalBenefit).slice(0, 10)
 );
 
 function renderChart() {

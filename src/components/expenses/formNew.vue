@@ -5,6 +5,7 @@
     <div class="modalFormDiv">
       <cInput type="text" v-model="description" label="Description" :error="errors.description"/>
       <cInput type="number" v-model.number="price" label="Price" :error="errors.price"/>
+      <cInput type="date" v-model="date" label="Date" :error="errors.date"/>
       <Button class="btnConfirmAction" label="Confirm" @click="registerExpense" />
     </div>
   </Modal>
@@ -21,10 +22,12 @@ import { expenseSchema } from '../../utils/schema';
 const expenseModal = ref(false);
 const description = ref('');
 const price = ref(0);
+const date = ref(new Date().toISOString().split("T")[0]);
 const errors = ref({});
 const form = ref({
   description: null,
-  price: 0
+  price: 0,
+  date: null
 })
 
 const addExpense = () => expenseModal.value = true;
@@ -34,6 +37,7 @@ const registerExpense = async () => {
   form.value = {
     description: description.value,
     price: price.value,
+    date: date.value
   };
   try {
     await expenseSchema.validate(form.value, {abortEarly: false})
@@ -44,6 +48,7 @@ const registerExpense = async () => {
       .insert([{
         price: price.value,
         description: description.value,
+        date: date.value
       }]));
       console.log(data);
 
@@ -62,7 +67,5 @@ const registerExpense = async () => {
 </script>
 
 <style scoped>
-  .btnExpense {
-    background-color: var(--red-color);
-  }
+  .btnExpense { background-color: var(--red-color); }
 </style>
