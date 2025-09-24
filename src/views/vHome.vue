@@ -2,7 +2,7 @@
   <dashboardTitle/>
   <div class="grid-dashboard">
     <customCard>
-      <template #media="{hovered}"><CmExpenses><h4>{{ hovered ? 'ADD' : '' }}</h4></CmExpenses></template>
+      <template #media="{hovered}"><formNewExp><h4>{{ hovered ? 'ADD' : '' }}</h4></formNewExp></template>
       <template #title="{hovered}"><h4>{{ hovered ? '' : 'Today expenses' }}</h4></template>
       <template #value>{{ formatNumber(todayExpense) }}</template>
     </customCard>
@@ -13,7 +13,7 @@
     </customCard>
     <customCard>
       <template #media="{hovered}">
-        <router-link :to="{ name: 'transactions' }" class="btnRegisterCash btnDashboard">
+        <router-link :to="{ name: 'sales' }" class="btnRegisterCash btnDashboard">
           <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
           <h4>{{ hovered ? 'DETAILS' : '' }}</h4>
         </router-link>
@@ -33,7 +33,7 @@ import customCard from '@/components/dashboard/customCard.vue';
 import { expenses, fetchExpenses, transactions, fetchTransaction} from '@/server';
 import { formatNumber } from '@/utils/formatNumber';
 import { onMounted, ref } from 'vue';
-import CmExpenses from '@/components/cmExpenses.vue';
+import formNewExp from '@/components/expenses/formNew.vue';
 
 const todayExpense = ref(0);
 const todayBenefit = ref(0);

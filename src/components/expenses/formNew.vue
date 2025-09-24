@@ -11,12 +11,12 @@
 </template>
 
 <script setup>
-import { Button } from './custom/button';
-import cInput from './custom/cInput.vue';
-import Modal from './custom/cModal.vue';
+import { Button } from '../custom/button';
+import cInput from '../custom/cInput.vue';
+import Modal from '../custom/cModal.vue';
 import { supabase } from '@/lib/supabase';
 import { ref } from 'vue';
-import { expenseSchema } from '../utils/schema';
+import { expenseSchema } from '../../utils/schema';
 
 const expenseModal = ref(false);
 const description = ref('');

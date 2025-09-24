@@ -22,20 +22,11 @@
       </ul>
     </template>
   </Modal>
-
-  <Table
-    title="Expenses"
-    :headers="['Description','Price','Date']"
-    :fields="['description','price','created_at']"
-    :rows="expenses"
-  >
-    <template #cell-created_at="{ row }">{{ formatDate(row.created_at) }}<button class="btnSupport">-</button></template>
-  </Table>
 </template>
 
 <script setup>
 import { onMounted, ref, computed } from 'vue';
-import { fetchTransaction, transactions, fetchProducts, expenses, fetchExpenses, fetchSaleDetails } from '@/server';
+import { fetchTransaction, transactions, fetchProducts, fetchSaleDetails } from '@/server';
 import {formatDate} from '../utils/formatDate'
 import Table from './custom/table.vue'
 import Modal from './custom/cModal.vue'
@@ -63,21 +54,9 @@ const closeModal = () => {
 onMounted(async() => {
   fetchTransaction();
   fetchProducts();
-  fetchExpenses();
 });
 </script>
 
 <style>
- .btnInfo {
-  width: 3rem;
-  border-radius: 100px;
- }
- .btnSupport {
-  background-color: var(--white-color);
-  cursor: auto;
-  color: var(--white-color);
- }
- .btnSupport:hover{
-  background-color: var(--white-color);
- }
+ .btnInfo { width: 3rem; border-radius: 100px; }
 </style>

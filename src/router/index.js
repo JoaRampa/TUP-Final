@@ -3,6 +3,7 @@ import listProducts from '../components/products/listProducts.vue'
 import vHome from '@/views/vHome.vue'
 import cmTransactions from '../components/cmTransactions.vue';
 import balance from '../components/balance.vue';
+import dataExpenses from '../components/expenses/history.vue';
 
 const routes = [
   {
@@ -16,14 +17,19 @@ const routes = [
     component: listProducts,
   },
   {
-    path: '/transactions',
-    name: 'transactions',
+    path: '/sales',
+    name: 'sales',
     component: cmTransactions,
   },
   {
     path: '/balance',
     name: 'balance',
     component: balance,
+  },
+    {
+    path: '/expenses',
+    name: 'expenses',
+    component: dataExpenses,
   },
 ]
 

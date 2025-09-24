@@ -4,8 +4,9 @@
     <nav class="menu">
       <router-link :to="{ name: 'vHome' }"><i class="fa-solid fa-house"></i>Home</router-link>
       <router-link :to="{ name: 'listProducts' }"><i class="fa-solid fa-boxes-stacked"></i>Stock</router-link> 
-      <router-link :to="{ name: 'transactions' }"><i class="fa-solid fa-chart-line"></i>Transactions</router-link>
+      <router-link :to="{ name: 'sales' }"><i class="fa-solid fa-chart-line"></i>Sales</router-link>
       <router-link :to="{name: 'balance'}"><i class="fa-solid fa-scale-balanced"></i>Balance</router-link>
+      <router-link :to="{name: 'expenses'}"><i class="fa-solid fa-angle-double-down"></i>Expenses</router-link>
     </nav>
   </aside>
 </template>
@@ -18,6 +19,7 @@
   letter-spacing: .02em;
   color: var(--white-color);
 }
+.title i {margin-right: .5rem;}
 /* menu */
 .panel {
   position: fixed;
