@@ -1,13 +1,13 @@
 <template>
-  <Table title="Grouped Sales"
+  <cTable title="Grouped Sales"
     :headers="['Sale nro', 'Total', 'Date', 'Sale information']"
     :fields="['id', 'total', 'created_at', 'info']"
     :rows="sortedTransactions"
   >
     <template #cell-created_at="{ row }">{{ formatDate(row.created_at) }}</template>
     <template #cell-info="{ row }"><Button label="i" class="btnConfirmAction btnInfo" @click="infoModal(row)"/></template>
-  </Table>
-  <Modal v-if="infoSaleModal" @close="closeModal">
+  </cTable>
+  <cModal v-if="infoSaleModal" @close="closeModal">
     <template #default>
       <h2>Sale n° {{ selectedSale?.id }}</h2>
       <p>Total benefit: {{ selectedSale?.total }}</p>
@@ -20,7 +20,7 @@
         </li>
       </ul>
     </template>
-  </Modal>
+  </cModal>
   <totalSales />
 </template>
 
@@ -28,9 +28,7 @@
 import { onMounted, ref, computed } from 'vue';
 import { fetchTransaction, transactions, fetchProducts, fetchSaleDetails } from '@/server';
 import {formatDate} from '../utils/formatDate';
-import Table from './custom/table.vue';
-import Modal from './custom/cModal.vue';
-import {Button} from './custom/button';
+import { cTable, Button, cModal } from './custom';
 import totalSales from './products/totalSales.vue';
 
 const infoSaleModal = ref(false);

@@ -5,13 +5,13 @@
       <h2>Stock</h2>
       <Button label="+New product" @click="newModal" class="btnAdd"/>
     </div>
-    <Modal v-if="newProductModal" @close="closeModal">
+    <cModal v-if="newProductModal" @close="closeModal">
       <productForm mode="new" @save="fetchProducts" @close="closeModal"/>
-    </Modal>
-    <Modal v-if="editProductModal" @close="closeModal">
+    </cModal>
+    <cModal v-if="editProductModal" @close="closeModal">
       <productForm mode="edit" :product="selectedProduct" @close="closeModal" @save="fetchProducts"/>
-    </Modal>
-    <Table :headers="['Name','Stock','Sale price','Cost price', ' ']"
+    </cModal>
+    <cTable :headers="['Name','Stock','Sale price','Cost price', ' ']"
       :fields="['name', 'stock', 'sale_price', 'cost_price', 'actions' ]"
       :rows="searchProduct"
       :rowClass="getRowClass"
@@ -19,17 +19,14 @@
     <template #cell-actions="{ row }">
       <Button class="btnConfirmAction" label="Edit" @click="editModal(row)" />
     </template>
-    </Table>
+    </cTable>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { Button } from '../custom/button';
-import cInput from '../custom/cInput.vue'
-import Modal from '../custom/cModal.vue';
-import Table from '../custom/table.vue'
-import productForm from './productForm.vue';
+import { Button, cInput, cModal, cTable } from '../custom';
+import productForm from './pForm.vue';
 import { fetchProducts, products } from '@/server';
 
 const newProductModal = ref(false);

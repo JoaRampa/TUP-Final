@@ -1,5 +1,5 @@
 <template>
-  <Table title="Balance" 
+  <cTable title="Balance" 
     :headers="['Sales profits', 'Total expenses', 'Balance','Stock value']"
     :fields="['benefits', 'expenses', 'profit','stock_value']"
     :rows="[{}]"
@@ -8,13 +8,13 @@
     <template #cell-expenses>${{ formatNumber(totalExpense) }}</template>
     <template #cell-profit>${{ formatNumber(balance) }}</template>
     <template #cell-stock_value>${{ formatNumber(stockValue) }}</template> 
-  </Table>
+  </cTable>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { expenses, fetchExpenses, sales, fetchSales, fetchProducts, products } from '@/server'
-import Table from './custom/table.vue'
+import {cTable} from './custom'
 import { formatNumber } from '@/utils/formatNumber';
 
 const totalBenefit = ref(0);

@@ -14,7 +14,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { supabase } from '@/lib/supabase'
-import cInput from '../custom/cInput.vue'
+import {cInput} from '../custom'
 import { productSchema } from '../../utils/schema'
 
 const props = defineProps({

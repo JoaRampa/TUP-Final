@@ -1,17 +1,19 @@
 <template>
-  <dashboardTitle/>
+  <dTitle/>
   <div class="grid-dashboard">
-    <customCard>
-      <template #media><formNewExp/></template>
-      <template #title=><h4>Today expenses</h4></template>
+    <dCard>
+      <template #media>
+        <button @click="newModal" class="btnExpense btnDashboard"><i class="fa-solid fa-arrow-down"></i></button>
+      </template>
+      <template #title><h4>Today expenses</h4></template>
       <template #value>{{formatNumber(todayExpense)}}</template> 
-    </customCard>
-    <customCard>
+    </dCard>
+    <dCard>
       <template #media><cmSales/></template>
       <template #title><h4>Sales</h4></template>
       <template #value>{{formatNumber(todayBenefit)}}</template>
-    </customCard>
-    <customCard>
+    </dCard>
+    <dCard>
       <template #media>
         <router-link :to="{ name: 'sales' }" class="btnRegisterCash btnDashboard">
           <i class="fa-solid fa-cash-register" aria-hidden="true"></i>
@@ -19,23 +21,29 @@
       </template>
       <template #title><h4>Register cash</h4></template>
       <template #value>{{formatNumber(todayBenefit - todayExpense)}}</template>
-    </customCard>
+    </dCard>
   </div>
-  <dashboardFooter/>
+  <dFooter/>
+  <cModal v-if="newExpModal" @close="closeModal">
+    <eForm mode="new" @save="fetchExpenses" @close="closeModal"/>
+  </cModal>
 </template>
 
 <script setup>
 import cmSales from '@/components/cmSales.vue';
-import dashboardTitle from '@/components/dashboard/title.vue';
-import dashboardFooter from '@/components/dashboard/footer.vue';
-import customCard from '@/components/dashboard/customCard.vue';
+import { dCard, dTitle, dFooter } from '@/components/dashboard';
+import { cModal } from '@/components/custom';
 import { expenses, fetchExpenses, transactions, fetchTransaction} from '@/server';
 import { formatNumber } from '@/utils/formatNumber';
 import { onMounted, ref } from 'vue';
-import formNewExp from '@/components/expenses/formNew.vue';
+import eForm from '@/components/expenses/eForm.vue';
 
 const todayExpense = ref(0);
 const todayBenefit = ref(0);
+const newExpModal = ref(false);
+const closeModal = () => { newExpModal.value = false };
+
+const newModal = () => newExpModal.value = true;
 const isSameDay = (date1, date2) =>
   date1.getDate() === date2.getDate() &&
   date1.getMonth() === date2.getMonth() &&
@@ -75,7 +83,7 @@ onMounted(async () => {
   background-color: #0d9cc4;
   color: var(--black);
 }
-.btnRegisterCash:hover {
-  color: var(--white-color);
-}
+.btnRegisterCash:hover { color: var(--white-color); }
+.btnExpense { background-color: var(--red-color); }
+.btnExpense:hover { background-color: var(--red-color); }
 </style>

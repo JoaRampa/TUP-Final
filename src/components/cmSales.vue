@@ -1,6 +1,6 @@
 <template>
   <button @click="sell" class="btnSales btnDashboard"><i class="fa-solid fa-cart-shopping"></i><slot/></button>
-  <Modal v-if="saleModal" @close="closeModal">
+  <cModal v-if="saleModal" @close="closeModal">
     <h3>New sale</h3>
     <div class="modalFormDiv">
       <div v-for="(item, idx) in saleProds" :key="idx">
@@ -27,16 +27,14 @@
     </div>
     <button class="btnConfirmAction" @click="registerSale" :disabled="!canConfirm">Confirm</button>
     </div>
-  </Modal>
+  </cModal>
 </template>
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 import { supabase } from '@/lib/supabase';
-import { Button } from './custom/button';
+import { Button, cModal, cInput } from './custom';
 import { products, fetchProducts } from '@/server';
-import Modal from './custom/cModal.vue';
-import cInput from './custom/cInput.vue';
 import { saleSchema, discountSchema } from '../utils/schema';
 
 const saleModal = ref(false);

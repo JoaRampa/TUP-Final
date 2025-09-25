@@ -37,6 +37,7 @@ export default {
 
 <style>
 table {
+  position: relative;
   width: 90%;
   margin: .5rem 2rem;
   border-radius: .5rem;
