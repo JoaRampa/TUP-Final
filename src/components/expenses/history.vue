@@ -4,34 +4,46 @@
     <h2>Expenses</h2>
     <Button label="+New expense" @click="newModal" class="btnAddExp"/>
   </div>
+
   <cTable
     :headers="['Description','Price','Date', ' ']"
     :fields="['description','price','date', 'actions']"
-    :rows="expenses"
+    :rows="filteredExpenses"
   >
     <template #cell-actions="{ row }">
       <Button class="btnConfirmAction" label="Edit" @click="editModal(row)" />
     </template>
   </cTable>
+  <Paginator :total-items="expenses.length" :items-per-page="itemsPerPage" v-model="currentPage"/>
+
   <cModal v-if="editExpenseModal" @close="closeModal">
     <eForm mode="edit" :expense="selectedExp" @close="closeModal" @save="fetchExpenses"/>
   </cModal>
+
   <cModal v-if="newExpModal" @close="closeModal">
     <eForm mode="new" @save="fetchExpenses" @close="closeModal"/>
   </cModal>
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, computed } from 'vue';
   import { cTable, Button, cModal } from '../custom';
   import { expenses, fetchExpenses } from '@/server';
+  import Paginator from "@/components/cPaginator.vue";
   import eForm from './eForm.vue';
 
   const editExpenseModal = ref(false);
   const newExpModal = ref(false);
   const selectedExp = ref(null);
+  const currentPage = ref(1);
+  const itemsPerPage = 9;
   onMounted(async() => fetchExpenses());
   
+  const filteredExpenses = computed(() => {
+    const reversed = [...expenses.value].reverse();
+    const start = (currentPage.value - 1) * itemsPerPage;
+    return reversed.slice(start, start + itemsPerPage);
+  });
   const newModal = () => newExpModal.value = true;
   const editModal = (exp) => {
     selectedExp.value = exp;

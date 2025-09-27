@@ -11,9 +11,10 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
     "axios": "^1.7.9",
-    "chart.js": "^4.5.0",
+    "chart.js": "^3.9.1",
     "vee-validate": "^4.15.0",
     "vue": "^3.2.13",
+    "vue-chart-3": "^3.1.8",
     "vue-router": "^4.0.3",
     "xlsx": "^0.18.5",
     "yup": "^1.6.1"

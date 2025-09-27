@@ -58,16 +58,18 @@ const handleSubmit = async () => {
         })
         .eq('id', props.product.id));
         console.log(data);
+        alert(`Edited`);
     } else {
       ({data, error} = await supabase
       .from('products')
       .insert([ form.value ]));
       console.log(data);
+      alert(`Added`);
     }
     if(error){
       console.error("Database error:", error.message)
     } else {
-      emit('save') //act la lista
+      emit('save')
     }
     emit('close')
   } catch (validationError) {

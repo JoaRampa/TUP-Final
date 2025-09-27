@@ -44,9 +44,7 @@ table {
   border: 1px solid var(--border-color);
   padding: 0 0.5rem;
 }
-th {
-  padding: 1rem 0;
-}
+th { padding: 1rem 0; }
 td, th {
   text-align: center;
   border-bottom: 1px solid var(--border-color);

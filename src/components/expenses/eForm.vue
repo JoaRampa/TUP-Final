@@ -54,11 +54,13 @@ const handleSubmit = async () => {
         })
         .eq('id', props.expense.id));
         console.log(data);
+        alert(`Edited`);
     } else {
       ({data, error} = await supabase
       .from('expenses')
       .insert([ form.value ]));
       console.log(data);
+      alert(`Added`);
     }
     if(error){
       console.error("Database error:", error.message)
