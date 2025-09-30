@@ -52,7 +52,7 @@ const isSameDay = (date1, date2) =>
 onMounted(async () => {
   await Promise.all([fetchExpenses(), fetchTransaction()]);
   todayExpense.value = expenses.value
-    .filter(expense => isSameDay(new Date(expense.created_at), new Date()))
+    .filter(expense => isSameDay(new Date(expense.date), new Date()))
     .reduce((total, expense) => {
     return total + expense.price 
   }, 0)
