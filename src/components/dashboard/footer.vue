@@ -13,9 +13,7 @@
 </script>
 
 <style scoped>
-.dashboard-style{
-  padding: 0;
-}
+.dashboard-style{ padding: 0; }
 .grid-info {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

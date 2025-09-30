@@ -1,14 +1,8 @@
 <template>
   <div class="dashboard">
     <div class="top-row">
-      <div class="card highlight green">
-        <h3>Balance last month</h3>
-        <p class="value">${{ formatNumber(monthlyBalance) }}</p>
-      </div>
-      <div class="card highlight blue">
-        <h3>Anual balance</h3>
-        <p class="value">${{ formatNumber(balance) }}</p>
-      </div>
+      <bMonth/>
+      <bYear/>
     </div>
 
     <div class="bottom-row">
@@ -48,13 +42,13 @@ import { DoughnutChart } from "vue-chart-3";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, DoughnutController } from "chart.js";
 import { expenses, fetchExpenses, transactions, fetchTransaction, fetchProducts, products } from "@/server";
 import { formatNumber } from "@/utils/formatNumber";
+import { bMonth, bYear} from "../components/balance/index";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, DoughnutController);
 
 const totalBenefit = ref(0);
 const totalExpense = ref(0);
 const stockValue = ref(0);
-const monthlyBalance = ref(0);
 
 const balance = computed(() => totalBenefit.value - totalExpense.value);
 
@@ -72,26 +66,6 @@ onMounted(async () => {
   totalBenefit.value = transactions.value.reduce((s, t) => s + toNum(t.total), 0);
   totalExpense.value = expenses.value.reduce((s, e) => s + toNum(e.price), 0);
   stockValue.value = products.value.reduce((s, p) => s + toNum(p.stock) * toNum(p.cost_price), 0);
-
-  const now = new Date();
-  const Y = now.getFullYear();
-  const M = now.getMonth(); // mes actual 0..11
-
-  const inMonth = raw => {
-    const d = raw ? new Date(raw) : new Date(NaN);
-    if (isNaN(d.getTime())) return false;
-    return d.getFullYear() === Y && d.getMonth() === M;
-  };
-
-  const sumSales = transactions.value
-    .filter(t => inMonth(t.created_at ?? t.date ?? t.createdAt))
-    .reduce((s, t) => s + toNum(t.total), 0);
-
-  const sumExpenses = expenses.value
-    .filter(e => inMonth(e.date ?? e.created_at ?? e.createdAt))
-    .reduce((s, e) => s + toNum(e.price), 0);
-
-  monthlyBalance.value = sumSales - sumExpenses;
 
   chartData.value.datasets[0].data = [totalBenefit.value, totalExpense.value];
 });
@@ -125,8 +99,6 @@ onMounted(async () => {
   font-size: 2rem;
   font-weight: bold;
 }
-.highlight.green .value { color: #2e7d32; }
-.highlight.blue .value { color: #1565c0; }
 .bottom-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
