@@ -90,11 +90,6 @@ onMounted(async () => {
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
-.card h3 {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 0.5rem;
-}
 .value {
   font-size: 2rem;
   font-weight: bold;
@@ -110,15 +105,4 @@ onMounted(async () => {
   gap: 1rem;
   margin-top: 1rem;
 }
-.label {
-  font-size: 0.9rem;
-  color: #666;
-}
-.number {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-.number.green { color: #2e7d32; }
-.number.red { color: #c62828; }
-.number.blue { color: #1565c0; }
 </style>
