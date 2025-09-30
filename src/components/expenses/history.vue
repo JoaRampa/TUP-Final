@@ -37,7 +37,8 @@
   const selectedExp = ref(null);
   const currentPage = ref(1);
   const itemsPerPage = 9;
-  onMounted(async() => fetchExpenses());
+
+  onMounted(async() => { fetchExpenses(); });
   
   const filteredExpenses = computed(() => {
     const reversed = [...expenses.value].reverse();

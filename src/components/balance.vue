@@ -60,52 +60,39 @@ const balance = computed(() => totalBenefit.value - totalExpense.value);
 
 const chartData = ref({
   labels: ["Profits", "Expenses"],
-  datasets: [
-    {
-      data: [0, 0],
-      backgroundColor: ["#4CAF50", "#F44336"],
-    },
-  ],
+  datasets: [{ data: [0, 0], backgroundColor: ["#4CAF50", "#F44336"] }],
 });
+const chartOptions = ref({ responsive: true, plugins: { legend: { position: "bottom" } } });
 
-const chartOptions = ref({
-  responsive: true,
-  plugins: {
-    legend: { position: "bottom" },
-  },
-});
+const toNum = v => Number(v) || 0;
 
 onMounted(async () => {
   await Promise.all([fetchExpenses(), fetchTransaction(), fetchProducts()]);
 
-  totalBenefit.value = transactions.value.reduce((t, ts) => t + ts.total, 0);
-  totalExpense.value = expenses.value.reduce((t, e) => t + e.price, 0);
-  stockValue.value = products.value.reduce((t, p) => t + p.stock * p.cost_price,0);
+  totalBenefit.value = transactions.value.reduce((s, t) => s + toNum(t.total), 0);
+  totalExpense.value = expenses.value.reduce((s, e) => s + toNum(e.price), 0);
+  stockValue.value = products.value.reduce((s, p) => s + toNum(p.stock) * toNum(p.cost_price), 0);
 
-  /* Balance mensual expensesMonth funciona bien, corregir las fechas de trans ya q recibe el created_at
-  const lastMonth = new Date();
-  lastMonth.setMonth(lastMonth.getMonth() - 1);
-  const monthSales = transactions.value.filter((s) => new Date(s.date) >= lastMonth);
-  const monthExpenses = expenses.value.filter(
-    (e) => new Date(e.date) >= lastMonth
-  );
-  monthlyBalance.value =
-    monthSales.reduce((t, ts) => t + ts.total, 0) -
-    monthExpenses.reduce((t, e) => t + e.price, 0);*/
+  const now = new Date();
+  const Y = now.getFullYear();
+  const M = now.getMonth(); // mes actual 0..11
 
-  /* Balance anual
-  const year = new Date().getFullYear();
-  const yearSales = sales.value.filter(
-    (s) => new Date(s.date).getFullYear() === year
-  );
-  const yearExpenses = expenses.value.filter(
-    (e) => new Date(e.date).getFullYear() === year
-  );
-  yearlyBalance.value =
-    yearSales.reduce((t, s) => t + (s.sale_price - s.cost_price), 0) -
-    yearExpenses.reduce((t, e) => t + e.price, 0);*/
+  const inMonth = raw => {
+    const d = raw ? new Date(raw) : new Date(NaN);
+    if (isNaN(d.getTime())) return false;
+    return d.getFullYear() === Y && d.getMonth() === M;
+  };
 
-  // Act grafico
+  const sumSales = transactions.value
+    .filter(t => inMonth(t.created_at ?? t.date ?? t.createdAt))
+    .reduce((s, t) => s + toNum(t.total), 0);
+
+  const sumExpenses = expenses.value
+    .filter(e => inMonth(e.date ?? e.created_at ?? e.createdAt))
+    .reduce((s, e) => s + toNum(e.price), 0);
+
+  monthlyBalance.value = sumSales - sumExpenses;
+
   chartData.value.datasets[0].data = [totalBenefit.value, totalExpense.value];
 });
 </script>
